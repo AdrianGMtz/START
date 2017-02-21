@@ -39,6 +39,7 @@
 
 ?>
 <!DOCTYPE html>
+<html>
 	<head>
 		<!--Import Google Icon Font-->
 		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -71,13 +72,13 @@
 			</div>
 		</nav>
 
-		<!-- Sign Up form -->
+		<!-- Login form -->
 		<br>
 		<div class="container">
 			<div class="row">
 				<div class="card-panel col s12 m6 grey lighten-4 center offset-m3">
 					<br>
-					<form class="col s12 m6 offset-m3 " action = "Login.php" method = "post">
+					<form class="col s12 m6 offset-m3 " action = "login.php" method = "post">
 
 						<div id="username" class="center">
 							<h5>Log In</h5>
