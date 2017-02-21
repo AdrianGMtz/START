@@ -36,3 +36,6 @@ CREATE TABLE CommissionDetails (
 	details VARCHAR(350) NOT NULL,
 	FOREIGN KEY (userID) REFERENCES Users(userID)
 );
+
+INSERT INTO Users(fName, lName, email, passwrd, artist)
+VALUES  ('Marco', 'Ramirez', 'marco@gmail.com', 'marco', FALSE);
