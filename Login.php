@@ -4,7 +4,7 @@
 	// If you receive something from the submit button
 	if($_POST['submit']) {
 
-		include_once("Connect.php"); // connect to database
+		include_once("connect.php"); // connect to database
 
 		// clean up user input
 		$email = strip_tags($_POST['email']);
