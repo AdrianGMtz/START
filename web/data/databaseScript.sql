@@ -1,0 +1,29 @@
+CREATE TABLE Users (
+    userID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	fName VARCHAR(30) NOT NULL,
+    lName VARCHAR(30) NOT NULL,
+    email VARCHAR(50) NOT NULL UNIQUE,
+    passwrd VARCHAR(50) NOT NULL,
+    artist BOOLEAN NOT NULL,
+    description VARCHAR(350),
+    categories VARCHAR(50),
+    subcategories VARCHAR(50)
+);
+
+CREATE TABLE Inbox (
+    inboxID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    user1ID VARCHAR(50) NOT NULL,
+	user2ID VARCHAR(50) NOT NULL,
+	FOREIGN KEY (user1ID) REFERENCES Users(userID),
+    FOREIGN KEY (user2ID) REFERENCES Users(userID)
+);
+
+CREATE TABLE Messages(
+    messageID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    userEmail VARCHAR(50) NOT NULL,
+    userOrder VARCHAR(400) NOT NULL,
+    quantity INT NOT NULL,
+    orderDate DATE NOT NULL,
+    PRIMARY KEY (orderId),
+    FOREIGN KEY (userEmail) REFERENCES Users(email)
+);
