@@ -12,18 +12,18 @@ CREATE TABLE Users (
 
 CREATE TABLE Inbox (
     inboxID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    user1ID VARCHAR(50) NOT NULL,
-	user2ID VARCHAR(50) NOT NULL,
+    user1ID INT NOT NULL,
+	user2ID INT NOT NULL,
 	FOREIGN KEY (user1ID) REFERENCES Users(userID),
     FOREIGN KEY (user2ID) REFERENCES Users(userID)
 );
 
 CREATE TABLE Messages(
     messageID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    userEmail VARCHAR(50) NOT NULL,
-    userOrder VARCHAR(400) NOT NULL,
-    quantity INT NOT NULL,
-    orderDate DATE NOT NULL,
-    PRIMARY KEY (orderId),
-    FOREIGN KEY (userEmail) REFERENCES Users(email)
+    inboxID INT NOT NULL,
+    userID INT NOT NULL,
+    msgTime INT NOT NULL,
+    message VARCHAR(300) NOT NULL,
+    FOREIGN KEY (inboxID) REFERENCES Inbox(inboxID),
+    FOREIGN KEY (userID) REFERENCES Users(userID)
 );
