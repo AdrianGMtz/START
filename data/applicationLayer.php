@@ -2,7 +2,7 @@
 	header('Content-type: application/json');
 	require_once __DIR__ . '/dataLayer.php';
 
-	$action = $_POST["action"];
+	$action = strip_tags($_POST["action"]);
 
 	switch ($action) {
 		case 'LOGIN':
@@ -95,9 +95,9 @@
 	}
 
 	function loginFunction() {
-		$userEmail = $_POST["email"];
-		$userPassword = $_POST["password"];
-		$cookie = $_POST["cookie"];
+		$userEmail = strip_tags($_POST["email"]);
+		$userPassword = strip_tags($_POST["password"]);
+		//$cookie = $_POST["cookie"];
 
 		$result = findUser($userEmail);
 
@@ -107,19 +107,22 @@
 
 			if ($userPassword == $pass) {
 				session_start();
-				$_SESSION["user"] = $userEmail;
+				// Add them to the session
+				$_SESSION['email'] = $userEmail;
+				$_SESSION['userID'] = $userID;
 
+				/*
 				if($cookie == "true"){
 					if($_COOKIE["userEmail"] != username){
 						setcookie("userEmail", $userEmail, time()+(60*60*24*20), "/", "", 0);
 					}
 				} else {
 					setcookie("userEmail", '', time()-(60*60*24*30), "/", "", 0);
-				}
+				}*/
 				echo json_encode(array("message" => 'Login succesful!'));
 			} else {
-				header('HTTP/1.1 500 ' . $result["status"]);
-				die($result["status"]);
+				header('HTTP/1.1 500 ' . 'Incorrect user or password');
+				die('Incorrect user or password');
 			}
 		} else {
 			header('HTTP/1.1 500 ' . $result["status"]);
@@ -128,11 +131,12 @@
 	}
 
 	function registrationFunction() {
-		$fName = $_POST["firstName"];
-		$lName = $_POST["lastName"];
-		$userName = $_POST["username"];
-		$userEmail = $_POST["email"];
-		$userPassword = $_POST["password"];
+		// VARIABLES PROVIDED IN THE HTML
+		$userName = strip_tags($_POST['username']);
+		$userEmail = strip_tags($_POST['email']);
+		$userPassword = strip_tags($_POST['password']);
+		$fName = 'FNAME';
+		$lName = 'LNAME';
 
 		$userPassword = passwordEncryption($userPassword);
 

@@ -1,10 +1,9 @@
 <?php
-
 	function connectionToDataBase() {
 		$servername = "localhost";
 		$username = "root";
 		$password = "root";
-		$dbname = "start";
+		$dbname = "testStart";
 
 		$conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -41,19 +40,20 @@
 		$conn = connectionToDataBase();
 
 		if ($conn != null) {
-			$sql = "SELECT email FROM Users WHERE email='$userEmail'";
+			$sql = "SELECT email FROM Users WHERE email = '$userEmail'";
+
 			$result = $conn->query($sql);
 
 			if ($result->num_rows > 0) {
 				return array("status" => "Email already exists!");
-			} else {
-				$sql = "INSERT INTO Users(fName, lName, username, email, passwrd) VALUES('$fName', '$lName', '$userName', '$userEmail', '$userPassword');";
-
+			}
+			else {
+				$sql = "INSERT INTO Users(fName,lName,username,email,passwrd,artist) VALUES ('$fName', '$lName', '$userName','$userEmail','$userPassword',FALSE);";
 				if (mysqli_query($conn, $sql)) {
 					return array("status" => "SUCCESS");
-				} 
+				}
 				else {
-				    return array("status" => "Couldn't create user!");
+					return array("status" => "Couldn't create user!");
 				}
 			}
 		} else {
