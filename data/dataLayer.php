@@ -46,9 +46,9 @@
 
 			if ($result->num_rows > 0) {
 				return array("status" => "Email already exists!");
-			}
-			else {
-				$sql = "INSERT INTO Users(fName,lName,username,email,passwrd,artist) VALUES ('$fName', '$lName', '$userName','$userEmail','$userPassword',FALSE);";
+			} else {
+				$sql = "INSERT INTO Users(fName, lName, username, email, passwrd, artist) VALUES('$fName', '$lName', '$userName', '$userEmail', '$userPassword',FALSE);";
+				
 				if (mysqli_query($conn, $sql)) {
 					return array("status" => "SUCCESS");
 				}

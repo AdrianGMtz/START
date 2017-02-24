@@ -37,19 +37,15 @@
 		<div class="container">
 			<div class="row">
 				<div class="card-panel col s12 m6 grey lighten-4 center offset-m3">
-					<br>
 					<form class="col s12 m6 offset-m3">
-
-						<div class="center">
-							<h5>Log In</h5>
-						</div>
+						<h5>Log In</h5>
 
 						<!-- Email -->
 						<div class="row">
 							<div class="input-field col s12">
 								<i class="material-icons prefix">email</i>
 								<input id="email" type="email" class="validate">
-								<label for="email" data-error="Please enter a valid email address"> <b>Email</b> </label>
+								<label data-error="Please enter a valid email address"> <b>Email</b> </label>
 							</div>
 						</div>
 
@@ -57,18 +53,13 @@
 						<div class="row">
 							<div class="input-field col s12">
 								<i class="material-icons prefix">vpn_key</i>
-								<input id="password" type="password" class="validate" name="password">
-								<label for="password"> <b>Password</b> </label>
+								<input id="password" type="password" class="validate">
+								<label> <b>Password</b> </label>
 							</div>
 						</div>
 
 						<!-- Submit button -->
-						<div class="center">
-							<button class="btn-large waves-effect waves-light center" id="login"><b>Login</b>
-								<i class="material-icons right">send</i>
-							</button>
-						</div>
-						<br>
+						<a class="waves-effect waves-light btn" id="login" style="margin-bottom: 20px;"><i class="material-icons right">send</i><b>Login</b></a>
 					</form>
 					<br>
 				</div>
@@ -105,6 +96,36 @@
 						alert("Complete all fields!");
 					}
 				});
+
+				// Login
+				$("#loginButton").click(function(){
+	                var jsonData = {
+	                    "email" : $("#emailLogin").val(),
+	                    "password" : $("#passwordLogin").val(),
+	                    "cookie" : $("#cookieCheckbox").is(":checked"),
+	                    "action" : "LOGIN"
+	                };
+
+	                $.ajax({
+						url : "data/applicationLayer.php",
+						type: "POST",
+						data: jsonData,
+						dataType : "json",
+						contentType : "application/x-www-form-urlencoded",
+						success: function(jsonResponse){
+							$("#userForm").hide(400);
+							$("#infoMessage").html("<h2>" + jsonResponse.message + "</h2>");
+		                    $("#dialogInfo").show(400);
+							$(':input', '#userForm').not(':button').val('');
+							logged = true;
+							checkUserStatus();
+						},
+						error: function(errorMessage){
+							$("#infoMessage").html("<h2>Could not login!</h2>");
+		                    $("#dialogInfo").show(400);
+						}
+	                });
+	            });
 			});
 		</script>
 	</body>

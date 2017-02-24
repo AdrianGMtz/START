@@ -10,15 +10,13 @@
 		<!--Import style.css-->
 		<link type="text/css" rel="stylesheet" href="css/style.css"/>
 
-		<!--Import js/jquery-->
-		<script src="js/jquery.js" type="text/javascript"></script>
-
 		<!--Let browser know website is optimized for mobile-->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-		<title>START! - Sign Up</title>
+		<title>START! | Sign Up</title>
 
-		<!--Import materialize.js-->
+		<!--Import jQuery before materialize.js-->
+		<script src="js/jquery.js" type="text/javascript"></script>
 		<script type="text/javascript" src="js/materialize.min.js"></script>
 	</head>
 
@@ -39,19 +37,15 @@
 		<div class="container">
 			<div class="row">
 				<div class="card-panel col s12 m6 grey lighten-4 center offset-m3">
-					<br>
-					<form class="col s12 m6 offset-m3 ">
-
-						<div class="center">
-							<h5>Sign Up</h5>
-						</div>
+					<form class="col s12 m6 offset-m3">
+						<h5>Sign Up</h5>
 
 						<!-- Username -->
 						<div class="row">
 							<div class="input-field col s12">
 								<i class="material-icons prefix">person</i>
 								<input id="username" type="text" class="validate">
-								<label for="username">	<b>Username</b>	</label>
+								<label>	<b>Username</b>	</label>
 							</div>
 						</div>
 
@@ -60,7 +54,7 @@
 							<div class="input-field col s12">
 								<i class="material-icons prefix">email</i>
 								<input id="email" type="email" class="validate">
-								<label for="email" data-error="Please enter a valid email address"> <b>Email</b> </label>
+								<label data-error="Please enter a valid email address"> <b>Email</b> </label>
 							</div>
 						</div>
 
@@ -69,19 +63,14 @@
 							<div class="input-field col s12">
 								<i class="material-icons prefix">vpn_key</i>
 								<input id="password" type="password" class="validate">
-								<label for="password"> <b>Password</b> </label>
+								<label> <b>Password</b> </label>
 							</div>
 						</div>
 
 						<!-- Submit button -->
-						<div class="center">
-							<button class="btn-large waves-effect waves-light center" id="signup"><b>Join START</b>
-								<i class="material-icons right">send</i>
-							</button>
+						<a class="waves-effect waves-light btn" id="signup" style="margin-bottom: 20px;"><i class="material-icons right">send</i><b>Join START</b></a>
 						</div>
-						<br>
 					</form>
-					<br>
 				</div>
 			</div>
 		</div>
@@ -105,6 +94,7 @@
 							success: function(jsonData){
 								//logged = true;
 		                        //checkUserStatus();
+		                        window.location.replace("profile.html");
 								alert(jsonData.message);
 							},
 							error:function(errorMessage){
