@@ -4,7 +4,6 @@
 		<?php  include('header.html'); ?>
 		<script type="text/javascript" src="js/login.js"></script>
 		<title>START! | username</title>
-    	?>
 
 	</head>
 
