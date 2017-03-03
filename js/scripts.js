@@ -63,24 +63,24 @@ $(document).ready(function(){
 		console.log("clic");
 
 		var jsonData = {
-            "action" : "LOGOUT"
-        };
+			"action" : "LOGOUT"
+		};
 
-        $.ajax({
-            url : "data/applicationLayer.php",
-            type : "POST",
-            data : jsonData,
-            dataType : "json",
-            contentType : "application/x-www-form-urlencoded",
-            success: function(jsonResponse){
-            	console.log("LOGOUT");
-            	logged = false;
+		$.ajax({
+			url : "data/applicationLayer.php",
+			type : "POST",
+			data : jsonData,
+			dataType : "json",
+			contentType : "application/x-www-form-urlencoded",
+			success: function(jsonResponse){
+				console.log("LOGOUT");
+				logged = false;
 				window.location.replace("index.html");
-            },
-            error : function(errorMessage){
-                console.log(errorMessage.responseText);
-            }
-        });
+			},
+			error : function(errorMessage){
+				console.log(errorMessage.responseText);
+			}
+		});
 	})
 
 	// Login

@@ -20,6 +20,12 @@
 		case 'CHECKCOOKIE':
 			cookieCheck();
 			break;
+		case 'GETUSERINFO':
+			userInfo();
+			break;
+		case 'EDITINFO':
+			editInfo();
+			break;
 	}
 
 	function sessionCheck() {
@@ -41,6 +47,43 @@
 		} else {
 			header('HTTP/1.1 500 No Cookie');
 			die('No cookie');
+		}
+	}
+
+	function userInfo() {
+		session_start();
+
+		if (isset($_SESSION['userID']) && isset($_SESSION['userEmail'])) {
+			$userID = $_SESSION['userID'];
+			$userEmail = $_SESSION['userEmail'];
+
+			$result = getInfo($userEmail);
+
+			if ($result["status"] == "SUCCESS") {
+				$description = $result["description"];
+			} else {
+				header('HTTP/1.1 500 ' . $result["status"]);
+				die($result["status"]);
+			}
+
+			echo json_encode(array("ID" => $userID, "Email" => $userEmail, "Description" => $description));
+		} else {
+			header('HTTP/1.1 500 Connection Error');
+			die('Connection Error');
+		}
+	}
+
+	function editInfo() {
+		$userEmail = strip_tags($_POST["userEmail"]);
+		$description = strip_tags($_POST["description"]);
+
+		$result = saveInfo($userEmail, $description);
+
+		if ($result["status"] == "SUCCESS") {
+			echo json_encode(array("message" => 'Login succesful!'));
+		} else {
+			header('HTTP/1.1 500 ' . $result["status"]);
+			die($result["status"]);
 		}
 	}
 
@@ -76,23 +119,23 @@
 			}
 		}
 
-		$password = substr($password, 0,  $length - $count); 
+		$password = substr($password, 0, $length - $count); 
 
 		return $password;
 	}
 
 	function passwordEncryption($password) {
-	    $key = pack('H*', "dbf14c7e313a05bfa34763051cef08bc55abe029fdebae5e1d417e2ffb2c11a3");
+		$key = pack('H*', "dbf14c7e313a05bfa34763051cef08bc55abe029fdebae5e1d417e2ffb2c11a3");
 
-	    $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
-	    $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-	    
-	    $ciphertext = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $key, $password, MCRYPT_MODE_CBC, $iv);
-	    $ciphertext = $iv . $ciphertext;
-	    
-	    $userPassword = base64_encode($ciphertext);
+		$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
+		$iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
+		
+		$ciphertext = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $key, $password, MCRYPT_MODE_CBC, $iv);
+		$ciphertext = $iv . $ciphertext;
+		
+		$userPassword = base64_encode($ciphertext);
 
-	    return $userPassword;
+		return $userPassword;
 	}
 
 	function loginFunction() {

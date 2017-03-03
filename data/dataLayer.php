@@ -61,4 +61,44 @@
 		}
 		$conn -> close();
 	}
+
+	function saveInfo($userEmail, $description) {
+		$conn = connectionToDataBase();
+
+		if ($conn != null) {
+			$sql = "UPDATE Users SET description = '$description' WHERE email='$userEmail'";
+
+			if (mysqli_query($conn, $sql)) {
+				return array("status" => "SUCCESS");
+			}
+			else {
+				return array("status" => "Couldn't update description!");
+			}
+		} else {
+			return array("status" => "Connection with DB went wrong!");
+		}
+		$conn -> close();
+	}
+
+	function getInfo($userEmail) {
+		$conn = connectionToDataBase();
+
+		if ($conn != null) {
+			$sql = "SELECT description from Users WHERE email='$userEmail'";
+
+			$result = $conn->query($sql);
+
+			if ($result->num_rows > 0) {
+				while($row = $result->fetch_assoc()) {
+					$conn->close();
+					return array("status" => "SUCCESS", "description" => $row['description']);
+				}
+			} else {
+				return array("status" => "User not Found!");
+			}
+		} else {
+			return array("status" => "Connection with DB went wrong!");
+		}
+		$conn -> close();
+	}
 ?>
