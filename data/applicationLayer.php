@@ -25,9 +25,10 @@
 	function sessionCheck() {
 		session_start();
 
-		if (isset($_SESSION['user'])) {
-			$msg = 'Logout ' . $_SESSION['user'];
-			echo json_encode(array("loginMSG" => $msg));
+		if (isset($_SESSION['userID']) && isset($_SESSION['userEmail'])) {
+			$userID = $_SESSION['userID'];
+			$userEmail = $_SESSION['userEmail'];
+			echo json_encode(array("ID" => $userID, "Email" => $userEmail));
 		} else {
 			header('HTTP/1.1 500 No Session');
 			die('No Session');
@@ -46,7 +47,7 @@
 	function logoutFunction() {
 		session_start();
 
-		if (isset($_SESSION['user'])) {
+		if (isset($_SESSION['userID']) && isset($_SESSION['userEmail'])) {
 			session_destroy();
 			echo json_encode(array("message" => 'Session removed'));
 		} else {
@@ -97,28 +98,29 @@
 	function loginFunction() {
 		$userEmail = strip_tags($_POST["email"]);
 		$userPassword = strip_tags($_POST["password"]);
-		//$cookie = $_POST["cookie"];
+		$cookie = $_POST["cookie"];
 
 		$result = findUser($userEmail);
 
 		if ($result["status"] == "SUCCESS") {
 			// Decrypt password
-			$pass = passwordDecryption($result["response"]);
+			$pass = passwordDecryption($result["responseP"]);
 
 			if ($userPassword == $pass) {
 				session_start();
-				// Add them to the session
-				$_SESSION['email'] = $userEmail;
-				$_SESSION['userID'] = $userID;
 
-				/*
+				// Add them to the session
+				$_SESSION['userEmail'] = $userEmail;
+				$_SESSION['userID'] = $result["responseU"];
+
+				// Set cookie if true
 				if($cookie == "true"){
 					if($_COOKIE["userEmail"] != username){
 						setcookie("userEmail", $userEmail, time()+(60*60*24*20), "/", "", 0);
 					}
 				} else {
 					setcookie("userEmail", '', time()-(60*60*24*30), "/", "", 0);
-				}*/
+				}
 				echo json_encode(array("message" => 'Login succesful!'));
 			} else {
 				header('HTTP/1.1 500 ' . 'Incorrect user or password');
@@ -144,9 +146,10 @@
 
 		if ($result["status"] == "SUCCESS") {
 			session_start();
-			$_SESSION["user"] = $userEmail;
-
-			setcookie("userEmail", '', time()-(60*60*24*30), "/", "", 0);
+			
+			// Add them to the session
+			$_SESSION['userEmail'] = $userEmail;
+			$_SESSION['userID'] = $userID;
 
 			echo json_encode(array("message" => "Registration succesful!"));
 		} else {

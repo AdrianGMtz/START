@@ -25,7 +25,7 @@
 			if ($result->num_rows > 0) {
 				while($row = $result->fetch_assoc()) {
 					$conn->close();
-					return array("status" => "SUCCESS", "response" => $row['passwrd']);
+					return array("status" => "SUCCESS", "responseP" => $row['passwrd'], "responseU" => $row['username']);
 				}
 			} else {
 				return array("status" => "User not Found!");

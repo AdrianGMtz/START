@@ -1,36 +1,13 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<!--Import Google Icon Font-->
-		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-		<!--Import materialize.css-->
-		<link type="text/css" rel="stylesheet" href="css/materialize.min.css"	media="screen,projection"/>
-
-		<!--Import style.css-->
-		<link type="text/css" rel="stylesheet" href="css/style.css"/>
-
-		<!--Let browser know website is optimized for mobile-->
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
 		<title>START! | Sign Up</title>
-
-		<!--Import jQuery before materialize.js-->
-		<script src="js/jquery.js" type="text/javascript"></script>
-		<script type="text/javascript" src="js/materialize.min.js"></script>
+		<?php include('header.html'); ?>
 	</head>
 
 	<body>
 		<!--Top navigation bar-->
-		<nav>
-			<div class="nav-wrapper black">
-				<a href="index.html" class="brand-logo"> START! </a>
-				<ul id="nav-mobile" class="right"> <!-- The navigation links are aligned to the right -->
-					<li><a href="signup.html"> Sign Up </a></li>
-					<li><a href="login.html"> Login </a></li>
-				</ul>
-			</div>
-		</nav>
+		<?php include('navbar.php'); ?>
 
 		<!-- Sign Up form -->
 		<br>
@@ -109,12 +86,5 @@
 		</script>
 	</body>
 	<!--Footer-->
-	<footer class="page-footer black">
-		<div class="footer-copyright">
-			<div class="container">
-				© 2017 START. All rights reserved
-				<a class="grey-text text-lighten-4 right" href="#!">More Links</a>
-			</div>
-		</div>
-	</footer>
+	<?php include('footer.html'); ?>
 </html>

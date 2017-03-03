@@ -2,13 +2,12 @@
 <html>
 	<head>
 		<title>START! | Login</title>
-		<?php  include('header.html'); ?>
-		<script type="text/javascript" src="js/login.js"></script>
+		<?php include('header.html'); ?>
 	</head>
 
 	<body>
 		<!--Top navigation bar-->
-		<?php  include('navbar.php');  ?>
+		<?php include('navbar.php'); ?>
 
 		<!-- Login form -->
 		<br>
@@ -36,6 +35,12 @@
 							</div>
 						</div>
 
+						<!-- Remember Me -->
+						<div class="row">
+							<input type="checkbox" class="filled-in" id="cookieCheckbox" />
+							<label for="cookieCheckbox">Remember Me</label>
+						</div>
+
 						<!-- Submit button -->
 						<a class="waves-effect waves-light btn" id="login" style="margin-bottom: 20px;"><i class="material-icons right">send</i><b>Login</b></a>
 					</form>
@@ -46,5 +51,5 @@
 
 	</body>
 	<!--Footer-->
-	<?php  include('footer.html');  ?>
+	<?php include('footer.html'); ?>
 </html>

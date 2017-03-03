@@ -1,36 +1,26 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<?php
-			include('header.html');
-			include('navbar.php'); 
-		 ?>
+		<title>START! | username</title>
+
+		<?php include('header.html'); ?>
 		<script type="text/javascript" src="js/login.js"></script>
 
 		<script type="text/javascript">
-			
-			  $(document).ready(function(){
-			    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-			    $('.modal').modal();
-			  });
-     
+			$(document).ready(function(){
+				// the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+				$('.modal').modal();
+			});
+
+			$('.slider').slider({
+				full_width: true
+			});
 		</script>
-
-
-<script>
-   $(document).ready(function () {
-       $('.slider').slider({full_width: true});
-   });
-</script>
-
-
-		<title>START! | username</title>
-		
 	</head>
 
 	<body>
-
-		<br><br>
+		<!--Top navigation bar-->
+		<?php include('navbar.php'); ?>
 
 		<div class="container">
 
@@ -58,69 +48,66 @@
 					<br>
 					<h4 class="white-text">Sketch</h4> <br>
 						
-						  <div class="slider">
-						    <ul class="slides">
+						<div class="slider">
+							<ul class="slides">
 
-						      <li>					     
-						        <img src="images/user.png" class="materialboxed"> <!-- random image -->
-						        <div class="caption center-align">	       
-						          <h3>Optional title for the example</h3>
-						        </div>
-						      </li>
+							<li>						 
+								<img src="images/user.png" class="materialboxed"> <!-- random image -->
+								<div class="caption center-align">
+								<h3>Optional title for the example</h3>
+								</div>
+							</li>
 
-						      <li>					     
-						        <img src="images/user.png" class="materialboxed"> <!-- random image -->
-						        <div class="caption center-align">	       
-						          <h3>Optional title for the example</h3>
-						        </div>
-						      </li>
+							<li>						 
+								<img src="images/user.png" class="materialboxed"> <!-- random image -->
+								<div class="caption center-align">
+								<h3>Optional title for the example</h3>
+								</div>
+							</li>
 
-						      <li>					     
-						        <img src="images/user.png" class="materialboxed"> <!-- random image -->
-						        <div class="caption center-align">	       
-						          <h3>Optional title for the example</h3>
-						        </div>
-						      </li>
+							<li>						 
+								<img src="images/user.png" class="materialboxed"> <!-- random image -->
+								<div class="caption center-align">
+								<h3>Optional title for the example</h3>
+								</div>
+							</li>
 
-						    </ul>
+							</ul>
 
-						    <h5 class="right-align white-text">Price: $20</h5>
-						  </div>
-						  <br>
-						  	<p class="white-text left">A short description about the specific commission type will be placed here.</p>
+							<h5 class="right-align white-text">Price: $20</h5>
+						</div>
+						<br>
+							<p class="white-text left">A short description about the specific commission type will be placed here.</p>
 
-						  	<br><br><br>
+							<br><br><br>
 
-						  <a class="waves-effect waves-light btn orange btn-large " href="#policies">Commission artist</a>
+						<a class="waves-effect waves-light btn orange btn-large " href="#policies">Commission artist</a>
 					</div> 
 				</div>
-
 			</div>
 		</div>
 	</body>
 
 
 
-	  <!-- Modal Structure -->
-	  <div id="policies" class="modal">
-	    <div class="modal-content">
-	      <h4 class="center">Client Agreement</h4>
-	      <p><b> You agree to follow this artist's commission policies: </b></p>
+	<!-- Modal Structure -->
+	<div id="policies" class="modal">
+		<div class="modal-content">
+		<h4 class="center">Client Agreement</h4>
+		<p><b> You agree to follow this artist's commission policies: </b></p>
 
-	      <ul>
-	      	<li> No deadline </li>
-	      	<li> At most 2 changes </li>
-	      	<li> No refunds </li>
-	      </ul>
+		<ul>
+			<li> No deadline </li>
+			<li> At most 2 changes </li>
+			<li> No refunds </li>
+		</ul>
 
-	    </div>
-	    <div class="modal-footer">
-	      <a href="#!" class=" modal-action modal-close waves-effect waves-orange btn-flat">I Agree</a>
-	    </div>
-	  </div>
-
-
+		</div>
+		<div class="modal-footer">
+		<a href="#!" class=" modal-action modal-close waves-effect waves-orange btn-flat">I Agree</a>
+		</div>
+	</div>
 
 	<!--Footer-->
-	<?php  include('footer.html');  ?>
+	<?php include('footer.html'); ?>
 </html>

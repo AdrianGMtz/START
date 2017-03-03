@@ -1,28 +1,16 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<?php  include('header.html'); ?>
-		<script type="text/javascript" src="js/login.js"></script>
 		<title>START! | username</title>
-
+		<?php include('header.html'); ?>
 	</head>
 
 	<body>
 		<!--Top navigation bar-->
-		<nav>
-			<div class="nav-wrapper black">
-				<a href="index.html" class="brand-logo"> START! </a>
-				<ul id="nav-mobile" class="right"> <!-- The navigation links are aligned to the right -->
-					<li><a href=""> Username </a></li>
-					<li><a href=""><i class="material-icons left">email</i><span class="new badge red"> 1 </span></a></li>
-					<li><a href=""> Logout </a></li>
-				</ul>
-			</div>
-		</nav>
+		<?php include('navbar.php'); ?>
 
 		<br><br>
 
-	<!-- Sign Up form -->
 	<div class="container">
 		<div class="row">
 			<!-- User info bar -->
@@ -63,8 +51,7 @@
 		</div>
 		<br>
 	</div>
-
+	</body>
 	<!--Footer-->
-	<?php  include('footer.html');  ?>
-
+	<?php include('footer.html'); ?>
 </html>

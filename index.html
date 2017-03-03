@@ -26,14 +26,36 @@
 			<div class="nav-wrapper black">
 				<a href="index.html" class="brand-logo"> START! </a>
 				<ul id="nav-mobile" class="right"> <!-- The navigation links are aligned to the right -->
-					<li><a href="signup.html"> Sign Up </a></li>
-					<li><a href="login.html"> Login </a></li>
 				</ul>
 			</div>
 		</nav>
 
 		<script type="text/javascript">
-			window.location.replace("login.html");
+			// Verify if any session exists
+			checkUserStatus();
+
+			// Check Session
+			function checkUserStatus() {
+				$("#nav-mobile").empty();
+
+				var jsonData = {
+					"action" : "CHECKSESSION"
+				};
+
+				$.ajax({
+					url : "data/applicationLayer.php",
+					type : "POST",
+					data : jsonData,
+					dataType : "json",
+					contentType : "application/x-www-form-urlencoded",
+					success: function(jsonResponse){
+						window.location.replace("profile.php");
+					},
+					error : function(errorMessage){
+						window.location.replace("login.php");
+					}
+				});
+			}
 		</script>
 
 	</body>
