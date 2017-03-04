@@ -4,17 +4,12 @@
 		<title>START! | username</title>
 
 		<?php include('header.html'); ?>
-		<script type="text/javascript" src="js/login.js"></script>
 
 		<script type="text/javascript">
 			$(document).ready(function(){
-				// the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-				$('.modal').modal();
-			});
-
-			$('.slider').slider({
-				full_width: true
-			});
+		      $('.slider').slider();
+		      $('.modal').modal();
+		    });
 		</script>
 	</head>
 

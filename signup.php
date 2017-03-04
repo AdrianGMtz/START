@@ -51,39 +51,7 @@
 				</div>
 			</div>
 		</div>
-		<script type="text/javascript">
-			$(document).ready(function(){
-				$("#signup").click(function(){
-					if ($('#username').val() != "" && $('#email').val() != "" && $('#password').val() != ""){
-						var jsonObject = {
-							"action": "REGISTRATION",
-							"username": $('#username').val(),
-							"email": $('#email').val(),
-							"password": $('#password').val()
-						};
-						
-						$.ajax({
-							type:'POST',
-							url:'data/applicationLayer.php',
-							data: jsonObject,
-							dataType:'json',
-							headers:{'Content-Type':'application/x-www-form-urlencoded'},
-							success: function(jsonData){
-								//logged = true;
-		                        //checkUserStatus();
-		                        window.location.replace("profile.php");
-								alert(jsonData.message);
-							},
-							error:function(errorMessage){
-								alert("Error trying to register user!");
-							}
-						});  
-					} else {
-						alert("Complete all fields!");
-					}
-				});
-			});
-		</script>
+
 	</body>
 	<!--Footer-->
 	<?php include('footer.html'); ?>
