@@ -3,6 +3,8 @@
 	<head>
 		<title>START! | Login</title>
 		<?php include('header.html'); ?>
+		<!--Import scripts.js-->
+		<script type="text/javascript" src="js/scripts.js"></script>
 	</head>
 
 	<body>

@@ -80,11 +80,29 @@
 		$conn -> close();
 	}
 
+	function changeUserType($userEmail) {
+		$conn = connectionToDataBase();
+
+		if ($conn != null) {
+			$sql = "UPDATE Users SET artist = TRUE WHERE email='$userEmail'";
+
+			if (mysqli_query($conn, $sql)) {
+				return array("status" => "SUCCESS");
+			}
+			else {
+				return array("status" => "Couldn't update user!");
+			}
+		} else {
+			return array("status" => "Connection with DB went wrong!");
+		}
+		$conn -> close();
+	}
+
 	function getInfo($userEmail) {
 		$conn = connectionToDataBase();
 
 		if ($conn != null) {
-			$sql = "SELECT description from Users WHERE email='$userEmail'";
+			$sql = "SELECT description, artist, categories, subcategories from Users WHERE email='$userEmail'";
 
 			$result = $conn->query($sql);
 

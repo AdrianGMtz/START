@@ -9,7 +9,7 @@
 		<!--Top navigation bar-->
 		<?php include('navbar.php'); ?>
 
-		<br><br>
+		<br>
 
 	<div class="container">
 		<div class="row">
@@ -22,7 +22,7 @@
 				<h5 id="username" class="center"></h5>
 
 				<!-- User Description -->
-				<p id="description">All user information and personalized description will go here.</p>
+				<p id="description"></p>
 				
 				<!-- Profile Edit / Message Artist -->
 				<div class="center">
@@ -40,8 +40,8 @@
 					<input type="text" name="description" id="editDescription">
 				</div>
 				<div class="modal-footer">
-					<button class="modal-action modal-close waves-effect waves-green btn-flat" id="saveBtn">Save</button>
-					<button class="modal-action modal-close waves-effect waves-green btn-flat" id="cancelBtn">Cancel</button>
+					<button class="modal-action modal-close waves-effect waves-light btn blue" id="saveBtn">Save</button>
+					<button class="modal-action modal-close waves-effect waves-light btn blue" id="cancelBtn">Cancel</button>
 				</div>
 			</div>
 
@@ -52,7 +52,7 @@
 				<div class="card-panel blue lighten-5 card-content valign center nonArtist">
 					<h5 class="blue-text text-lighten-2">You must be an artist to offer commissions.</h5>
 					<br>
-					<a class="waves-effect waves-light btn blue">Become an artist</a>
+					<button class="modal-action modal-close waves-effect waves-light btn blue" id="becomeArtistBtn">Become an artist</button>
 				</div>
 
 				<!-- Message for artist (Only the last one or this one will be shown) -->
@@ -60,6 +60,7 @@
 					<h5 class="blue-text text-lighten-2">You're not offering any commissions.</h5>
 					<br>
 					<a class="waves-effect waves-light btn blue">Add commission</a>
+					<button class="modal-action modal-close waves-effect waves-light btn blue" id="addCommissionBtn">Add commission</button>
 				</div>
 			</div>
 		</div>
@@ -73,10 +74,9 @@
 			var userID = '';
 			var userEmail = '';
 
-			// Verify if any session exists
+			// Get user info (Artist status, description, username, commissions)
 			getUserInfo();
 
-			// Check Session
 			function getUserInfo() {
 				$("#nav-mobile").empty();
 
@@ -107,17 +107,17 @@
 						window.location.replace("login.php");
 					}
 				});
-				console.log(userID);
 			}
 
-			// Edit
+			// Edit description Modal
 			$('.modal').modal({
 				dismissible: false,
 				opacity: .5,
 				inDuration: 250,
 				outDuration: 250
 			});
-			// Save
+
+			// Save description
 			$("#saveBtn").click(function(){
 				var description = $(editDescription).val();
 
@@ -134,17 +134,42 @@
 					dataType : "json",
 					contentType : "application/x-www-form-urlencoded",
 					success: function(jsonResponse){
-						console.log("saved");
 						$(editDescription).val('');
+						$('#description').text(description);
+						alert('Description saved Successfully!');
 					},
 					error : function(errorMessage){
 						console.log(errorMessage.responseText);
 					}
 				});
 			});
-			// Cancel
+
+			// Cancel Edit Description
 			$("#cancelBtn").click(function(){
 				$(editDescription).val('');
+			});
+
+			// Become Artist if user is not one
+			$("#becomeArtistBtn").click(function(){
+				var jsonData = {
+					"action" : "BECOMEARTIST",
+					"userEmail" : userEmail
+				};
+
+				$.ajax({
+					url : "data/applicationLayer.php",
+					type : "POST",
+					data : jsonData,
+					dataType : "json",
+					contentType : "application/x-www-form-urlencoded",
+					success: function(jsonResponse){
+						getUserInfo();
+						alert('You are now an artist!');
+					},
+					error : function(errorMessage){
+						console.log(errorMessage.responseText);
+					}
+				});
 			});
 		});
 	</script>

@@ -26,6 +26,9 @@
 		case 'EDITINFO':
 			editInfo();
 			break;
+		case 'BECOMEARTIST':
+			becomeArtist();
+			break;
 	}
 
 	function sessionCheck() {
@@ -80,7 +83,20 @@
 		$result = saveInfo($userEmail, $description);
 
 		if ($result["status"] == "SUCCESS") {
-			echo json_encode(array("message" => 'Login succesful!'));
+			echo json_encode(array("message" => 'Save Successful!'));
+		} else {
+			header('HTTP/1.1 500 ' . $result["status"]);
+			die($result["status"]);
+		}
+	}
+
+	function becomeArtist() {
+		$userEmail = strip_tags($_POST["userEmail"]);
+
+		$result = changeUserType($userEmail);
+
+		if ($result["status"] == "SUCCESS") {
+			echo json_encode(array("message" => 'User is now an Artist!'));
 		} else {
 			header('HTTP/1.1 500 ' . $result["status"]);
 			die($result["status"]);
@@ -164,7 +180,7 @@
 				} else {
 					setcookie("userEmail", '', time()-(60*60*24*30), "/", "", 0);
 				}
-				echo json_encode(array("message" => 'Login succesful!'));
+				echo json_encode(array("message" => 'Login Successful!'));
 			} else {
 				header('HTTP/1.1 500 ' . 'Incorrect user or password');
 				die('Incorrect user or password');
@@ -192,9 +208,9 @@
 			
 			// Add them to the session
 			$_SESSION['userEmail'] = $userEmail;
-			$_SESSION['userID'] = $userID;
+			$_SESSION['userID'] = $userName;
 
-			echo json_encode(array("message" => "Registration succesful!"));
+			echo json_encode(array("message" => 'Registration Successful!'));
 		} else {
 			header('HTTP/1.1 500 ' . $result["status"]);
 			die($result["status"]);

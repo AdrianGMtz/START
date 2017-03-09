@@ -3,6 +3,8 @@
 	<head>
 		<title>START! | Sign Up</title>
 		<?php include('header.html'); ?>
+		<!--Import scripts.js-->
+		<script type="text/javascript" src="js/scripts.js"></script>
 	</head>
 
 	<body>
@@ -51,7 +53,6 @@
 				</div>
 			</div>
 		</div>
-
 	</body>
 	<!--Footer-->
 	<?php include('footer.html'); ?>

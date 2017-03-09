@@ -101,7 +101,7 @@ $(document).ready(function(){
 				contentType : "application/x-www-form-urlencoded",
 				success: function(jsonData){
 					logged = true;
-					checkUserStatus();
+					//checkUserStatus();
 					// Send the user to the profile page
 					window.location.replace("profile.php");
 					alert(jsonData.message);
@@ -133,7 +133,8 @@ $(document).ready(function(){
 				headers:{'Content-Type':'application/x-www-form-urlencoded'},
 				success: function(jsonData){
 					logged = true;
-					checkUserStatus();
+					//checkUserStatus();
+					// Send the user to the profile page
 					window.location.replace("profile.php");
 					alert(jsonData.message);
 				},
