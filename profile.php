@@ -26,9 +26,9 @@
 				
 				<!-- Profile Edit / Message Artist -->
 				<div class="center">
-					<a class="waves-effect waves-light btn blue artist">Message</a>
 					<!-- Edit Modal Trigger -->
-					<a class="modal-trigger waves-effect waves-light btn blue nonArtist" href="#editModal">Edit</a>
+					<a class="modal-trigger waves-effect waves-light btn blue" href="#editModal">Edit</a>
+					<a class="waves-effect waves-light btn blue artist">Message</a>
 				</div>
 				<br>
 			</div>
@@ -100,12 +100,15 @@
 
 						$('#username').text(userID);
 						$('#description').text(description);
+						$('#editDescription').val(description);
 						$('title').text('START! | ' + userID);
 						$("#nav-mobile").html('<li><a href="profile.php">' + userID + '</a></li><li><a href=""><i class="material-icons left">email</i><span class="new badge red"> 1 </span></a></li><li id="logout" style="padding-right: 15px; padding-left: 15px;">Logout</li>');
-						if (artist) {
+						if (artist == '1') {
 							$('.nonArtist').hide();
+							$('.artist').show();
 						} else {
 							$('.artist').hide();
+							$('.nonArtist').show();
 						}
 					},
 					error : function(errorMessage){
@@ -125,7 +128,7 @@
 
 			// Save description
 			$("#saveBtn").click(function(){
-				var description = $(editDescription).val();
+				var description = $('#editDescription').val();
 
 				var jsonData = {
 					"action" : "EDITINFO",
@@ -140,7 +143,7 @@
 					dataType : "json",
 					contentType : "application/x-www-form-urlencoded",
 					success: function(jsonResponse){
-						$(editDescription).val('');
+						$('#editDescription').val('');
 						$('#description').text(description);
 						alert('Description saved Successfully!');
 					},
@@ -152,7 +155,7 @@
 
 			// Cancel Edit Description
 			$("#cancelBtn").click(function(){
-				$(editDescription).val('');
+				$('#editDescription').val($('#description').text());
 			});
 
 			// Become Artist if user is not one
