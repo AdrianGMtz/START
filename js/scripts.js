@@ -11,8 +11,6 @@ $(document).ready(function(){
 
 	// Check Session
 	function checkUserStatus() {
-		$("#nav-mobile").empty();
-
 		var jsonData = {
 			"action" : "CHECKSESSION"
 		};
@@ -27,11 +25,15 @@ $(document).ready(function(){
 				logged = true;
 				userID = jsonResponse.ID;
 				userEmail = jsonResponse.Email;
-				$("#nav-mobile").html('<li><a href="profile.php">' + userID + '</a></li><li><a href=""><i class="material-icons left">email</i><span class="new badge red"> 1 </span></a></li><li id="logout" style="padding-right: 15px; padding-left: 15px;">Logout</li>');
+				$("#userID").text(userID);
+				$(".loggedIN").show();
+				$(".loggedOUT").hide();
 			},
 			error : function(errorMessage){
 				logged = false;
-				$("#nav-mobile").html('<li><a href="signup.php"> Sign Up </a></li><li><a href="login.php"> Login </a></li>');
+				$(".loggedIN").hide();
+				$(".loggedOUT").show();
+				$("#userID").text("");
 			}
 		});
 	}
@@ -60,8 +62,6 @@ $(document).ready(function(){
 
 	// Logout
 	$("#logout").click(function(){
-		console.log("clic");
-
 		var jsonData = {
 			"action" : "LOGOUT"
 		};
@@ -73,7 +73,6 @@ $(document).ready(function(){
 			dataType : "json",
 			contentType : "application/x-www-form-urlencoded",
 			success: function(jsonResponse){
-				console.log("LOGOUT");
 				logged = false;
 				window.location.replace("index.html");
 			},
@@ -81,7 +80,7 @@ $(document).ready(function(){
 				console.log(errorMessage.responseText);
 			}
 		});
-	})
+	});
 
 	// Login
 	$("#login").click(function(){

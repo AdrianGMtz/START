@@ -77,8 +77,6 @@
 			getUserInfo();
 
 			function getUserInfo() {
-				$("#nav-mobile").empty();
-
 				var jsonData = {
 					"action" : "GETUSERINFO"
 				};
@@ -102,7 +100,9 @@
 						$('#description').text(description);
 						$('#editDescription').val(description);
 						$('title').text('START! | ' + userID);
-						$("#nav-mobile").html('<li><a href="profile.php">' + userID + '</a></li><li><a href=""><i class="material-icons left">email</i><span class="new badge red"> 1 </span></a></li><li id="logout" style="padding-right: 15px; padding-left: 15px;">Logout</li>');
+						$("#userID").text(userID);
+						$(".loggedIN").show();
+						$(".loggedOUT").hide();
 						if (artist == '1') {
 							$('.nonArtist').hide();
 							$('.artist').show();
@@ -113,6 +113,9 @@
 					},
 					error : function(errorMessage){
 						logged = false;
+						$(".loggedIN").hide();
+						$(".loggedOUT").show();
+						$("#userID").text("");
 						window.location.replace("login.php");
 					}
 				});
@@ -174,6 +177,28 @@
 					success: function(jsonResponse){
 						getUserInfo();
 						alert('You are now an artist!');
+					},
+					error : function(errorMessage){
+						console.log(errorMessage.responseText);
+					}
+				});
+			});
+
+			// Logout
+			$("#logout").click(function(){
+				var jsonData = {
+					"action" : "LOGOUT"
+				};
+
+				$.ajax({
+					url : "data/applicationLayer.php",
+					type : "POST",
+					data : jsonData,
+					dataType : "json",
+					contentType : "application/x-www-form-urlencoded",
+					success: function(jsonResponse){
+						logged = false;
+						window.location.replace("index.html");
 					},
 					error : function(errorMessage){
 						console.log(errorMessage.responseText);
