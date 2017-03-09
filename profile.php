@@ -59,7 +59,6 @@
 				<div class="card-panel blue lighten-5 card-content valign center artist">
 					<h5 class="blue-text text-lighten-2">You're not offering any commissions.</h5>
 					<br>
-					<a class="waves-effect waves-light btn blue">Add commission</a>
 					<button class="modal-action modal-close waves-effect waves-light btn blue" id="addCommissionBtn">Add commission</button>
 				</div>
 			</div>
@@ -95,12 +94,19 @@
 						userID = jsonResponse.ID;
 						userEmail = jsonResponse.Email;
 						description = jsonResponse.Description;
+						categories = jsonResponse.Categories;
+						subcategories = jsonResponse.Subcategories;
+						artist = jsonResponse.Artist;
 
 						$('#username').text(userID);
 						$('#description').text(description);
 						$('title').text('START! | ' + userID);
 						$("#nav-mobile").html('<li><a href="profile.php">' + userID + '</a></li><li><a href=""><i class="material-icons left">email</i><span class="new badge red"> 1 </span></a></li><li id="logout" style="padding-right: 15px; padding-left: 15px;">Logout</li>');
-						$('.artist').hide();
+						if (artist) {
+							$('.nonArtist').hide();
+						} else {
+							$('.artist').hide();
+						}
 					},
 					error : function(errorMessage){
 						logged = false;

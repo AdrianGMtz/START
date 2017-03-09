@@ -109,7 +109,7 @@
 			if ($result->num_rows > 0) {
 				while($row = $result->fetch_assoc()) {
 					$conn->close();
-					return array("status" => "SUCCESS", "description" => $row['description']);
+					return array("status" => "SUCCESS", "description" => $row['description'], "artist" => $row['artist'], "categories" => $row['categories'], "subcategories" => $row['subcategories']);
 				}
 			} else {
 				return array("status" => "User not Found!");

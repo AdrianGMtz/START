@@ -63,13 +63,11 @@
 			$result = getInfo($userEmail);
 
 			if ($result["status"] == "SUCCESS") {
-				$description = $result["description"];
+				echo json_encode(array("ID" => $userID, "Email" => $userEmail, "Description" => $result["description"], "Artist" => $result['artist'], "Categories" => $result['categories'], "Subcategories" => $result['subcategories']));
 			} else {
 				header('HTTP/1.1 500 ' . $result["status"]);
 				die($result["status"]);
 			}
-
-			echo json_encode(array("ID" => $userID, "Email" => $userEmail, "Description" => $description));
 		} else {
 			header('HTTP/1.1 500 Connection Error');
 			die('Connection Error');
