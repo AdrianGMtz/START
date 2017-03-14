@@ -33,15 +33,18 @@
 				<br>
 			</div>
 
-			<!-- Modal Structure -->
+			<!-- Description Modal Structure -->
 			<div id="editModal" class="modal modal-fixed-footer">
 				<div class="modal-content">
 					<h4>Edit Description</h4>
-					<input type="text" name="description" id="editDescription">
+					<div class="input-field col s12">
+						<input type="text" name="description" id="editDescription">
+						<label> <b>User Description</b> </label>
+					</div>
 				</div>
 				<div class="modal-footer">
-					<button class="modal-action modal-close waves-effect waves-light btn blue" id="saveBtn">Save</button>
-					<button class="modal-action modal-close waves-effect waves-light btn blue" id="cancelBtn">Cancel</button>
+					<button class="modal-action modal-close waves-effect waves-light btn blue" id="saveDescriptionBtn">Save</button>
+					<button class="modal-action modal-close waves-effect waves-light btn blue" id="cancelDescriptionBtn">Cancel</button>
 				</div>
 			</div>
 
@@ -52,14 +55,33 @@
 				<div class="card-panel blue lighten-5 card-content valign center nonArtist">
 					<h5 class="blue-text text-lighten-2">You must be an artist to offer commissions.</h5>
 					<br>
-					<button class="modal-action modal-close waves-effect waves-light btn blue" id="becomeArtistBtn">Become an artist</button>
+					<button class="waves-effect waves-light btn blue" id="becomeArtistBtn">Become an artist</button>
 				</div>
 
-				<!-- Message for artist (Only the last one or this one will be shown) -->
+				<!-- Message for artist -->
 				<div class="card-panel blue lighten-5 card-content valign center artist">
 					<h5 class="blue-text text-lighten-2">You're not offering any commissions.</h5>
-					<br>
-					<button class="modal-action modal-close waves-effect waves-light btn blue" id="addCommissionBtn">Add commission</button>
+				</div>
+
+				<a class="modal-trigger waves-effect waves-light btn blue artist" href="#addCommissionBtn">Add commission</a>
+
+				<!-- Commission Modal Structure -->
+				<div id="addCommissionBtn" class="modal modal-fixed-footer">
+					<div class="modal-content">
+						<h4>Add Commission</h4>
+						<div class="input-field col s12">
+							<input type="text" name="commissionDesc" id="commissionDesc">
+							<label> <b>Commission Description</b> </label>
+						</div>
+						<div class="input-field col s12">
+							<input type="number" name="commissionPrice" id="commissionPrice" placeholder="0.00">
+							<label> <b>Commission Price</b> </label>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button class="modal-action modal-close waves-effect waves-light btn blue" id="saveCommissionBtn">Save</button>
+						<button class="modal-action modal-close waves-effect waves-light btn blue" id="cancelCommissionBtn">Cancel</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -130,7 +152,7 @@
 			});
 
 			// Save description
-			$("#saveBtn").click(function(){
+			$("#saveDescriptionBtn").click(function(){
 				var description = $('#editDescription').val();
 
 				var jsonData = {
@@ -156,9 +178,43 @@
 				});
 			});
 
+			// Save Commission
+			$("#saveCommissionBtn").click(function(){
+				var commissionDesc = $('#commissionDesc').val();
+
+				var jsonData = {
+					"action" : "SAVECOMMISSION",
+					"userEmail" : userEmail,
+					"commissionDesc" : commissionDescription,
+					"commissionPrice" : commissionPrice
+				};
+
+				$.ajax({
+					url : "data/applicationLayer.php",
+					type : "POST",
+					data : jsonData,
+					dataType : "json",
+					contentType : "application/x-www-form-urlencoded",
+					success: function(jsonResponse){
+						$('#commissionDesc').val('');
+						$('#commissionPrice').val('');
+						alert('Commission saved Successfully!');
+					},
+					error : function(errorMessage){
+						console.log(errorMessage.responseText);
+					}
+				});
+			});
+
 			// Cancel Edit Description
-			$("#cancelBtn").click(function(){
+			$("#cancelDescriptionBtn").click(function(){
 				$('#editDescription').val($('#description').text());
+			});
+
+			// Cancel Add Commission
+			$("#cancelCommissionBtn").click(function(){
+				$('#commissionDesc').val('');
+				$('#commissionPrice').val('');
 			});
 
 			// Become Artist if user is not one

@@ -29,6 +29,9 @@
 		case 'BECOMEARTIST':
 			becomeArtist();
 			break;
+		case 'SAVECOMMISSION':
+			saveCommission();
+			break;
 	}
 
 	function sessionCheck() {
