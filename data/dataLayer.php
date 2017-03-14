@@ -119,4 +119,34 @@
 		}
 		$conn -> close();
 	}
+
+	function saveCommissionInfo($userEmail, $commissionDescription, $commissionPrice, $commissionType) {
+		$conn = connectionToDataBase();
+
+		if ($conn != null) {
+			$sql = "SELECT userID FROM Users WHERE email = '$userEmail'";
+
+			$result = $conn->query($sql);
+
+			if ($result->num_rows > 0) {
+				while($row = $result->fetch_assoc()) {
+					$userID = $row['userID'];
+					$sql = "INSERT INTO CommissionDetails(userID, commissionType, description, price) VALUES('$userID', '$commissionType', '$commissionDescription', '$commissionPrice');";
+
+					if (mysqli_query($conn, $sql)) {
+						return array("status" => "SUCCESS");
+					}
+					else {
+						return array("status" => "Couldn't save commission!");
+					}
+					return array("status" => "SUCCESS", "description" => $row['description'], "artist" => $row['artist'], "categories" => $row['categories'], "subcategories" => $row['subcategories']);
+				}
+			} else {
+				return array("status" => "User not found!");
+			}
+		} else {
+			return array("status" => "Connection with DB went wrong!");
+		}
+		$conn -> close();
+	}
 ?>

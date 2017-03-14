@@ -91,6 +91,22 @@
 		}
 	}
 
+	function saveCommission() {
+		$userEmail = strip_tags($_POST["userEmail"]);
+		$commissionDescription = strip_tags($_POST["commissionDescription"]);
+		$commissionPrice = strip_tags($_POST["commissionPrice"]);
+		$commissionType = 'N/A';
+
+		$result = saveCommissionInfo($userEmail, $commissionDescription, $commissionPrice, $commissionType);
+
+		if ($result["status"] == "SUCCESS") {
+			echo json_encode(array("message" => 'Save Successful!'));
+		} else {
+			header('HTTP/1.1 500 ' . $result["status"]);
+			die($result["status"]);
+		}
+	}
+
 	function becomeArtist() {
 		$userEmail = strip_tags($_POST["userEmail"]);
 

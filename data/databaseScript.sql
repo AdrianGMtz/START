@@ -34,9 +34,6 @@ CREATE TABLE CommissionDetails (
 	userID INT NOT NULL,
 	commissionType VARCHAR(50) NOT NULL,
 	description VARCHAR(350) NOT NULL,
-	details VARCHAR(350) NOT NULL,
+	price FLOAT NOT NULL,
 	FOREIGN KEY (userID) REFERENCES Users(userID)
 );
-
-INSERT INTO Users(fName, lName, email, passwrd, artist)
-VALUES  ('Marco', 'Ramirez', 'marco@gmail.com', 'marco', FALSE);

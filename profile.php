@@ -83,6 +83,10 @@
 						<button class="modal-action modal-close waves-effect waves-light btn blue" id="cancelCommissionBtn">Cancel</button>
 					</div>
 				</div>
+
+				<!-- Commission -->
+				<div class="row artist" id="commissions">
+				</div>
 			</div>
 		</div>
 		<br>
@@ -181,11 +185,12 @@
 			// Save Commission
 			$("#saveCommissionBtn").click(function(){
 				var commissionDesc = $('#commissionDesc').val();
+				var commissionPrice = $('#commissionPrice').val();
 
 				var jsonData = {
 					"action" : "SAVECOMMISSION",
 					"userEmail" : userEmail,
-					"commissionDesc" : commissionDescription,
+					"commissionDescription" : commissionDesc,
 					"commissionPrice" : commissionPrice
 				};
 
@@ -198,6 +203,7 @@
 					success: function(jsonResponse){
 						$('#commissionDesc').val('');
 						$('#commissionPrice').val('');
+						$('#commissions').append('<div class="col s8 m4"><div class="card"><div class="card-image"><img src="images/user.png"><span class="card-title">Type</span></div><div class="card-content"><p>' + commissionDesc + '</p><p>$' + commissionPrice + '</p></div><div class="card-action"><a href="#">More Info</a></div></div></div>');
 						alert('Commission saved Successfully!');
 					},
 					error : function(errorMessage){
