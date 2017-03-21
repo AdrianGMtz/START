@@ -14,3 +14,17 @@
 Auth::routes();
 
 Route::get('/', 'CommissionController@index');
+
+Route::get('/profile', 'UserController@show');
+
+Route::get('/profile/edit', 'UserController@edit');
+
+Route::post('/profile/edit', 'UserController@store');
+
+Route::get('/profile/create', 'UserController@create');
+
+Route::post('/commissions', 'CommissionController@store');
+
+//Route::get('/profile/{profile}', 'UserController@showArtist');
+
+

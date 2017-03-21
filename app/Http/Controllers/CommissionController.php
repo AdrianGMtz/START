@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Commission;
+
 class CommissionController extends Controller
 {
     /**
@@ -21,6 +23,37 @@ class CommissionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        return view('welcome');
+        return view('index');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show() {
+        return view('commissions.details');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store() {
+        // Validate form
+        $this->validate(request(), [
+            'description' => 'required|min:2',
+            'type' => 'required',
+            'price' => 'required'
+        ]);
+
+        // Create new post
+        auth()->user()->publish(
+            new Commission(request(['description', 'type', 'price']))
+        );
+
+        // return view
+        return redirect('/profile');
     }
 }

@@ -1,9 +1,18 @@
-
 // Fonts
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
 
-// Variables
-@import "variables";
+body {
+	font-family:Raleway,sans-serif;
+	line-height:1.6;
+	color:#636b6f;
+	background-color:#f5f8fa; 
+}
 
-// Bootstrap
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+/* Navbar */
+nav ul li:hover {
+	background-color: rgb(0,200,200);
+}
+
+nav .brand-logo {
+	padding-left: 10px;
+}

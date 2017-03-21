@@ -26,4 +26,17 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function commissions() {
+        return $this->hasMany(Commission::Class);
+    }
+
+    public function publish(Commission $commission) {
+        $this->commissions()->save($commission);
+    }
+
+    public function updateUser($description) {
+        $this->description = $description;
+        $this->save();
+    }
 }

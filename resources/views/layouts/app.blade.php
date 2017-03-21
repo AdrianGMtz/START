@@ -35,7 +35,9 @@
         <!-- Navbar -->
         @include('layouts.nav')
 
-        @yield('content')
+        <div class="container">
+            @yield('content')
+        </div>
 
         <!-- Footer -->
         @include('layouts.footer')

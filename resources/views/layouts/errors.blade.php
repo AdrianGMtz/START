@@ -1,5 +1,5 @@
 @if (count($errors))
-	<div class="card-panel red">
+	<div class="card-panel red lighten-5 card-content valign center">
 		<ul class="white-text">
 			@foreach ($errors->all() as $error)
 				<li>{{ $error }}</li>
