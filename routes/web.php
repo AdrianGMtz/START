@@ -25,6 +25,12 @@ Route::get('/profile/create', 'UserController@create');
 
 Route::post('/commissions', 'CommissionController@store');
 
-//Route::get('/profile/{profile}', 'UserController@showArtist');
+Route::get('/commissions/{commission}', 'CommissionController@show');
+
+Route::get('/commissions/{commission}/edit', 'CommissionController@edit');
+
+Route::get('/profile/becomeArtist', 'UserController@becomeArtist');
+
+Route::get('/profile/{profile}', 'UserController@showArtist');
 
 

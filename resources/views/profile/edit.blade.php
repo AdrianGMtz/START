@@ -9,7 +9,7 @@
 			<h4>Edit Description</h4>
 			<div class="row">
 				<div class="input-field col s12">
-					<input id="description" type="text" class="validate" name="description" required>
+					<input id="description" type="text" class="validate" name="description" value="{{ $user->description }}" required>
 					<label for="description">User Description</label>
 				</div>
 			</div>

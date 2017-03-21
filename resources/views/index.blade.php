@@ -11,11 +11,11 @@
 
         <div id="digital-art" class="col s12 white" style="border-color:red;">
 
-            {{-- <div class="row" style="margin-top: 10px;">
-                @foreach ($posts as $post)
-                    @include ('posts.post')
+            <div class="row" style="margin-top: 10px;">
+                @foreach ($commissions as $commission)
+                    @include ('commissions.commission')
                 @endforeach
-            </div> --}}
+            </div>
 
             <ul class="pagination center">
                 <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>

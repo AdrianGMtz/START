@@ -25,23 +25,29 @@
 		<div class="col s12 m8 l9">
 			<h5 class="center">Commissions</h5>
 			@if($user->artist)
-				<!-- Message for artist -->
 				<a class="waves-effect waves-light btn blue" href="/profile/create"><i class="material-icons">note_add</i></a>
-				<div class="card-panel blue lighten-5 card-content valign center">
-					<h5 class="blue-text text-lighten-2">You're not offering any commissions.</h5>
-				</div>
+
+				@if (count($commissions))
+					<!-- Commissions -->
+					<div class="row">
+		                @foreach ($commissions as $commission)
+		                    @include ('commissions.commission')
+		                @endforeach
+		            </div>
+		        @else
+		        	<!-- Message for artist -->
+					<div class="card-panel blue lighten-5 card-content valign center">
+						<h5 class="blue-text text-lighten-2">You're not offering any commissions.</h5>
+					</div>
+				@endif
 			@else
 				<!-- Message for non artists -->
 				<div class="card-panel blue lighten-5 card-content valign center">
 					<h5 class="blue-text text-lighten-2">You must be an artist to offer commissions.</h5>
 					<br>
-					<button class="waves-effect waves-light btn blue" id="becomeArtistBtn">Become an artist</button>
+					<a class="waves-effect waves-light btn blue" href="/profile/becomeArtist">Become an artist</a>
 				</div>
 			@endif
-
-			<!-- Commission -->
-			<div class="row artist" id="commissions">
-			</div>
 		</div>
 	</div>
 @endsection('content')

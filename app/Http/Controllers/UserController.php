@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 use App\User;
+use App\Commission;
 
 class UserController extends Controller
 {
@@ -24,8 +25,13 @@ class UserController extends Controller
      */
     public function show() {
     	$user = User::find(auth()->user()->id);
+    	
+    	// $commissions = $user->commissions();
+    	$commissions = Commission::latest()->where('user_id', $user->id)->get();
 
-        return view('profile.show', compact('user'));
+    	// dd($commissions);
+
+        return view('profile.show', compact('user', 'commissions'));
     }
 
     /**
@@ -33,8 +39,23 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function showArtist() {
-        return view('profile.show');
+    public function showArtist(User $profile) {
+    	$user = User::find($profile->id);
+
+    	$commissions = Commission::latest()->where('user_id', $user->id)->get();
+
+        return view('profile.show', compact('user', 'commissions'));
+    }
+
+    public function becomeArtist() {
+
+    	// Create new post
+        $user = auth()->user();
+        $user->artist = true;
+        $user->save();
+
+     	// return view
+    	return redirect('/profile');
     }
 
     /**
@@ -43,7 +64,9 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit() {
-        return view('profile.edit');
+    	$user = auth()->user();
+
+        return view('profile.edit', compact('user'));
     }
 
     /**

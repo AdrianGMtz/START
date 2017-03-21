@@ -23,7 +23,9 @@ class CommissionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        return view('index');
+        $commissions = Commission::latest()->get();
+
+        return view('index', compact('commissions'));
     }
 
     /**
@@ -31,8 +33,8 @@ class CommissionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show() {
-        return view('commissions.details');
+    public function show(Commission $commission) {
+        return view('commissions.details', compact('commission'));
     }
 
     /**
@@ -55,5 +57,15 @@ class CommissionController extends Controller
 
         // return view
         return redirect('/profile');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Commission $commission) {
+
+        return view('commissions.edit', compact('commission'));
     }
 }
