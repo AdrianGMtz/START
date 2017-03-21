@@ -32,6 +32,9 @@
 		case 'SAVECOMMISSION':
 			saveCommission();
 			break;
+		case 'CHANGEPSSWD':
+			changePassword();
+			break;
 	}
 
 	function sessionCheck() {
@@ -228,6 +231,36 @@
 			$_SESSION['userID'] = $userName;
 
 			echo json_encode(array("message" => 'Registration Successful!'));
+		} else {
+			header('HTTP/1.1 500 ' . $result["status"]);
+			die($result["status"]);
+		}
+	}
+
+	function changePassword() {
+		$userEmail = strip_tags($_POST["email"]);
+		$userOldPassword = strip_tags($_POST["oldPass"]);
+		$userNewPassword = strip_tags($_POST["newPass"]);
+		$userNewPassword2 = strip_tags($_POST["newPass2"]);
+
+		$result = findUser($userEmail);
+
+		if ($result["status"] == "SUCCESS") {
+			// Decrypt password
+			$pass = passwordDecryption($result["responseP"]);
+
+			if ($userOldPassword == $pass) {
+				//If new password matches.
+				if ($userNewPassword == $userNewPassword2) {
+					//Save password in database.
+					
+
+				}
+				echo json_encode(array("message" => 'Password Changed!'));
+			} else {
+				header('HTTP/1.1 500 ' . 'Incorrect user or password');
+				die('Incorrect user or password');
+			}
 		} else {
 			header('HTTP/1.1 500 ' . $result["status"]);
 			die($result["status"]);

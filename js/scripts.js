@@ -114,6 +114,39 @@ $(document).ready(function(){
 		}
 	});
 
+	// Change Password
+	$("#changePassword").click(function(){
+		if ($('#oldPass').val() != "" && $('#newPass').val() != "" && $('#newPass2').val() != ""){
+			var jsonObject = {
+				"action": "CHANGEPSSWD",
+				"email": $('#email').val(),
+				"oldPass": $('#oldPass').val(),
+				"newPass": $('#newPass').val(),
+				"newPass2": $('#newPass2').val()
+			};
+			
+			$.ajax({
+				type:'POST',
+				url:'data/applicationLayer.php',
+				data: jsonObject,
+				dataType:'json',
+				contentType : "application/x-www-form-urlencoded",
+				success: function(jsonData){
+					logged = true;
+					//checkUserStatus();
+					// Send the user to the profile page
+					window.location.replace("profile.php");
+					alert(jsonData.message);
+				},
+				error:function(errorMessage){
+					alert("Error trying to login!");
+				}
+			});
+		} else {
+			alert("Complete all fields!");
+		}
+	});
+
 	// Sign Up
 	$("#signup").click(function(){
 		if ($('#username').val() != "" && $('#email').val() != "" && $('#password').val() != ""){
