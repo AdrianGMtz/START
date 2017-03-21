@@ -135,11 +135,11 @@ $(document).ready(function(){
 					logged = true;
 					//checkUserStatus();
 					// Send the user to the profile page
-					window.location.replace("profile.php");
+					window.location.replace("settings.php");
 					alert(jsonData.message);
 				},
 				error:function(errorMessage){
-					alert("Error trying to login!");
+					alert("Error trying to change password!");
 				}
 			});
 		} else {

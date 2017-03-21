@@ -36,6 +36,32 @@
 		$conn -> close();
 	}
 
+	function changePass($userEmail, $userNewPassword) {
+		$conn = connectionToDataBase();
+
+		if ($conn != null) {
+			$sql = "SELECT * FROM Users WHERE email='$userEmail'";
+
+			$result = $conn->query($sql);
+
+			if ($result->num_rows > 0) {
+				$sql = "UPDATE Users SET passwrd = '$userNewPassword' WHERE email='$userEmail'";
+				
+				if (mysqli_query($conn, $sql)) {
+					return array("status" => "SUCCESS");
+				}
+				else {
+					return array("status" => "Couldn't update password!");
+				}
+			} else {
+				return array("status" => "Can't update password, check your email!!");
+			}
+		} else {
+			return array("status" => "Connection with DB went wrong!");
+		}
+		$conn -> close();
+	}
+
 	function attemptRegistration($userEmail, $fName, $lName, $userName, $userPassword) {
 		$conn = connectionToDataBase();
 

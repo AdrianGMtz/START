@@ -253,10 +253,12 @@
 				//If new password matches.
 				if ($userNewPassword == $userNewPassword2) {
 					//Save password in database.
-					
-
+					$userNewPassword = passwordEncryption($userNewPassword);
+					$result = changePass($userEmail, $userNewPassword);
+					echo json_encode(array("message" => 'Password Changed!'));
+				}else{
+				echo json_encode(array("message" => 'Something went wrong!'));
 				}
-				echo json_encode(array("message" => 'Password Changed!'));
 			} else {
 				header('HTTP/1.1 500 ' . 'Incorrect user or password');
 				die('Incorrect user or password');
