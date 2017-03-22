@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\DB;
+
 use Illuminate\Http\Request;
 
 use App\User;
@@ -26,10 +26,9 @@ class UserController extends Controller
     public function show() {
     	$user = User::find(auth()->user()->id);
     	
-    	// $commissions = $user->commissions();
+    	// $commissions = User::find(auth()->user()->id)->commissions;
+        
     	$commissions = Commission::latest()->where('user_id', $user->id)->get();
-
-    	// dd($commissions);
 
         return view('profile.show', compact('user', 'commissions'));
     }

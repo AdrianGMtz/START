@@ -29,6 +29,10 @@ Route::get('/commissions/{commission}', 'CommissionController@show');
 
 Route::get('/commissions/{commission}/edit', 'CommissionController@edit');
 
+Route::get('/commissions/{commission}/delete', 'CommissionController@delete');
+
+Route::post('/commissions/{commission}/edit', 'CommissionController@update');
+
 Route::get('/profile/becomeArtist', 'UserController@becomeArtist');
 
 Route::get('/profile/{profile}', 'UserController@showArtist');

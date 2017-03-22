@@ -68,4 +68,15 @@ class CommissionController extends Controller
 
         return view('commissions.edit', compact('commission'));
     }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function delete(Commission $commission) {
+        Commission::destroy($commission->id);
+
+        return redirect('/profile');
+    }
 }
