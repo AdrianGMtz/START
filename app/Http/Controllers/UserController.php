@@ -39,11 +39,22 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function showArtist(User $profile) {
-    	$user = User::find($profile->id);
+    	// $user = User::find($profile->id)->where([['artist', true],['id', $profile->id])->get();
+        $result = User::where([['artist', true],['id', $profile->id]])->get();
+        
+        if (!$result->isEmpty()) {
+            $user = $result[0];
 
-    	$commissions = Commission::latest()->where('user_id', $user->id)->get();
+            $current_user = auth()->user()->id;
 
-        return view('profile.show', compact('user', 'commissions'));
+            if ($user->id != $current_user) {
+                $commissions = Commission::latest()->where('user_id', $user->id)->get();
+
+                return view('profile.show', compact('user', 'commissions'));
+            }
+        }
+
+    	return redirect('/profile');
     }
 
     public function becomeArtist() {
