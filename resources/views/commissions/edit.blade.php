@@ -2,7 +2,7 @@
 
 @section ('content')
 	<div class="row">
-		<form class="col s12" method="POST" action="/commissions/edit">
+		<form class="col s12" method="POST" action="/commissions/{{ $commission->id }}/edit">
 
 			{{ csrf_field() }}
 
@@ -23,7 +23,7 @@
 			</div>
 			<button type="submit" class="waves-effect waves-light btn blue">Save</button>
 			<a class="waves-effect waves-light btn red" href="/commissions/{{ $commission->id }}/delete">Delete</a>
-			<button type="button" class="waves-effect waves-light btn red" onclick="window.location='{{ URL::previous() }}'">Cancel</button>
+			<button type="button" class="waves-effect waves-light btn red" onclick="window.location='/profile'">Cancel</button>
 
 			@include ('layouts.errors')
 		</form>

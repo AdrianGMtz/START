@@ -22,7 +22,7 @@
 				</div>
 			</div>
 			<button type="submit" class="waves-effect waves-light btn blue">Save</button>
-			<button type="button" class="waves-effect waves-light btn red" onclick="window.location='{{ URL::previous() }}'">Cancel</button>
+			<button type="button" class="waves-effect waves-light btn red" onclick="window.location='/profile'">Cancel</button>
 
 			@include ('layouts.errors')
 		</form>

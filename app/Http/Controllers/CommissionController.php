@@ -42,7 +42,7 @@ class CommissionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store() {
+    public function create() {
         // Validate form
         $this->validate(request(), [
             'description' => 'required|min:2',
@@ -64,6 +64,35 @@ class CommissionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function store(Commission $commission) {
+        $current_user = auth()->user()->id;
+        $commission_user = $commission->user_id;
+
+        // Validate form
+        $this->validate(request(), [
+            'description' => 'required|min:2',
+            'type' => 'required',
+            'price' => 'required'
+        ]);
+
+        if ($current_user == $commission_user) {
+            $commission->description = request('description');
+            $commission->type = request('type');
+            $commission->price = request('price');
+
+            $commission->save();
+
+            // return view
+            return redirect('/profile');
+        }
+       abort(403, 'Unauthorized action.');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function edit(Commission $commission) {
 
         return view('commissions.edit', compact('commission'));
@@ -75,8 +104,14 @@ class CommissionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function delete(Commission $commission) {
-        Commission::destroy($commission->id);
+        $current_user = auth()->user()->id;
+        $commission_user = $commission->user_id;
 
-        return redirect('/profile');
+        if ($current_user == $commission_user) {
+            Commission::destroy($commission->id);
+
+            return redirect('/profile');
+        }
+        abort(403, 'Unauthorized action.');
     }
 }

@@ -89,7 +89,9 @@ class UserController extends Controller
      	]);
 
      	// Create new post
-        auth()->user()->updateUser((request('description')));
+        $user = auth()->user();
+        $user->description = (request('description'));
+        $user->save();
 
      	// return view
     	return redirect('/profile');

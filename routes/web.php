@@ -11,6 +11,8 @@
 |
 */
 
+use App\Http\Middleware\CheckOwnership;
+
 Auth::routes();
 
 Route::get('/', 'CommissionController@index');
@@ -23,18 +25,18 @@ Route::post('/profile/edit', 'UserController@store');
 
 Route::get('/profile/create', 'UserController@create');
 
-Route::post('/commissions', 'CommissionController@store');
-
-Route::get('/commissions/{commission}', 'CommissionController@show');
-
-Route::get('/commissions/{commission}/edit', 'CommissionController@edit');
-
-Route::get('/commissions/{commission}/delete', 'CommissionController@delete');
-
-Route::post('/commissions/{commission}/edit', 'CommissionController@update');
-
 Route::get('/profile/becomeArtist', 'UserController@becomeArtist');
 
 Route::get('/profile/{profile}', 'UserController@showArtist');
+
+Route::post('/commissions', 'CommissionController@create');
+
+Route::get('/commissions/{commission}', 'CommissionController@show');
+
+Route::get('/commissions/{commission}/edit', 'CommissionController@edit')->middleware(CheckOwnership::class);
+
+Route::post('/commissions/{commission}/edit', 'CommissionController@store');
+
+Route::get('/commissions/{commission}/delete', 'CommissionController@delete')->middleware(CheckOwnership::class);
 
 

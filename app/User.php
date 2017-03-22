@@ -34,9 +34,4 @@ class User extends Authenticatable
     public function publish(Commission $commission) {
         $this->commissions()->save($commission);
     }
-
-    public function updateUser($description) {
-        $this->description = $description;
-        $this->save();
-    }
 }
