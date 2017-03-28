@@ -11,7 +11,7 @@
 				<p>{{ $commission->description }}</p>
 			</div>
 			<div class="card-action">
-				<a href="commissions/{{ $commission->id }}">Message</a>
+				<a href="message/{{ $commission->user->id }}">Message</a>
 			</div>
 		</div>
 	</div>

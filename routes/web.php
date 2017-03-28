@@ -12,6 +12,7 @@
 */
 
 use App\Http\Middleware\CheckOwnership;
+use App\Http\Middleware\CheckRole;
 
 Auth::routes();
 
@@ -23,7 +24,7 @@ Route::get('/profile/edit', 'UserController@edit');
 
 Route::post('/profile/edit', 'UserController@store');
 
-Route::get('/profile/create', 'UserController@create');
+Route::get('/profile/create', 'UserController@create')->middleware(CheckRole::class);
 
 Route::get('/profile/becomeArtist', 'UserController@becomeArtist');
 
