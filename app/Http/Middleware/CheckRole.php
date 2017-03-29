@@ -17,7 +17,7 @@ class CheckRole
     {
         $user = auth()->user();
 
-        if ($user->artist != 1) {
+        if (!$user->artist) {
             return redirect('/profile');
         }
 

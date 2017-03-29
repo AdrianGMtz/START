@@ -13,7 +13,7 @@
 
             <div class="row" style="margin-top: 10px;">
                 @foreach ($commissions as $commission)
-                    @include ('commissions.commission')
+                    @include ('commissions.explore_commission')
                 @endforeach
             </div>
 
