@@ -5,49 +5,60 @@
 		<!-- User info bar -->
 		@include ('profile.info')
 
-		<!-- Commissions Detials area -->
-		<div class="col s12 m8 l9">
-			<h5 class="center">Commissions</h5>
-			@if ($user->id == auth()->user()->id)
-				@if($user->artist)
-					<a class="waves-effect waves-light btn blue" href="/profile/create"><i class="material-icons">note_add</i></a>
+		<!-- Commission Details -->
+		<div class="col s12 m9">
+			<div class="card-panel blue-grey darken-4 card-content valign center">
+				<h4 class="white-text">Sketch</h4>
+				<div class="slider">
+					<ul class="slides">
+						<li>
+							<img src="https://udemy-images.udemy.com/course/750x422/394968_538b_7.jpg" class="materialboxed">
+						</li>
 
-					@if (count($commissions))
-						<!-- Commissions -->
-						<div class="row">
-			                @foreach ($commissions as $commission)
-			                    @include ('commissions.commission')
-			                @endforeach
-			            </div>
-			        @else
-			        	<!-- Message for artist -->
-						<div class="card-panel blue lighten-5 card-content valign center">
-							<h5 class="blue-text text-lighten-2">You're not offering any commissions.</h5>
-						</div>
-					@endif
-				@else
-					<!-- Message for non artists -->
-					<div class="card-panel blue lighten-5 card-content valign center">
-						<h5 class="blue-text text-lighten-2">You must be an artist to offer commissions.</h5>
-						<br>
-						<a class="waves-effect waves-light btn blue" href="/profile/becomeArtist">Become an artist</a>
-					</div>
-				@endif
-			@else
-				@if (count($commissions))
-					<!-- Commissions -->
-					<div class="row">
-						@foreach ($commissions as $commission)
-							@include ('commissions.commission')
-						@endforeach
-					</div>
-				@else
-					<!-- Message for artist -->
-					<div class="card-panel blue lighten-5 card-content valign center">
-						<h5 class="blue-text text-lighten-2">This artist isn't offering any commissions at this time.</h5>
-					</div>
-				@endif
-			@endif
+						<li>
+							<img src="https://udemy-images.udemy.com/course/750x422/394968_538b_7.jpg" class="materialboxed">
+						</li>
+
+						<li>
+							<img src="https://udemy-images.udemy.com/course/750x422/394968_538b_7.jpg" class="materialboxed">
+						</li>
+					</ul>
+
+					<h5 class="right-align white-text">Price: $20</h5>
+				</div>
+				<br>
+				<p class="white-text left">A short description about the specific commission type will be placed here.</p>
+
+				<br><br><br>
+
+				<a class="waves-effect waves-light btn orange btn-large " href="#policies">Hire</a>
+			</div> 
 		</div>
+		<!-- Modal Structure -->
+		<div id="policies" class="modal">
+			<div class="modal-content">
+				<h4 class="center">Client Agreement</h4>
+				<p><b> You agree to follow this artist's commission policies: </b></p>
+
+				<ul>
+					<li> No deadline </li>
+					<li> At most 2 changes </li>
+					<li> No refunds </li>
+				</ul>
+
+			</div>
+			<div class="modal-footer">
+				<a href="#!" class=" modal-action modal-close waves-effect waves-orange btn-flat">I Agree</a>
+			</div>
+		</div>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$('.slider').slider({
+					interval: 3300
+				});
+				$('.modal').modal();
+				$('.materialboxed').materialbox();
+			});
+		</script>
 	</div>
 @endsection('content')

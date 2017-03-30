@@ -2,44 +2,40 @@
 
 @section('content')
     <div class="row">
-
-        <ul id="tabs-swipe-demo" class="tabs tabs-fixed-width" style="margin-top: 10px;">
-            <li class="tab col s3"><a class="active red white-text" href="#digital-art">Digital Art</a></li>
-            <li class="tab col s3"><a class="blue white-text" href="#animation">Animation</a></li>
-            <li class="tab col s3"><a class="green white-text" href="#audio">Audio</a></li>
+        <ul id="tabs-swipe" class="tabs tabs-fixed-width" style="margin-top: 10px;">
+            <li class="tab col s3"><a class="active red white-text" href="#photography">Photography</a></li>
+            <li class="tab col s3"><a class="blue white-text" href="#digital-art">Digital Art</a></li>
+            <li class="tab col s3"><a class="green white-text" href="#videos">Videos</a></li>
         </ul>
 
-        <div id="digital-art" class="col s12 white" style="border-color:red;">
-
+        <div id="photography" class="col s12 white" style="border-color:red;">
             <div class="row" style="margin-top: 10px;">
-                @foreach ($commissions as $commission)
+                @foreach ($photography_commissions as $commission)
                     @include ('commissions.explore_commission')
                 @endforeach
             </div>
 
-            <ul class="pagination center">
-                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-                <li class="active"><a href="#!">1</a></li>
-                <li class="waves-effect"><a href="#!">2</a></li>
-                <li class="waves-effect"><a href="#!">3</a></li>
-                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-            </ul>
-
+            {!! $photography_commissions->links('commissions/pagination') !!}
         </div>
 
+        <div id="digital-art" class="col s12 white" style="border-color:blue;">
+            <div class="row" style="margin-top: 10px;">
+                @foreach ($photography_commissions as $commission)
+                    @include ('commissions.explore_commission')
+                @endforeach
+            </div>
 
-        <div id="animation" class="col s12 white" style="border-color:blue;">
-
-            Animation
-
+            {!! $photography_commissions->links('commissions/pagination') !!}
         </div>
 
+        <div id="videos" class="col s12 white" style="border-color:green;">
+             <div class="row" style="margin-top: 10px;">
+                @foreach ($video_commissions as $commission)
+                    @include ('commissions.explore_commission')
+                @endforeach
+            </div>
 
-        <div id="audio" class="col s12 white" style="border-color:green;">
-
-             Audio
-
+            {!! $video_commissions->links('commissions/pagination') !!}
         </div>
-
     </div>
 @endsection

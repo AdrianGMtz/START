@@ -1,4 +1,4 @@
-<div class="card-panel col s12 m4 l3 grey lighten-4">
+<div class="card-panel col s12 m3 grey lighten-4">
 	<!-- User Image -->
 	<img class="responsive-img " src="https://help.sketchbook.com/knowledgebase/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png">
 	

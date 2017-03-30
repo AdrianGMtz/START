@@ -23,9 +23,10 @@ class CommissionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $commissions = Commission::latest()->get();
+        $photography_commissions = Commission::where('type', 'Photography')->paginate(8);
+        $video_commissions = Commission::where('type', 'Video')->paginate(8);
 
-        return view('index', compact('commissions'));
+        return view('index', compact('photography_commissions', 'video_commissions'));
     }
 
     /**
