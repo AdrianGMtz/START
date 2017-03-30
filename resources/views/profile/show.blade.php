@@ -7,37 +7,57 @@
 
 		<!-- Commission Details -->
 		<div class="col s12 m9">
-			<div class="card-panel blue-grey darken-4 card-content valign center">
-				<h4 class="white-text">Sketch</h4>
-				<div class="slider">
-					<ul class="slides">
-						<li>
-							<img src="https://udemy-images.udemy.com/course/750x422/394968_538b_7.jpg" class="materialboxed">
-						</li>
+			<ul id="tabs-swipe" class="tabs tabs-fixed-width" style="margin-top: 10px;">
+				<li class="tab col s3"><a class="active red white-text" href="#photography">Photography</a></li>
+				<li class="tab col s3"><a class="blue white-text" href="#digital-art">Digital Art</a></li>
+				<li class="tab col s3"><a class="green white-text" href="#sketch">Sketches</a></li>
+			</ul>
 
-						<li>
-							<img src="https://udemy-images.udemy.com/course/750x422/394968_538b_7.jpg" class="materialboxed">
-						</li>
+			<div id="photography" class="col s12 white details" style="border-color:red;">
+				<div class="card grey darken-4 center">
+					<div class="card-content white-text">
+						<div class="slider">
+							<ul class="slides">
+								<li>
+									<a href="#img1">
+										<img src="https://udemy-images.udemy.com/course/750x422/394968_538b_7.jpg">
+									</a>
+								</li>
 
-						<li>
-							<img src="https://udemy-images.udemy.com/course/750x422/394968_538b_7.jpg" class="materialboxed">
-						</li>
-					</ul>
-
-					<h5 class="right-align white-text">Price: $20</h5>
+								<li>
+									<a href="#img2">
+										<img src="https://udemy-images.udemy.com/course/750x422/394968_538b_7.jpg">
+									</a>
+								</li>
+							</ul>
+						</div>
+						<p class="white-text left">A short description about the specific commission type will be placed here.</p>
+					</div>
+					<div class="card-action">
+						<h5 class="white-text">Price: $20</h5>
+						<a class="waves-effect waves-light btn orange btn-large " href="#policies">Hire</a>
+					</div>
 				</div>
-				<br>
-				<p class="white-text left">A short description about the specific commission type will be placed here.</p>
+				<!-- Gallery Modals -->
+				<div id="zoom images">
+					<img class="modal lightbox" id="img1" src="https://udemy-images.udemy.com/course/750x422/394968_538b_7.jpg">
+					<img class="modal lightbox" id="img2" src="https://udemy-images.udemy.com/course/750x422/394968_538b_7.jpg">
+				</div>
+			</div>
 
-				<br><br><br>
+			<div id="digital-art" class="col s12 white details" style="border-color:blue;">
+				Digi
+			</div>
 
-				<a class="waves-effect waves-light btn orange btn-large " href="#policies">Hire</a>
-			</div> 
+			<div id="sketch" class="col s12 white details" style="border-color:green;">
+				Ske
+			</div>
 		</div>
-		<!-- Modal Structure -->
+		<!-- Policies Modal -->
 		<div id="policies" class="modal">
 			<div class="modal-content">
 				<h4 class="center">Client Agreement</h4>
+				<hr>
 				<p><b> You agree to follow this artist's commission policies: </b></p>
 
 				<ul>
@@ -54,10 +74,10 @@
 		<script type="text/javascript">
 			$(document).ready(function(){
 				$('.slider').slider({
+					height: 288,
 					interval: 3300
 				});
 				$('.modal').modal();
-				$('.materialboxed').materialbox();
 			});
 		</script>
 	</div>

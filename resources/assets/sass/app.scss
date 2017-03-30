@@ -1,4 +1,4 @@
-// Fonts
+/* Fonts */
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
 
 body {
@@ -15,4 +15,29 @@ nav ul li:hover {
 
 nav .brand-logo {
 	padding-left: 10px;
+}
+
+/* Explore and Profile Active Tab */
+.tabs .indicator {
+	background-color: rgba(255, 255, 255, 0.6);
+	height: 4px;
+}
+
+/* Slider Lightbox */
+.lightbox {
+    position: fixed;
+    max-width: 90%;
+    max-height: 90%;
+}
+
+.slider .indicators .indicator-item.active {
+    background-color: orange;
+}
+
+.row .col .details {
+	padding: 0px;
+}
+
+.details .card {
+	margin: 0px;
 }
