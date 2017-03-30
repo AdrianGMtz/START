@@ -24,9 +24,10 @@ class CommissionController extends Controller
      */
     public function index() {
         $photography_commissions = Commission::where('type', 'Photography')->paginate(8);
-        $video_commissions = Commission::where('type', 'Video')->paginate(8);
+        $digital_commissions = Commission::where('type', 'Digital-Art')->paginate(8);
+        $sketch_commissions = Commission::where('type', 'Sketch')->paginate(8);
 
-        return view('index', compact('photography_commissions', 'video_commissions'));
+        return view('index', compact('photography_commissions', 'sketch_commissions', 'digital_commissions'));
     }
 
     /**
