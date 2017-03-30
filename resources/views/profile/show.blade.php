@@ -35,13 +35,32 @@
 					</div>
 					<div class="card-action">
 						<h5 class="white-text">Price: $20</h5>
-						<a class="waves-effect waves-light btn orange btn-large " href="#policies">Hire</a>
+						<a class="waves-effect waves-light btn orange btn-large" href="#policies">Hire</a>
 					</div>
 				</div>
 				<!-- Gallery Modals -->
 				<div id="zoom images">
 					<img class="modal lightbox" id="img1" src="https://udemy-images.udemy.com/course/750x422/394968_538b_7.jpg">
 					<img class="modal lightbox" id="img2" src="https://udemy-images.udemy.com/course/750x422/394968_538b_7.jpg">
+				</div>
+				<!-- Policies Modal -->
+				<div id="policies" class="modal">
+					<div class="modal-content">
+						<h4 class="center">Client Agreement</h4>
+						<hr>
+						<p><b> You agree to follow this artist's commission policies: </b></p>
+
+						<ul>
+							<li> No deadline </li>
+							<li> At most 2 changes </li>
+							<li> No refunds </li>
+						</ul>
+					</div>
+					<div class="modal-footer">
+						<hr>
+						<a href="#!" class="modal-action modal-close waves-effect waves-light btn red btn-medium" style="margin-left: 4px;">I Agree</a>
+						<a href="#!" class="modal-action modal-close waves-effect waves-light btn blue btn-medium" style="margin-right: 4px;">Cancel</a>
+					</div>
 				</div>
 			</div>
 
@@ -53,31 +72,18 @@
 				Ske
 			</div>
 		</div>
-		<!-- Policies Modal -->
-		<div id="policies" class="modal">
-			<div class="modal-content">
-				<h4 class="center">Client Agreement</h4>
-				<hr>
-				<p><b> You agree to follow this artist's commission policies: </b></p>
-
-				<ul>
-					<li> No deadline </li>
-					<li> At most 2 changes </li>
-					<li> No refunds </li>
-				</ul>
-
-			</div>
-			<div class="modal-footer">
-				<a href="#!" class=" modal-action modal-close waves-effect waves-orange btn-flat">I Agree</a>
-			</div>
-		</div>
 		<script type="text/javascript">
 			$(document).ready(function(){
 				$('.slider').slider({
 					height: 288,
 					interval: 3300
 				});
-				$('.modal').modal();
+				$('.modal').modal({
+					dismissible: false, // Modal can't be dismissed by clicking outside of the modal
+					opacity: .7, // Opacity of modal background
+					inDuration: 300, // Transition in duration
+					outDuration: 200 // Transition out duration
+				});
 			});
 		</script>
 	</div>
