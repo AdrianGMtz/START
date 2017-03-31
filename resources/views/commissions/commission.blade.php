@@ -7,9 +7,9 @@
 				<a class="btn-floating halfway-fab waves-effect waves-light blue" href="/commissions/{{ $commission->id }}/edit"><i class="material-icons">mode_edit</i></a>
 			@endif
 		</div>
-		<div class="card-content">
+		<div class="card-content center">
 			{{-- <p>{{ $commission->user->name }}</p> --}}
-			<p>{{ $commission->type }} - ${{ $commission->price }}</p>
+			<p><b>{{ $commission->type }}</b></p><p>${{ $commission->price }}</p>
 		</div>
 		<div class="card-action">
 			<a href="commissions/{{ $commission->id }}">More Info</a>
