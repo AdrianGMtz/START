@@ -23,7 +23,11 @@ nav .brand-logo {
 	height: 4px;
 }
 
-/* Slider Lightbox */
+/* Profile Slider Lightbox */
+#edit_btn {
+	z-index: 9;
+	top: 0;
+}
 .lightbox {
     position: fixed;
     max-width: 90%;

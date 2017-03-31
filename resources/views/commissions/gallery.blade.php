@@ -1,4 +1,7 @@
-<div class="card grey darken-4 center">
+ <div class="card grey darken-4 center">
+	 @if ($user->id == auth()->user()->id)
+		<a id="edit_btn" class="btn-floating halfway-fab waves-effect waves-light btn-large blue" href="/commissions/{{ $commission->id }}/edit"><i class="material-icons">mode_edit</i></a>
+	@endif
 	<div class="card-content white-text">
 		<div class="slider">
 			<ul class="slides">
