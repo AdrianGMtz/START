@@ -40,6 +40,9 @@
                         </li>
                     </ul>
                 </li> --}}
+
+                <li><a href="/settings"> <i class="material-icons">settings</i> </a></li>
+
             @endif
         </ul>
     </div>

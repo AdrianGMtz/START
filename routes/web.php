@@ -40,4 +40,8 @@ Route::post('/commissions/{commission}/edit', 'CommissionController@store');
 
 Route::get('/commissions/{commission}/delete', 'CommissionController@delete')->middleware(CheckOwnership::class);
 
+Route::get('/settings', 'SettingsController@show');
+
+Route::post('/settings', 'SettingsController@changePassword');
+
 
