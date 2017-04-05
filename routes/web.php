@@ -44,4 +44,3 @@ Route::get('/settings', 'SettingsController@show');
 
 Route::post('/settings', 'SettingsController@changePassword');
 
-

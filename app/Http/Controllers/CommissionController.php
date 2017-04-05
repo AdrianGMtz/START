@@ -46,7 +46,7 @@ class CommissionController extends Controller
     public function create() {
         // Validate form
         $this->validate(request(), [
-            'description' => 'required|min:2',
+            'description' => 'required|min:3',
             'type' => 'required',
             'price' => 'required'
         ]);
