@@ -1,0 +1,20 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+
+body {
+  font-family: Raleway,sans-serif;
+  line-height: 1.6;
+  color: #636b6f;
+  background-color: #f5f8fa;
+}
+
+/* Navbar */
+
+nav ul li:hover {
+  background-color: #00c8c8;
+}
+
+nav .brand-logo {
+  padding-left: 10px;
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInJlc291cmNlcy9hc3NldHMvc2Fzcy9hcHAuc2NzcyJdLCJzb3VyY2VzQ29udGVudCI6WyIvLyBGb250c1xuQGltcG9ydCB1cmwoaHR0cHM6Ly9mb250cy5nb29nbGVhcGlzLmNvbS9jc3M/ZmFtaWx5PVJhbGV3YXk6MzAwLDQwMCw2MDApO1xuXG5ib2R5IHtcblx0Zm9udC1mYW1pbHk6UmFsZXdheSxzYW5zLXNlcmlmO1xuXHRsaW5lLWhlaWdodDoxLjY7XG5cdGNvbG9yOiM2MzZiNmY7XG5cdGJhY2tncm91bmQtY29sb3I6I2Y1ZjhmYTsgXG59XG5cbi8qIE5hdmJhciAqL1xubmF2IHVsIGxpOmhvdmVyIHtcblx0YmFja2dyb3VuZC1jb2xvcjogcmdiKDAsMjAwLDIwMCk7XG59XG5cbm5hdiAuYnJhbmQtbG9nbyB7XG5cdHBhZGRpbmctbGVmdDogMTBweDtcbn0iXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQ0EsT0FBTyxDQUFDLGdFQUFJO0FBRVosQUFBQSxJQUFJLENBQUM7RUFDSixXQUFXLEVBQUMsa0JBQWtCO0VBQzlCLFdBQVcsRUFBQyxHQUFHO0VBQ2YsS0FBSyxFQUFDLE9BQU87RUFDYixnQkFBZ0IsRUFBQyxPQUFPO0NBQ3hCOztBQUVELFlBQVk7QUFDWixBQUFPLEdBQUosQ0FBQyxFQUFFLENBQUMsRUFBRSxBQUFBLE1BQU0sQ0FBQztFQUNmLGdCQUFnQixFQUFFLE9BQWM7Q0FDaEM7O0FBRUQsQUFBSSxHQUFELENBQUMsV0FBVyxDQUFDO0VBQ2YsWUFBWSxFQUFFLElBQUk7Q0FDbEIifQ== */
