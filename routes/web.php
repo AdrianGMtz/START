@@ -16,8 +16,7 @@ use App\Http\Middleware\CheckRole;
 
 Auth::routes();
 
-Route::get('/', 'CommissionController@index');
-
+// Profile Routes
 Route::get('/profile', 'UserController@show');
 
 Route::get('/profile/edit', 'UserController@edit');
@@ -30,6 +29,9 @@ Route::get('/profile/becomeArtist', 'UserController@becomeArtist');
 
 Route::get('/profile/{profile}', 'UserController@showArtist');
 
+// Commission Routes
+Route::get('/', 'CommissionController@index');
+
 Route::post('/commissions', 'CommissionController@create');
 
 Route::get('/commissions/{commission}', 'CommissionController@show');
@@ -39,5 +41,12 @@ Route::get('/commissions/{commission}/edit', 'CommissionController@edit')->middl
 Route::post('/commissions/{commission}/edit', 'CommissionController@store');
 
 Route::get('/commissions/{commission}/delete', 'CommissionController@delete')->middleware(CheckOwnership::class);
+
+// Chat Routes
+Route::get('/messages', 'MessageController@show');
+
+Route::get('/message/{id}', 'MessageController@chatHistory')->name('message.read');
+
+Route::post('/message/send', 'MessageController@ajaxSendMessage')->name('message.new');
 
 
