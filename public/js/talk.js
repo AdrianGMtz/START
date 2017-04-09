@@ -10360,7 +10360,7 @@ return jQuery;
 				success: function success(jsonResponse) {
 					$('#talkMessages').append(jsonResponse.html);
 					tag[0].reset();
-					$('#message-data').height('7rem');
+					$('#message-data').height('85');
 					scrollSmoothToBottom();
 				},
 				error: function error(errorMessage) {

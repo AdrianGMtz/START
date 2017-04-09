@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-	<div class="row">
+	<div class="row" style="margin-bottom: 0px;">
 		<div class="chat-container clearfix">
 			<div class="col s12 m3">
 				@include('chat.peoplelist')
