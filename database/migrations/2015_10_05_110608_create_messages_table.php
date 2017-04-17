@@ -15,6 +15,7 @@ class CreateMessagesTable extends Migration
             $tbl->boolean('is_seen')->default(0);
             $tbl->boolean('deleted_from_sender')->default(0);
             $tbl->boolean('deleted_from_receiver')->default(0);
+            $tbl->integer('type');
             $tbl->integer('user_id');
             $tbl->integer('conversation_id');
             $tbl->timestamps();

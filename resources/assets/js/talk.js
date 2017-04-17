@@ -10,8 +10,15 @@ $(document).ready(function () {
 	$('#talkSendMessage').submit(function(e) {
 		e.preventDefault();
 
-		var tag = $(this);
-		var data = tag.serialize();
+		var form = $(this)[0];
+		
+		var type = form.elements['type'].value;
+
+		var data = {
+			'message-data' : form.elements['message-data'].value,
+			'_id' : form.elements['_id'].value,
+			'type' : type
+		};
 
 		if ($('#message-data').val() != '') {
 			$.ajax({
@@ -25,7 +32,7 @@ $(document).ready(function () {
 				contentType : "application/x-www-form-urlencoded",
 				success: function(jsonResponse){
 					$('#talkMessages').append(jsonResponse.html);
-					tag[0].reset();
+					form.reset();
 					$('#message-data').height('85');
 					scrollSmoothToBottom();
 				},
@@ -33,6 +40,22 @@ $(document).ready(function () {
 					console.log(errorMessage);
 				}
 			});
+		}
+	});
+
+	$("#talkSendMessage button").click(function (e) {
+		e.preventDefault() // cancel form submission
+
+		// Check which button was pressed
+		if ($(this).attr("value") == "text") {
+			$('#type').val(1);
+			$("#talkSendMessage").submit();
+		}else if ($(this).attr("value") == "file") {
+			$('#type').val(2);
+			$("#talkSendMessage").submit();
+		}else if ($(this).attr("value") == "payment") {
+			$('#type').val(3);
+			$("#talkSendMessage").submit();
 		}
 	});
 
@@ -44,6 +67,8 @@ $(document).ready(function () {
 			});
 		}
 		if (event.keyCode == 13 && !event.shiftKey) {
+			$('#type').val(1);
+			
 			$('#talkSendMessage').submit();
 
 			return false;

@@ -6,9 +6,9 @@
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-/******/
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -10344,8 +10344,15 @@ return jQuery;
 	$('#talkSendMessage').submit(function (e) {
 		e.preventDefault();
 
-		var tag = $(this);
-		var data = tag.serialize();
+		var form = $(this)[0];
+
+		var type = form.elements['type'].value;
+
+		var data = {
+			'message-data': form.elements['message-data'].value,
+			'_id': form.elements['_id'].value,
+			'type': type
+		};
 
 		if ($('#message-data').val() != '') {
 			$.ajax({
@@ -10359,7 +10366,7 @@ return jQuery;
 				contentType: "application/x-www-form-urlencoded",
 				success: function success(jsonResponse) {
 					$('#talkMessages').append(jsonResponse.html);
-					tag[0].reset();
+					form.reset();
 					$('#message-data').height('85');
 					scrollSmoothToBottom();
 				},
@@ -10367,6 +10374,22 @@ return jQuery;
 					console.log(errorMessage);
 				}
 			});
+		}
+	});
+
+	$("#talkSendMessage button").click(function (e) {
+		e.preventDefault(); // cancel form submission
+
+		// Check which button was pressed
+		if ($(this).attr("value") == "text") {
+			$('#type').val(1);
+			$("#talkSendMessage").submit();
+		} else if ($(this).attr("value") == "file") {
+			$('#type').val(2);
+			$("#talkSendMessage").submit();
+		} else if ($(this).attr("value") == "payment") {
+			$('#type').val(3);
+			$("#talkSendMessage").submit();
 		}
 	});
 
@@ -10378,6 +10401,8 @@ return jQuery;
 			});
 		}
 		if (event.keyCode == 13 && !event.shiftKey) {
+			$('#type').val(1);
+
 			$('#talkSendMessage').submit();
 
 			return false;

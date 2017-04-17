@@ -3,7 +3,20 @@
 		<span class="message-data-time" >{{$message->humans_time}} ago</span> &nbsp; &nbsp;
 		<span class="message-data-name" >{{$message->sender->name}}</span>
 	</div>
-	<div class="message my-message float-right">
-		{{$message->message}}
-	</div>
+	{{-- Text --}}
+	@if ($message->type == 1)
+		<div class="message my-message float-right">
+			{{$message->message}}
+		</div>
+	{{-- File --}}
+	@elseif ($message->type == 2)
+		<div class="message my-message float-right">
+			<a class="white-text" href="{{$message->message}}"><i class="material-icons">attach_file</i> File</a>
+		</div>
+	{{-- Payment --}}
+	@else
+		<div class="message my-message float-right">
+			<b><u>Charged:</u></b> <br> {{$message->message}}
+		</div>
+	@endif
 </li>

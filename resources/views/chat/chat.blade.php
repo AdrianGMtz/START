@@ -26,6 +26,7 @@
 							</div>
 						@endif
 					</div> <!-- end chat-header -->
+
 					@include('chat.conversations')
 					
 					{{-- Display Chat input when messaging another user --}}
@@ -36,11 +37,12 @@
 									<div class="col s11" style="padding-right: 8px;">
 										<textarea name="message-data" id="message-data" placeholder ="Type your message" rows="3" maxlength="500" autofocus></textarea>
 										<input type="hidden" name="_id" value="{{@request()->route('id')}}">
+										<input type="hidden" id="type" name="type" value="1">
 									</div>
 									<div class="col s1 center">
-										<button class="waves-effect waves-light btn blue send" type="submit">Send</button>
-										<button class="waves-effect waves-light btn-floating green" type="button"><i class="material-icons">attach_money</i></button>
-										<button class="waves-effect waves-light btn-floating orange" type="button"><i class="material-icons">attach_file</i></button>
+										<button class="waves-effect waves-light btn blue send" type="submit" value="text">Send</button>
+										<button class="waves-effect waves-light btn-floating green" type="submit" value="payment"><i class="material-icons">attach_money</i></button>
+										<button class="waves-effect waves-light btn-floating orange" type="submit" value="file"><i class="material-icons">attach_file</i></button>
 									</div>
 								</div>
 							</form>
@@ -59,13 +61,24 @@
 			}
 
 			function msgshow(data) {
+				// Check Message Type
+				if (data.type == 1) {
+					// Text
+					message = data.message;
+				} else if (data.type == 2) {
+					// File
+					message = '<a class="white-text" href="' + data.message + '"><i class="material-icons">attach_file</i> File</a>';
+				} else {
+					// Payment
+					message = '<b><u>Receipt:</u></b> <br> ' + data.message;
+				}
 				var html = '<li class="clearfix" id="message-' + data.id + '">' +
 				'<div class="message-data">' +
 				'<span class="message-data-name">' + data.sender.name + '</span>' + '&nbsp; &nbsp;' +
 				'<span class="message-data-time">1 Second ago</span>' +
 				'</div>' +
 				'<div class="message other-message float-left">' +
-				data.message +
+				message +
 				'</div>' +
 				'</li>';
 
