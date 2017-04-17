@@ -3,16 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\User;
-use App\Commission;
-
-use Auth;
-use Hash;
-use Validator;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 class SettingsController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct() {
+        $this->middleware('auth');
+    }
 
     /**
      * Show the application dashboard.
@@ -20,32 +23,55 @@ class SettingsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show() {
-
         $user = auth()->user();
-        return view('settings.settings', compact('user'));
+        return view('profile.settings', compact('user'));
     }
 
+    public function changePassword() {
+        // Get form data
+        $data = request()->all();
 
-    public function changePassword()
-    {
+        // Validate form data
+        $validator = Validator::make($data, [
+            'oldPassword' => 'required',
+            'password' => 'required|min:6|confirmed',
+        ]);
 
-        $user = auth()->user();
-        $hashedPassword = $user->password;
+        // After data validation
+        $validator->after(function ($validator) {
+            // Get current authenticated user
+            $user = auth()->user();
 
-        $oldPass = request('oldPass');
-        $newPass = request('newPass');
-        $newPass2 = request('newPass2');
+            // Get current password
+            $hashedPassword = $user->password;
 
-        if (Hash::check( $oldPass , $hashedPassword)) {
+            // Get old password
+            $oldPassword = request('oldPassword');
 
-            $user -> password = bcrypt($newPass);
-            $user -> save();
+            // Get new password
+            $newPassword = request('password');
+            
+            // Check given password is the same as stored password
+            if (Hash::check($oldPassword , $hashedPassword)) {
+                // Encrypt new password
+                $user -> password = bcrypt($newPassword);
 
-            return redirect('/profile');
+                // Save new password
+                $user -> save();
+
+                return redirect('/profile');
+            } else {
+                // Add error message for given password
+                $validator->errors()->add('oldPassword', "Credentials don't match!");
+            }
+        });
+
+        // If there are any errors return them to settings page
+        if ($validator->fails()) {
+            return redirect('/settings')
+                        ->withErrors($validator);
         }
 
-        return redirect('/settings');
+        return redirect('/profile');
     } 
-
-    
 }
