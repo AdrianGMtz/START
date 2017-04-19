@@ -18,6 +18,7 @@ class UsersTableSeeder extends Seeder
                 "email"         => "marco@example.com",
                 "username"      => "marco",
                 "password"      => bcrypt('marco123'),
+                "artist"        => 1,
                 "created_at"    => Carbon::now()->format('Y-m-d H:i:s'),
                 "updated_at"    => Carbon::now()->format('Y-m-d H:i:s')
             ],
@@ -26,6 +27,7 @@ class UsersTableSeeder extends Seeder
                 "email"         => "alex@example.com",
                 "username"      => "alex",
                 "password"      => bcrypt('alex123'),
+                "artist"        => 1,
                 "created_at"    => Carbon::now()->format('Y-m-d H:i:s'),
                 "updated_at"    => Carbon::now()->format('Y-m-d H:i:s')
             ],
@@ -34,6 +36,7 @@ class UsersTableSeeder extends Seeder
                 "email"         => "juan@example.com",
                 "username"      => "juan",
                 "password"      => bcrypt('juan123'),
+                "artist"        => 1,
                 "created_at"    => Carbon::now()->format('Y-m-d H:i:s'),
                 "updated_at"    => Carbon::now()->format('Y-m-d H:i:s')
             ],
@@ -42,6 +45,7 @@ class UsersTableSeeder extends Seeder
                 "email"         => "pedro@example.com",
                 "username"      => "pedro",
                 "password"      => bcrypt('pedro123'),
+                "artist"        => 0,
                 "created_at"    => Carbon::now()->format('Y-m-d H:i:s'),
                 "updated_at"    => Carbon::now()->format('Y-m-d H:i:s')
             ],

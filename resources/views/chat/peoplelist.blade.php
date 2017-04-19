@@ -10,7 +10,7 @@
 			@foreach($threads as $inbox)
 				@if(!is_null($inbox->thread))
 					<li class="clearfix">
-						<a href="{{route('message.read', ['id'=>$inbox->withUser->id])}}">
+						<a href="/message/{{$inbox->withUser->id}}">
 						<img class="circle responsive-img" src="https://help.sketchbook.com/knowledgebase/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png" alt="profile" style="width: 25%;"/>
 						<div class="about">
 							<div class="white-text">{{$inbox->withUser->name}}

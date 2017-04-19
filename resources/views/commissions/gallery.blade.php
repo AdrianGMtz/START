@@ -48,8 +48,8 @@
 	</div>
 	<div class="modal-footer">
 		<hr>
-		<a href="#!" class="modal-action modal-close waves-effect waves-light btn red btn-medium" style="margin-left: 4px;">I Agree</a>
-		<a href="#!" class="modal-action modal-close waves-effect waves-light btn blue btn-medium" style="margin-right: 4px;">Cancel</a>
+		<button class="modal-action modal-close waves-effect waves-light btn red btn-medium" style="margin-left: 4px;">I Agree</button>
+		<button class="modal-action modal-close waves-effect waves-light btn blue btn-medium" style="margin-right: 4px;">Cancel</button>
 	</div>
 </div>
 <script type="text/javascript">

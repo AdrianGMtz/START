@@ -45,8 +45,15 @@ Route::get('/commissions/{commission}/delete', 'CommissionController@delete')->m
 // Chat Routes
 Route::get('/messages', 'MessageController@show');
 
-Route::get('/message/{id}', 'MessageController@chatHistory')->name('message.read');
+Route::get('/message/{id}', 'MessageController@chatHistory');
 
-Route::post('/message/send', 'MessageController@ajaxSendMessage')->name('message.new');
+Route::post('/message/send', 'MessageController@sendMessage');
 
+Route::post('/message/payment', 'MessageController@sendPayment');
 
+// Payment Routes
+Route::get('/payment', 'PayPalController@show');
+
+Route::post('/pay', 'PayPalController@postPayment');
+
+Route::get('/pay', 'PayPalController@getPaymentStatus');

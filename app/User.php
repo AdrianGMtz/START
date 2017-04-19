@@ -31,6 +31,14 @@ class User extends Authenticatable
         return $this->hasMany(Commission::Class);
     }
 
+    public function orders() {
+        return $this->hasMany(Order::Class);
+    }
+
+    public function order(Order $order) {
+        $this->orders()->save($order);
+    }
+
     public function publish(Commission $commission) {
         $this->commissions()->save($commission);
     }

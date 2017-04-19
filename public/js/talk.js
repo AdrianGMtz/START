@@ -10341,17 +10341,53 @@ return jQuery;
 		}, 250);
 	}
 
+	$('#talkSendPayment').submit(function (e) {
+		e.preventDefault();
+
+		var form = $(this)[0];
+
+		var message = form.elements['commission_description'].value + (form.elements['commission_comments'].value != '' ? '\n' + form.elements['commission_comments'].value : '');
+
+		// var message = form.elements['commission_description'].value + comments;
+
+		var data = {
+			'commission_id': $('#commissions :selected').val(),
+			'message-data': message,
+			'client_id': form.elements['_id'].value,
+			'type': 3
+		};
+
+		if ($('#commission_description').val() != '') {
+			$.ajax({
+				url: "/message/payment",
+				type: "POST",
+				data: data,
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				},
+				dataType: "json",
+				contentType: "application/x-www-form-urlencoded",
+				success: function success(jsonResponse) {
+					$('#talkMessages').append(jsonResponse.html);
+					form.reset();
+					scrollSmoothToBottom();
+				},
+				error: function error(errorMessage) {
+					console.log(errorMessage);
+				}
+			});
+		}
+	});
+
 	$('#talkSendMessage').submit(function (e) {
 		e.preventDefault();
 
 		var form = $(this)[0];
 
-		var type = form.elements['type'].value;
-
 		var data = {
 			'message-data': form.elements['message-data'].value,
 			'_id': form.elements['_id'].value,
-			'type': type
+			'type': form.elements['type'].value
 		};
 
 		if ($('#message-data').val() != '') {
@@ -10386,9 +10422,6 @@ return jQuery;
 			$("#talkSendMessage").submit();
 		} else if ($(this).attr("value") == "file") {
 			$('#type').val(2);
-			$("#talkSendMessage").submit();
-		} else if ($(this).attr("value") == "payment") {
-			$('#type').val(3);
 			$("#talkSendMessage").submit();
 		}
 	});

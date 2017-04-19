@@ -180,6 +180,15 @@ nav .brand-logo {
 	}
 }
 
+/* Payment Modal */
+#payment {
+	overflow-y: visible;
+}
+
+#payment .modal-footer {
+	border-top: 1px solid #9a9a9a;
+}
+
 .align-left {
 	text-align: left;
 }
