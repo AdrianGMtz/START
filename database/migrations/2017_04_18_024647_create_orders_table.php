@@ -18,6 +18,7 @@ class CreateOrdersTable extends Migration
             $tbl->integer('user_id');
             $tbl->integer('client_id');
             $tbl->integer('commission_id');
+            $tbl->text('order_comments')->nullable();
             $tbl->boolean('paid')->default(false);
             $tbl->timestamps();
         });

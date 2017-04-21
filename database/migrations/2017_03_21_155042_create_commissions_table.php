@@ -18,7 +18,7 @@ class CreateCommissionsTable extends Migration
             $table->integer('user_id');
             $table->string('type');
             $table->text('description');
-            $table->float('price');
+            $table->decimal('price', 8, 2);
             $table->timestamps();
         });
     }

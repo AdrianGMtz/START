@@ -58,18 +58,15 @@
 											<select id="commissions" required>
 												<option value="" disabled selected></option>
 												@foreach($commissions as $commission)
-													<option value="{{$commission->id}}" name="commission_id">{{$commission->type}}</option>
+													<option value="{{$commission->id}}" name="commission_id">{{$commission->description}} ${{$commission->price}}</option>
 												@endforeach
 											</select>
-											<label for="commissions"><b>Choose a commission type:</b></label>
+											<label for="commissions"><b>Choose a commission:</b></label>
 										</div>
+										<input id="commission_description" type="hidden" name="commission_description" required>
 										<div class="input-field">
-											<input id="commission_description" type="text" name="commission_description" placeholder=" " disabled required>
-											<label for="commission_description"><b>Commission Details:</b></label>
-										</div>
-										<div class="input-field">
-											<textarea class="materialize-textarea" name="commission_comments" id="commission_comments" placeholder ="Type your message" rows="3" maxlength="300"></textarea>
-											<label for="commission_comments"><b>Comments:</b></label>
+											<textarea class="materialize-textarea" name="order_comments" id="order_comments" placeholder ="Type your message" rows="3" maxlength="300"></textarea>
+											<label for="order_comments"><b>Comments:</b></label>
 										</div>
 										<input type="hidden" name="_id" value="{{@request()->route('id')}}">
 									</form>
@@ -95,13 +92,9 @@
 				});
 				
 				$('select').material_select();
-
-				var commissions = <?php echo $commissions;?>;
 				
 				$('#commissions').change(function() {
-					var id = $("#commissions option:selected").val();
-
-					var description = commissions[id - 1].description + '  $' + commissions[id - 1].price;
+					var description = $("#commissions option:selected").text();
 
 					$('#commission_description').val(description);
 				});

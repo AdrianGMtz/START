@@ -10,6 +10,7 @@ use URL;
 use Session;
 use Redirect;
 use Input;
+use App\Order;
 /** All Paypal Details class **/
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
@@ -25,7 +26,7 @@ use PayPal\Api\ExecutePayment;
 use PayPal\Api\PaymentExecution;
 use PayPal\Api\Transaction;
 
-class PayPalController extends Controller
+class OrderController extends Controller
 {
 	private $_api_context;
 
@@ -51,7 +52,13 @@ class PayPalController extends Controller
 	 */
 	public function show()
 	{
-		return view('orders.pay');
+		$client_orders = auth()->user()->orders()->latest()->get();
+
+		$user_orders = Order::where('client_id', auth()->user()->id)
+			->latest()
+			->get();
+
+		return view('orders.orders', compact('client_orders', 'user_orders'));
 	}
 
 	/**

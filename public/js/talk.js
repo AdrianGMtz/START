@@ -10346,13 +10346,10 @@ return jQuery;
 
 		var form = $(this)[0];
 
-		var message = form.elements['commission_description'].value + (form.elements['commission_comments'].value != '' ? '\n' + form.elements['commission_comments'].value : '');
-
-		// var message = form.elements['commission_description'].value + comments;
-
 		var data = {
 			'commission_id': $('#commissions :selected').val(),
-			'message-data': message,
+			'order_comments': form.elements['order_comments'].value,
+			'message-data': form.elements['commission_description'].value,
 			'client_id': form.elements['_id'].value,
 			'type': 3
 		};

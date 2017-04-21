@@ -20,7 +20,7 @@
 			<br>
 			{{$message->message}}
 			<br>
-			<a href="/orders/{{$order_id}}" class="waves-effect waves-light btn green btn-medium">View Order</a>
+			<a href="/orders/{{$order_id}}" class="waves-effect waves-light btn green btn-medium">View</a>
 		</div>
 	@endif
 </li>

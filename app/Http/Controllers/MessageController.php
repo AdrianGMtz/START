@@ -112,7 +112,7 @@ class MessageController extends Controller
 		Talk::setAuthUserId(auth()->user()->id);
 
 		$order_id = auth()->user()->order(
-			new Order(request(['commission_id', 'client_id']))
+			new Order(request(['commission_id', 'client_id', 'order_comments']))
 		);
 		
 		if ($message = Talk::sendMessageByUserId($client_id, $body, $messageType)) {
