@@ -36,7 +36,8 @@ class User extends Authenticatable
     }
 
     public function order(Order $order) {
-        $this->orders()->save($order);
+        $order = $this->orders()->save($order);
+        return $order->id;
     }
 
     public function publish(Commission $commission) {

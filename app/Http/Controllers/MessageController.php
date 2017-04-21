@@ -29,7 +29,13 @@ class MessageController extends Controller
 		$messages = [];
 		$commissions = $requested_user->commissions;
 
-		return view('chat.chat', compact('threads', 'messages', 'requested_user', 'commissions'));
+		$client_orders = [];
+		$client_order_count = 0;
+
+		$user_orders = [];
+		$user_order_count = 0;
+
+		return view('chat.chat', compact('threads', 'messages', 'requested_user', 'commissions', 'client_orders', 'client_order_count', 'user_orders', 'user_order_count'));
 	}
 
 	public function chatHistory($id)
@@ -60,7 +66,7 @@ class MessageController extends Controller
 		$conversation = Talk::getMessagesByUserId($id);
 
 		$messages = [];
-		$commissions = [];
+		$commissions = collect([]);
 
 		// Fetch messages if conversation exists
 		if($conversation) {
@@ -72,10 +78,24 @@ class MessageController extends Controller
 			$commissions = $current_user->commissions;
 		}
 
-		return view('chat.chat', compact('threads', 'messages', 'requested_user', 'commissions'));
+		$client_orders = $current_user->orders()
+			->where('client_id', $requested_user->id)
+			->orderBy('id', 'desc')
+			->get();
+
+		$client_order_count = ($client_orders->count() == 0) ? 0 : $client_orders->count() - 1;
+
+		$user_orders = $requested_user->orders()
+			->where('client_id', $current_user->id)
+			->orderBy('id', 'desc')
+			->get();
+		
+		$user_order_count = ($user_orders->count() == 0) ? 0 : $user_orders->count() - 1;
+
+		return view('chat.chat', compact('threads', 'messages', 'requested_user', 'commissions', 'client_orders', 'client_order_count', 'user_orders', 'user_order_count'));
 	}
 
-	public function sendPayment(Request $request)
+	public function sendOrder(Request $request)
 	{
 		// Validate form
 		$this->validate(request(), [
@@ -91,12 +111,12 @@ class MessageController extends Controller
 		$messageType = request('type');
 		Talk::setAuthUserId(auth()->user()->id);
 
-		auth()->user()->order(
+		$order_id = auth()->user()->order(
 			new Order(request(['commission_id', 'client_id']))
 		);
 		
 		if ($message = Talk::sendMessageByUserId($client_id, $body, $messageType)) {
-			$html = view('chat.newMessageHtml', compact('message'))->render();
+			$html = view('chat.message', compact('message', 'order_id'))->render();
 			return response()->json(['status'=>'success', 'html'=>$html], 200);
 		}
 	}
@@ -117,7 +137,7 @@ class MessageController extends Controller
 		Talk::setAuthUserId(auth()->user()->id);
 		
 		if ($message = Talk::sendMessageByUserId($userId, $body, $messageType)) {
-			$html = view('chat.newMessageHtml', compact('message'))->render();
+			$html = view('chat.message', compact('message'))->render();
 			return response()->json(['status'=>'success', 'html'=>$html], 200);
 		}
 	}

@@ -16,7 +16,11 @@
 	{{-- Payment --}}
 	@else
 		<div class="message my-message float-right">
-			<b><u>Charged:</u></b> <br> {{$message->message}}
+			<b><u>Order:</u></b>
+			<br>
+			{{$message->message}}
+			<br>
+			<a href="/orders/{{$order_id}}" class="waves-effect waves-light btn green btn-medium">View Order</a>
 		</div>
 	@endif
 </li>

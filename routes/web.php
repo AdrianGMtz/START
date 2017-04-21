@@ -49,11 +49,15 @@ Route::get('/message/{id}', 'MessageController@chatHistory');
 
 Route::post('/message/send', 'MessageController@sendMessage');
 
-Route::post('/message/payment', 'MessageController@sendPayment');
+Route::post('/message/payment', 'MessageController@sendOrder');
 
 // Payment Routes
-Route::get('/payment', 'PayPalController@show');
+Route::get('/orders', 'OrderController@show');
 
-Route::post('/pay', 'PayPalController@postPayment');
+Route::get('/orders/{$user_id}/latest', 'OrderController@redirectShowOrder');
 
-Route::get('/pay', 'PayPalController@getPaymentStatus');
+Route::get('/orders/{$id}', 'OrderController@showOrder');
+
+Route::post('/pay', 'OrderController@postPayment');
+
+Route::get('/pay', 'OrderController@getPaymentStatus');

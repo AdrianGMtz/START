@@ -51,7 +51,7 @@ class PayPalController extends Controller
 	 */
 	public function show()
 	{
-		return view('payment.pay');
+		return view('orders.pay');
 	}
 
 	/**
