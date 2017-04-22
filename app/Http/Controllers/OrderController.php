@@ -9,8 +9,9 @@ use Validator;
 use URL;
 use Session;
 use Redirect;
-use Input;
 use App\Order;
+use App\User;
+use App\Commission;
 /** All Paypal Details class **/
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
@@ -62,6 +63,29 @@ class OrderController extends Controller
 	}
 
 	/**
+	 * Show the pay with paypal page.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function showOrder($id)
+	{
+		$order = Order::find($id);
+
+		$current_user = auth()->user();
+
+		// Verify current user is either the artist of the order or the client
+		if ($current_user->id == $order->user_id || $current_user->id == $order->client_id) {
+			$artist = ($current_user->id == $order->user_id) ? $current_user : User::find($order->user_id);
+
+			$commission = Commission::find($order->commission_id);
+
+			return view('orders.order', compact('order', 'artist', 'commission'));
+		}
+
+		return redirect('/orders');
+	}
+
+	/**
 	 * Store a details of payment with paypal.
 	 *
 	 * @param  \Illuminate\Http\Request  $request
@@ -69,42 +93,57 @@ class OrderController extends Controller
 	 */
 	public function postPayment(Request $request)
 	{
+		// Validate form
+        $this->validate(request(), [
+            'commission_description' => 'required',
+            'commission_type' => 'required',
+            'commission_price' => 'required',
+            'artist_id' => 'required',
+            'order_id' => 'required'
+        ]);
+
+        // Get Order
+        $order_id = $request->get('order_id');
+
+        // Get Artist
+        $artist = User::find($request->get('artist_id'));
+
 		// Create new Payer and set it to PayPal
 		$payer = new Payer();
 		$payer->setPaymentMethod('paypal');
 
 		// Create Commission Item
-		$item_1 = new Item();
-		$item_1->setName('Item 1')
+		$item = new Item();
+		$item->setName($request->get('commission_description'))
 			->setCurrency('USD')
 			->setQuantity(1)
-			->setDescription('Commission')
-			->setPrice($request->get('amount'));
+			->setDescription($request->get('commission_type'))
+			->setPrice($request->get('commission_price'));
 
 		// Add Commission to checkout item list
 		$item_list = new ItemList();
-		$item_list->setItems(array($item_1));
+		$item_list->setItems(array($item));
 
 		// Set Amount currency and total
 		$amount = new Amount();
 		$amount->setCurrency('USD')
-			->setTotal($request->get('amount'));
+			->setTotal($request->get('commission_price'));
 
 		// Set artist paypal account
 		$payee = new Payee();
-		$payee->setEmail('marco@example.com');
+		$payee->setEmail($artist->email);
 
 		// Create new transaction with amount, item list and description
 		$transaction = new Transaction();
 		$transaction->setAmount($amount)
 			->setPayee($payee)
 			->setItemList($item_list)
-			->setDescription('START Commission Payment');
+			->setDescription('START Order Payment to ' . $artist->name);
 
 		// Set success and cancel redirect urls
 		$redirect_urls = new RedirectUrls();
-		$redirect_urls->setReturnUrl(URL::to('/pay'))
-			->setCancelUrl(URL::to('/pay'));
+		$redirect_urls->setReturnUrl(URL::to('/pay/' . $order_id))
+			->setCancelUrl(URL::to('/pay/' . $order_id));
 
 		// Create new payment with payer, transaction and redirect urls
 		$payment = new Payment();
@@ -118,14 +157,14 @@ class OrderController extends Controller
 			$payment->create($this->_api_context);
 		} catch (\PayPal\Exception\PPConnectionException $ex) {
 			if (\Config::get('app.debug')) {
-				\Session::put('error','Connection timeout');
-				return Redirect::route('/payment');
+				$this->validate()->errors()->add('error','Connection timeout');
+				return redirect('/orders/' . $order_id);
 				// echo "Exception: " . $ex->getMessage() . PHP_EOL;
 				// $err_data = json_decode($ex->getData(), true);
 				// exit;
 			} else {
-				\Session::put('error','Unexpected error occurred, sorry for the inconvenience');
-				return Redirect::route('/payment');
+				$this->validate()->errors()->add('error','Unexpected error occurred, sorry for the inconvenience');
+				return redirect('/orders/' . $order_id);
 				// die('Some error occur, sorry for inconvenient');
 			}
 		}
@@ -137,12 +176,16 @@ class OrderController extends Controller
 		}
 		// add payment ID to session
 		Session::put('paypal_payment_id', $payment->getId());
+
+		// Add order id to session
+		Session::put('order', $request->get('order_id'));
+
 		if(isset($redirect_url)) {
 			// redirect to paypal
-			return Redirect::away($redirect_url);
+			return redirect($redirect_url);
 		}
-		\Session::put('error','Unknown error occurred');
-		return Redirect::route('/payment');
+		$this->validate()->errors()->add('error','Unknown error occurred');
+		return redirect('/orders/' . $order_id);
 	}
 
 	/**
@@ -150,7 +193,7 @@ class OrderController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function getPaymentStatus()
+	public function getPaymentStatus(Request $request)
 	{
 		// Get the payment ID before session clear
 		$payment_id = Session::get('paypal_payment_id');
@@ -158,10 +201,16 @@ class OrderController extends Controller
 		// clear the session payment ID
 		Session::forget('paypal_payment_id');
 
+		// Get order
+		$order = Order::find(Session::get('order'));
+
+		// clear the order ID
+		Session::forget('order');
+
 		// Verify PlayerID & token are set
-		if (empty(Input::get('PayerID')) || empty(Input::get('token'))) {
-			\Session::put('error','Payment failed');
-			return Redirect::route('/payment');
+		if (empty($request->get('PayerID')) || empty($request->get('token'))) {
+			Session::put('error','Payment failed');
+			return redirect('/orders/' . $order->id);
 		}
 
 		/**
@@ -171,7 +220,7 @@ class OrderController extends Controller
 		* when the user is redirected from paypal back to your site
 		*/
 		$execution = new PaymentExecution();
-		$execution->setPayerId(Input::get('PayerID'));
+		$execution->setPayerId($request->get('PayerID'));
 
 		/**Execute the payment **/
 		$payment = Payment::get($payment_id, $this->_api_context);
@@ -180,11 +229,14 @@ class OrderController extends Controller
 
 		// Verify payment state
 		if ($result->getState() == 'approved') { 
-			// Here Write your database logic like that insert record or value in database if you want
-			\Session::put('success','Payment success');
-			return Redirect::route('/payment');
+			// Update order status to 'paid'
+			$order->paid = true;
+			$order->save();
+
+			Session::put('success','Payment success');
+			return redirect('/orders/' . $order->id);
 		}
-		\Session::put('error','Payment failed');
-		return Redirect::route('/payment');
+		Session::put('error','Payment failed');
+		return redirect('/orders/' . $order->id);
 	}
 }
