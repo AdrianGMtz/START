@@ -117,7 +117,7 @@
 					message = '<a class="white-text" href="' + data.message + '"><i class="material-icons">attach_file</i> File</a>';
 				} else {
 					// Payment
-					message = '<b><u>Order:</u></b> <br> ' + data.message + '<br> <a href="/orders/' + data.sender.id + '/latest"class="waves-effect waves-light btn green btn-medium">View</a>';
+					message = '<b><u>Order:</u></b> <br> ' + data.message + '<br> <a href="/orders/latest" class="waves-effect waves-light btn green btn-medium">View</a>';
 				}
 				var html = '<li class="clearfix" id="message-' + data.id + '">' +
 				'<div class="message-data">' +

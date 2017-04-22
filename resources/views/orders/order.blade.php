@@ -21,8 +21,14 @@
 							</div>
 							<?php Session::forget('error');?>
 						@endif
-						
+
 						<h2 class="center">Order #{{$order->id}}</h2>
+						@if($order->paid == 0)
+							<h5 class="center red-text"><b>Not Paid</b></h5>
+						@else
+							<h5 class="center green-text"><b>Paid</b></h5>
+						@endif
+
 						<hr>
 						<form method="POST" id="payment-form" class="center" action="/pay/{{$order->id}}" >
 							{{ csrf_field() }}
@@ -55,7 +61,7 @@
 						<div class="center">
 							<hr>
 
-							<a class="waves-effect waves-light btn blue" href="{{ URL::previous() }}">Back</a>
+							<a class="waves-effect waves-light btn blue" href="{{ (strpos(URL::previous(), 'pay') ? 'http://start.dev/orders': URL::previous()) }}">Back</a>
 
 							@if((auth()->user()->id != $artist->id) && ($order->paid == 0))
 								<button type="submit" form="payment-form" class="waves-effect waves-light btn green" style="margin-left: 5%;">Pay</button>

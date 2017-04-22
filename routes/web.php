@@ -54,9 +54,9 @@ Route::post('/message/payment', 'MessageController@sendOrder');
 // Payment Routes
 Route::get('/orders', 'OrderController@show');
 
-Route::get('/orders/{id}', 'OrderController@showOrder');
+Route::get('/orders/latest', 'OrderController@redirectShowOrder');
 
-Route::get('/orders/{user_id}/latest', 'OrderController@redirectShowOrder');
+Route::get('/orders/{id}', 'OrderController@showOrder');
 
 Route::get('/pay/{id}', 'OrderController@getPaymentStatus');
 

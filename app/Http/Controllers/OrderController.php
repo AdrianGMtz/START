@@ -86,6 +86,22 @@ class OrderController extends Controller
 	}
 
 	/**
+	 * Show the pay with paypal page.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function redirectShowOrder()
+	{
+		$current_user = auth()->user();
+
+		$order = Order::where('client_id', $current_user->id)
+			->latest()
+			->first();
+
+		return redirect('/orders/' . $order->id);
+	}
+
+	/**
 	 * Store a details of payment with paypal.
 	 *
 	 * @param  \Illuminate\Http\Request  $request
