@@ -16,6 +16,8 @@ use App\Http\Middleware\CheckRole;
 
 Auth::routes();
 
+Route::get('/register/verify/{token}', 'Auth\RegisterController@verify');
+
 // Profile Routes
 Route::get('/profile', 'UserController@show');
 
