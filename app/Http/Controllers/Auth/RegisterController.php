@@ -78,6 +78,7 @@ class RegisterController extends Controller
       'email_token' => str_random(10),
     ]);
 
+    return $user;
     // \Mail::to($user)->send(new EmailVerification(new User(['email_token' => $user->email_token, 'name' => $user->name])));
 
   }
