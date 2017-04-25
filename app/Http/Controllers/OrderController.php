@@ -224,8 +224,10 @@ class OrderController extends Controller
 		Session::forget('order');
 
 		// Verify PlayerID & token are set
-		if (empty($request->get('PayerID')) || empty($request->get('token'))) {
-			Session::put('error','Payment failed');
+		if(empty($request->get('token')) && empty($request->get('PayerID'))) {
+			return redirect('/orders');
+		} elseif (empty($request->get('PayerID'))) {
+			Session::put('error', 'Payment failed');
 			return redirect('/orders/' . $order->id);
 		}
 
