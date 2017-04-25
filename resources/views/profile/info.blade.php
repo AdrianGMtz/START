@@ -13,7 +13,7 @@
 		@if ($user->id == auth()->user()->id)
 			<a class="waves-effect waves-light btn blue" href="/profile/edit">Edit</a>
 		@else
-			<a class="waves-effect waves-light btn blue artist">Message</a>
+			<a class="waves-effect waves-light btn blue" href="/message/{{ $user->id }}">Message</a>
 		@endif
 	</div>
 	<br>
