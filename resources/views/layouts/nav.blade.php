@@ -13,7 +13,7 @@
 				<li><a href="/profile">{{ Auth::user()->name }}</a></li>
 				<li><a href="/messages">Chat <span class="material-icons">forum</span></a></li>
 				<li><a href="/orders">Orders <span class="material-icons">description</span></a></li>
-				<li><a href="/settings"> <span class="material-icons">settings</span> </a></li>
+				<li><a href="/settings">Settings <span class="material-icons">settings</span></a></li>
 				<li>
 					<a href="{{ route('logout') }}"
 						onclick="event.preventDefault();
@@ -61,4 +61,3 @@
 		</ul>
 	</div>
 </nav> --}}
->>>>>>> c801e6314d35a25f48fa76b26abbb5030e398747

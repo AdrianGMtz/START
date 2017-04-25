@@ -48,7 +48,7 @@
 	</div>
 	<div class="modal-footer">
 		<hr>
-		<button class="modal-action modal-close waves-effect waves-light btn red btn-medium" style="margin-left: 4px;">I Agree</button>
+		<a class="modal-action modal-close waves-effect waves-light btn red btn-medium" style="margin-left: 4px;" href="/message/{{ $user->id }}">I Agree</a>
 		<button class="modal-action modal-close waves-effect waves-light btn blue btn-medium" style="margin-right: 4px;">Cancel</button>
 	</div>
 </div>

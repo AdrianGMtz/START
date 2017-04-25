@@ -19,6 +19,7 @@ class UsersTableSeeder extends Seeder
                 "username"      => "marco",
                 "password"      => bcrypt('marco123'),
                 "artist"        => 1,
+                "verified"      => true,
                 "created_at"    => Carbon::now()->format('Y-m-d H:i:s'),
                 "updated_at"    => Carbon::now()->format('Y-m-d H:i:s')
             ],
@@ -28,6 +29,7 @@ class UsersTableSeeder extends Seeder
                 "username"      => "alex",
                 "password"      => bcrypt('alex123'),
                 "artist"        => 1,
+                "verified"      => true,
                 "created_at"    => Carbon::now()->format('Y-m-d H:i:s'),
                 "updated_at"    => Carbon::now()->format('Y-m-d H:i:s')
             ],
@@ -37,6 +39,7 @@ class UsersTableSeeder extends Seeder
                 "username"      => "juan",
                 "password"      => bcrypt('juan123'),
                 "artist"        => 1,
+                "verified"      => false,
                 "created_at"    => Carbon::now()->format('Y-m-d H:i:s'),
                 "updated_at"    => Carbon::now()->format('Y-m-d H:i:s')
             ],
@@ -46,6 +49,7 @@ class UsersTableSeeder extends Seeder
                 "username"      => "pedro",
                 "password"      => bcrypt('pedro123'),
                 "artist"        => 0,
+                "verified"      => false,
                 "created_at"    => Carbon::now()->format('Y-m-d H:i:s'),
                 "updated_at"    => Carbon::now()->format('Y-m-d H:i:s')
             ],

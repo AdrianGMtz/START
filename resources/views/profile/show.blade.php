@@ -53,5 +53,6 @@
 
 			<!-- Commission Details -->
 			@include ('commissions.details')
+		</div>
 	</div>
 @endsection('content')
