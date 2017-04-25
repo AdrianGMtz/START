@@ -24,7 +24,9 @@
 	</div>
 	<div class="card-action">
 		<h5 class="white-text">Price: ${{ $commission->price }}</h5>
-		<a class="waves-effect waves-light btn orange btn-large" href="#{{ $id }}_policies">Hire</a>
+		@if($user->id != auth()->user()->id)
+			<a class="waves-effect waves-light btn orange btn-large" href="#{{ $id }}_policies">Hire</a>
+		@endif
 	</div>
 </div>
 <!-- Gallery Modals -->

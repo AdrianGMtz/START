@@ -21,8 +21,8 @@
 					<label for="price">Price</label>
 				</div>
 			</div>
-			<button type="submit" class="waves-effect waves-light btn blue">Save</button>
 			<a class="waves-effect waves-light btn red" href="/commissions/{{ $commission->id }}/delete">Delete</a>
+			<button type="submit" class="waves-effect waves-light btn blue" style="margin-left: 10px; margin-right: 10px;">Save</button>
 			<button type="button" class="waves-effect waves-light btn red" onclick="window.location='/profile'">Cancel</button>
 
 			@include ('layouts.errors')
