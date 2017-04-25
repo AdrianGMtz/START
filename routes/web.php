@@ -44,3 +44,4 @@ Route::get('/settings', 'SettingsController@show');
 
 Route::post('/settings', 'SettingsController@changePassword');
 
+Route::get('/register/verify/{token}', 'Auth\RegisterController@verify'); 

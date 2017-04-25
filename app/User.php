@@ -7,31 +7,38 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+  use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name', 'email', 'username', 'password',
-    ];
+  /**
+  * The attributes that are mass assignable.
+  *
+  * @var array
+  */
+  protected $fillable = [
+    'name', 'email', 'username', 'password', 'email_token', 'verified'
+  ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+  /**
+  * The attributes that should be hidden for arrays.
+  *
+  * @var array
+  */
+  protected $hidden = [
+    'password', 'remember_token',
+  ];
 
-    public function commissions() {
-        return $this->hasMany(Commission::Class);
-    }
+  public function commissions() {
+    return $this->hasMany(Commission::Class);
+  }
 
-    public function publish(Commission $commission) {
-        $this->commissions()->save($commission);
-    }
+  public function publish(Commission $commission) {
+    $this->commissions()->save($commission);
+  }
+
+  public function verified()
+  {
+    $this->verified = 1;
+    $this->email_token = null;
+    $this->save();
+  }
 }
