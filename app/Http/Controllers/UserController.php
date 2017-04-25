@@ -9,102 +9,107 @@ use App\Commission;
 
 class UserController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct() {
-        $this->middleware('auth')->except(['showArtist']);
-    }
+	/**
+	 * Create a new controller instance.
+	 *
+	 * @return void
+	 */
+	public function __construct() {
+		$this->middleware('auth')->except(['showArtist']);
+	}
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show() {
-    	$user = User::find(auth()->user()->id);
-    	
-    	// $commissions = User::find(auth()->user()->id)->commissions;
-        
-    	$commissions = Commission::latest()->where('user_id', $user->id)->get();
+	/**
+	 * Show the application dashboard.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function show() {
+		$user = User::find(auth()->user()->id);
+		
+		$commissions = User::find($user->id)->commissions()->latest()->get();
 
-        return view('profile.show', compact('user', 'commissions'));
-    }
+		$photography_commissions = Commission::latest()->where([['type', 'Photography'],['user_id', $user->id]])->get();
+		$digital_commissions = Commission::latest()->where([['type', 'Digital Art'],['user_id', $user->id]])->get();
+		$sketch_commissions = Commission::latest()->where([['type', 'Sketch'],['user_id', $user->id]])->get();
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showArtist(User $profile) {
-    	// $user = User::find($profile->id)->where([['artist', true],['id', $profile->id])->get();
-        $result = User::where([['artist', true],['id', $profile->id]])->get();
-        
-        if (!$result->isEmpty()) {
-            $user = $result[0];
+		return view('profile.show', compact('user', 'photography_commissions', 'digital_commissions', 'sketch_commissions'));
+	}
 
-            $current_user = auth()->user()->id;
+	/**
+	 * Show the application dashboard.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function showArtist(User $profile) {
+		$result = User::where([['artist', true],['id', $profile->id]])->get();
+		
+		if (!$result->isEmpty()) {
+			$user = $result[0];
 
-            if ($user->id != $current_user) {
-                $commissions = Commission::latest()->where('user_id', $user->id)->get();
+			$current_user = auth()->user()->id;
 
-                return view('profile.show', compact('user', 'commissions'));
-            }
-        }
+			if ($user->id != $current_user) {
+				$commissions = User::find($user->id)->commissions()->latest()->get();
+				
+				$photography_commissions = Commission::latest()->where([['type', 'Photography'],['user_id', $user->id]])->get();
+				$digital_commissions = Commission::latest()->where([['type', 'Digital Art'],['user_id', $user->id]])->get();
+				$sketch_commissions = Commission::latest()->where([['type', 'Sketch'],['user_id', $user->id]])->get();
 
-    	return redirect('/profile');
-    }
+				return view('profile.show', compact('user', 'photography_commissions', 'digital_commissions', 'sketch_commissions'));
+			}
+		}
 
-    public function becomeArtist() {
+		return redirect('/profile');
+	}
 
-    	// Create new post
-        $user = auth()->user();
-        $user->artist = true;
-        $user->save();
+	public function becomeArtist() {
 
-     	// return view
-    	return redirect('/profile');
-    }
+		// Create new post
+		$user = auth()->user();
+		$user->artist = true;
+		$user->save();
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit() {
-    	$user = auth()->user();
+	 	// return view
+		return redirect('/profile');
+	}
 
-        return view('profile.edit', compact('user'));
-    }
+	/**
+	 * Show the application dashboard.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function edit() {
+		$user = auth()->user();
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create() {
-        return view('profile.create');
-    }
+		return view('profile.edit', compact('user'));
+	}
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store() {
-        // Validate form
-     	$this->validate(request(), [
-     		'description' => 'required|min:2'
-     	]);
+	/**
+	 * Show the application dashboard.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function create() {
+		return view('profile.create');
+	}
 
-     	// Create new post
-        $user = auth()->user();
-        $user->description = (request('description'));
-        $user->save();
+	/**
+	 * Show the application dashboard.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function store() {
+		// Validate form
+	 	$this->validate(request(), [
+	 		'description' => 'required|min:2'
+	 	]);
 
-     	// return view
-    	return redirect('/profile');
-    }
+	 	// Create new post
+		$user = auth()->user();
+		$user->description = (request('description'));
+		$user->save();
+
+	 	// return view
+		return redirect('/profile');
+	}
 }

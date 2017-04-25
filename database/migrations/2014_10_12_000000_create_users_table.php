@@ -20,7 +20,6 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();
             $table->boolean('artist')->default(false);
             $table->string('description')->default('N/A');
-            $table->string('categories')->default('N/A');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
