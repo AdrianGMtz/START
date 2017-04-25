@@ -5,13 +5,12 @@ namespace App\Http\Controllers\Auth;
 use DB;
 use Mail;
 use App\User;
-use Validator;
+// use Validator;
 use Illuminate\Http\Request;
 use App\Mail\EmailVerification;
 use App\Http\Controllers\Controller;
-// use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use App\Mail\Bienvenido;
 
 class RegisterController extends Controller
 {
@@ -70,7 +69,7 @@ class RegisterController extends Controller
 	protected function create(array $data)
 	{
 
-		$user = User::create([
+		return $user = User::create([
 			'name' => $data['name'],
 			'email' => $data['email'],
 			'username' => $data['username'],
@@ -97,11 +96,12 @@ class RegisterController extends Controller
 		try
 		{
 			$user = $this->create($request->all());
+
 			// After creating the user send an email with the random token generated in the create method above
 			$email = new EmailVerification(new User(['email_token' => $user->email_token, 'name' => $user->name]));
 			Mail::to($user->email)->send($email);
 			DB::commit();
-			return back();
+			return home();
 		}
 		catch(Exception $e)
 		{
