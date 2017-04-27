@@ -25,7 +25,7 @@
 	<div class="card-action">
 		<h5 class="white-text">Price: ${{ $commission->price }}</h5>
 		@if($user->id != auth()->user()->id)
-			<a class="waves-effect waves-light btn orange btn-large" href="#{{ $id }}_policies">Hire</a>
+			<a class="waves-effect waves-light btn orange btn-large" href="/message/{{ $user->id }}">Hire</a>
 		@endif
 	</div>
 </div>
@@ -36,12 +36,11 @@
 	<img class="modal lightbox" id="img{{ $commission->id }}2" src="https://udemy-images.udemy.com/course/750x422/394968_538b_7.jpg">
 </div>
 <!-- Policies Modal -->
-<div id="{{ $id }}_policies" class="modal">
+{{-- <div id="{{ $id }}_policies" class="modal">
 	<div class="modal-content">
 		<h4 class="center">Client Agreement</h4>
 		<hr>
 		<p><b> You agree to follow this artist's commission policies: </b></p>
-		{{-- Show policies for commission --}}
 		<ul>
 			<li> No deadline </li>
 			<li> At most 2 changes </li>
@@ -63,4 +62,4 @@
 			outDuration: 200 // Transition out duration
 		});
 	});
-</script>
+</script> --}}
