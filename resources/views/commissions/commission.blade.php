@@ -15,6 +15,5 @@
 			<a href="commissions/{{ $commission->id }}">More Info</a>
 		</div>
 	</div>
-
 </div>
 

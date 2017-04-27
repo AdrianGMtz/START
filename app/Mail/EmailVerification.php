@@ -11,29 +11,29 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 class EmailVerification extends Mailable
 {
-  use Queueable, SerializesModels;
+	use Queueable, SerializesModels;
 
-  public $user;
+	public $user;
 
 
-  /**
-  * Create a new message instance.
-  *
-  * @return void
-  */
+	/**
+	* Create a new message instance.
+	*
+	* @return void
+	*/
 
-  public function __construct(User $user)
-  {
-    $this->user = $user;
-  }
+	public function __construct(User $user)
+	{
+		$this->user = $user;
+	}
 
-  /**
-  * Build the message.
-  *
-  * @return $this
-  */
-  public function build()
-  {
-    return $this->view('emails.verification');
-  }
+	/**
+	* Build the message.
+	*
+	* @return $this
+	*/
+	public function build()
+	{
+		return $this->view('emails.verification');
+	}
 }

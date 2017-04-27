@@ -25,12 +25,10 @@ class UserController extends Controller
 	 */
 	public function show() {
 		$user = User::find(auth()->user()->id);
-		
-		$commissions = User::find($user->id)->commissions()->latest()->get();
 
-		$photography_commissions = Commission::latest()->where([['type', 'Photography'],['user_id', $user->id]])->get();
-		$digital_commissions = Commission::latest()->where([['type', 'Digital Art'],['user_id', $user->id]])->get();
-		$sketch_commissions = Commission::latest()->where([['type', 'Sketch'],['user_id', $user->id]])->get();
+		$photography_commissions = Commission::latest()->where([['type', 'Photography'],['user_id', $user->id]])->paginate(8);
+		$digital_commissions = Commission::latest()->where([['type', 'Digital Art'],['user_id', $user->id]])->paginate(8);
+		$sketch_commissions = Commission::latest()->where([['type', 'Sketch'],['user_id', $user->id]])->paginate(8);
 
 		return view('profile.show', compact('user', 'photography_commissions', 'digital_commissions', 'sketch_commissions'));
 	}
@@ -49,11 +47,9 @@ class UserController extends Controller
 			$current_user = auth()->user()->id;
 
 			if ($user->id != $current_user) {
-				$commissions = User::find($user->id)->commissions()->latest()->get();
-				
-				$photography_commissions = Commission::latest()->where([['type', 'Photography'],['user_id', $user->id]])->get();
-				$digital_commissions = Commission::latest()->where([['type', 'Digital Art'],['user_id', $user->id]])->get();
-				$sketch_commissions = Commission::latest()->where([['type', 'Sketch'],['user_id', $user->id]])->get();
+				$photography_commissions = Commission::latest()->where([['type', 'Photography'],['user_id', $user->id]])->paginate(8);
+				$digital_commissions = Commission::latest()->where([['type', 'Digital Art'],['user_id', $user->id]])->paginate(8);
+				$sketch_commissions = Commission::latest()->where([['type', 'Sketch'],['user_id', $user->id]])->paginate(8);
 
 				return view('profile.show', compact('user', 'photography_commissions', 'digital_commissions', 'sketch_commissions'));
 			}

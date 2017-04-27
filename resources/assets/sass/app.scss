@@ -51,11 +51,16 @@ nav .brand-logo {
 }
 
 .row .col .details {
-	padding: 0px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 .details .card {
 	margin: 0px;
+}
+
+.row #commission_details {
+	margin-bottom: 0px;
 }
 
 /* Chat */

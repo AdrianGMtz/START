@@ -1,72 +1,98 @@
-<div class="col s12 m9">
-	<h5 style="display: inline-block; margin-left: 39%;">Commissions</h5>
-	{{-- Verify user is an artist --}}
-	@if($user->artist)
-		@if ($user->id == auth()->user()->id)
-			<a class="waves-effect waves-light btn blue" style="float: right; margin-top: 10px;" href="/profile/create"><i class="material-icons">note_add</i></a>
-		@endif
-		{{-- Check user has Commissions --}}
-		@if ((count($photography_commissions) == 0) && (count($digital_commissions) == 0) && (count($sketch_commissions) == 0))
-			@if ($user->id == auth()->user()->id)
-				<div class="card-panel blue lighten-5 card-content valign center">
-					<h5 class="blue-text text-lighten-2">You're not offering any commissions.</h5>
+@extends('layouts.app')
+
+@section('content')
+	<div class="container">
+		<div class="row">
+			<!-- User info bar -->
+			@include('profile.info')
+
+			<!-- Commission Details -->
+			<div class="col s12 m9">
+				<div id="commission_details" class="row">
+					<div class="col s5">
+						<a class="waves-effect waves-light btn blue" href="/profile/{{ $user->id }}" style="margin: .82rem 0 .656rem 0;">View all commissions</a>
+					</div>
+					<div class="col s5">
+						<h5 style="display: inline-block;">Commission</h5>
+					</div>
 				</div>
-			@else
-				<div class="card-panel blue lighten-5 card-content valign center">
-					<h5 class="blue-text text-lighten-2">This artist isn't offering any commissions at this time.</h5>
+				<div class="card grey darken-4 center">
+					@if ($user->id == auth()->user()->id)
+						<a id="edit_btn" class="btn-floating halfway-fab waves-effect waves-light btn-large blue" href="/commissions/{{ $commission->id }}/edit"><i class="material-icons">mode_edit</i></a>
+					@endif
+					<div class="card-content white-text">
+						<div class="slider">
+							<ul class="slides">
+								{{-- Create <li> per image in commission --}}
+								<li>
+									{{-- href is #img + commission id + commission image id --}}
+									<a href="#img{{ $commission->id }}1">
+										<img src="https://udemy-images.udemy.com/course/750x422/394968_538b_7.jpg">
+									</a>
+								</li>
+
+								<li>
+									<a href="#img{{ $commission->id }}2">
+										<img src="https://udemy-images.udemy.com/course/750x422/394968_538b_7.jpg">
+									</a>
+								</li>
+							</ul>
+						</div>
+						<p class="white-text left">{{ $commission->description }}</p>
+					</div>
+					<div class="card-action">
+						<h5 class="white-text">Price: ${{ $commission->price }}</h5>
+						@if($user->id != auth()->user()->id)
+							<a class="waves-effect waves-light btn orange btn-large" href="/message/{{ $user->id }}">Hire</a>
+						@endif
+					</div>
 				</div>
-			@endif
-		@else
-			{{-- Show Commission Tabs --}}
-			<ul id="tabs-swipe" class="tabs tabs-fixed-width" style="margin-top: 10px;">
-				@if (count($photography_commissions))
-					<li class="tab col s3"><a class="active red white-text" href="#photography">Photography</a></li>
-				@endif
-				@if (count($digital_commissions))
-					<li class="tab col s3"><a class="blue white-text" href="#digital-art">Digital Art</a></li>
-				@endif
-				@if (count($sketch_commissions))
-					<li class="tab col s3"><a class="green white-text" href="#sketch">Sketches</a></li>
-				@endif
-			</ul>
-			{{-- Populate Photography Commissions --}}
-			@if (count($photography_commissions))
-				<div id="photography" class="col s12 white details" style="border-color:red;">
-					@include ('commissions.gallery', ['commission' => $photography_commissions[0], 'id' => 'photography'])
+				<!-- Gallery Modals -->
+				<div id="zoom_images">
+					{{-- Add img tag per image in commission --}}
+					<img class="modal lightbox" id="img{{ $commission->id }}1" src="https://udemy-images.udemy.com/course/750x422/394968_538b_7.jpg">
+					<img class="modal lightbox" id="img{{ $commission->id }}2" src="https://udemy-images.udemy.com/course/750x422/394968_538b_7.jpg">
 				</div>
-			@endif
-			{{-- Populate Digital Commissions --}}
-			@if (count($digital_commissions))
-				<div id="digital-art" class="col s12 white details" style="border-color:blue;">
-					@include ('commissions.gallery', ['commission' => $digital_commissions[0], 'id' => 'digital'])
-				</div>
-			@endif
-			{{-- Populate Sketch Commissions --}}
-			@if (count($sketch_commissions))
-				<div id="sketch" class="col s12 white details" style="border-color:green;">
-					@include ('commissions.gallery', ['commission' => $sketch_commissions[0], 'id' => 'sketch'])
-				</div>
-			@endif
-		@endif
-	@else
-		@if ($user->id == auth()->user()->id)
-			<!-- Message for non artist -->
-			<div class="card-panel blue lighten-5 card-content valign center">
-				<h5 class="blue-text text-lighten-2">You must be an artist to offer commissions.</h5>
-				<br>
-				<a class="waves-effect waves-light btn blue" href="/profile/becomeArtist">Become an artist</a>
+				<!-- Policies Modal -->
+				{{-- <div id="{{ $id }}_policies" class="modal">
+					<div class="modal-content">
+						<h4 class="center">Client Agreement</h4>
+						<hr>
+						<p><b> You agree to follow this artist's commission policies: </b></p>
+						<ul>
+							<li> No deadline </li>
+							<li> At most 2 changes </li>
+							<li> No refunds </li>
+						</ul>
+					</div>
+					<div class="modal-footer">
+						<hr>
+						<a class="modal-action modal-close waves-effect waves-light btn red btn-medium" style="margin-left: 4px;" href="/message/{{ $commission->user_id }}">I Agree</a>
+						<button class="modal-action modal-close waves-effect waves-light btn blue btn-medium" style="margin-right: 4px;">Cancel</button>
+					</div>
+				</div>--}}
 			</div>
-		@endif
-	@endif
-</div>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$('.slider').slider({
-			height: 300,
-			interval: 3300
+		</div>
+	</div>
+	{{-- <script type="text/javascript">
+		$(document).ready(function(){
+			$('#{{ $id }}_policies').modal({
+				dismissible: false, // Modal can't be dismissed by clicking outside of the modal
+				opacity: .8, // Opacity of modal background
+				inDuration: 300, // Transition in duration
+				outDuration: 200 // Transition out duration
+			});
 		});
-		$('.modal.lightbox').modal({
-			opacity: 0.9
+	</script> --}}
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('.slider').slider({
+				height: 300,
+				interval: 3300
+			});
+			$('.modal.lightbox').modal({
+				opacity: 0.9
+			});
 		});
-	});
-</script>
+	</script>
+@endsection('content')
