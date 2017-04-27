@@ -21,6 +21,14 @@ nav .brand-logo {
 	padding-left: 10px;
 }
 
+.side-nav ul li:hover {
+	background-color: orange;
+}
+
+.side-nav a {
+	color: white;
+}
+
 /* Explore and Profile Active Tab */
 .tabs .indicator {
 	background-color: rgba(255, 255, 255, 0.6);
