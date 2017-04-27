@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use DB;
 use Mail;
 use App\User;
-// use Validator;
 use Illuminate\Http\Request;
 use App\Mail\EmailVerification;
 use App\Http\Controllers\Controller;
@@ -76,9 +75,6 @@ class RegisterController extends Controller
 			'password' => bcrypt($data['password']),
 			'email_token' => str_random(10),
 		]);
-
-		// \Mail::to($user)->send(new EmailVerification(new User(['email_token' => $user->email_token, 'name' => $user->name])));
-
 	}
 
 
@@ -91,7 +87,6 @@ class RegisterController extends Controller
 			$this->throwValidationException($request, $validator);
 		}
 		// Using database transactions is useful here because stuff happening is actually a transaction
-		// I don't know what I said in the last line! Weird!
 		DB::beginTransaction();
 		try
 		{
