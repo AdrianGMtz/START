@@ -3,22 +3,29 @@
 @section('content')
 	<div class="container">
 		<div class="row">
-			<!-- Edit Description -->
-			<form class="col s12" method="POST" action="/profile/edit">
-				{{ csrf_field() }}
+			<div class="card-panel grey lighten-4 col s12 m8 offset-m2">
+				<!-- Edit Description -->
+				<form method="POST" action="/profile/edit">
+					{{ csrf_field() }}
 
-				<h4>Edit Description</h4>
-				<div class="row">
-					<div class="input-field col s12">
-						<input id="description" type="text" class="validate" name="description" value="{{ $user->description }}" required>
-						<label for="description">User Description</label>
+					<h4 class="center">Edit Description</h4>
+
+					<div class="row">
+						<div class="input-field col s12">
+							<input id="description" type="text" class="validate" name="description" value="{{ $user->description }}" required>
+							<label for="description">User Description</label>
+						</div>
 					</div>
-				</div>
-				<button type="submit" class="waves-effect waves-light btn blue">Save</button>
-				<button type="button" class="waves-effect waves-light btn red" onclick="window.location='/profile'">Cancel</button>
 
-				@include ('layouts.errors')
-			</form>
+					@include ('layouts.errors')
+
+					<div class="center">
+						<button type="submit" class="waves-effect waves-light btn blue">Save</button>
+						<button type="button" class="waves-effect waves-light btn red" onclick="window.location='/profile'">Cancel</button>
+					</div>
+					<br>
+				</form>
+			</div>
 		</div>
 	</div>
 @endsection('content')
