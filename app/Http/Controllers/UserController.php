@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use League\Flysystem\Filesystem;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
+use Hypweb\Flysystem\GoogleDrive\GoogleDriveAdapter;
+
 use App\User;
 use App\Commission;
 
@@ -106,5 +111,19 @@ class UserController extends Controller
 
      	// return view
     	return redirect('/profile');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function saveAvatar() {
+        Storage::disk('google')->put(
+            'profile_' . auth()->id(), 
+            file_get_contents(request()->file('avatar'))
+            );
+        // return view
+        return redirect('/profile');
     }
 }

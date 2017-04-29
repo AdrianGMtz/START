@@ -24,6 +24,8 @@ Route::get('/profile/edit', 'UserController@edit');
 
 Route::post('/profile/edit', 'UserController@store');
 
+Route::post('/profile/edit', 'UserController@saveAvatar');
+
 Route::get('/profile/create', 'UserController@create')->middleware(CheckRole::class);
 
 Route::get('/profile/becomeArtist', 'UserController@becomeArtist');
