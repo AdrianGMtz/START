@@ -1,90 +1,92 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
-			<div class="panel panel-default">
-				<div class="panel-heading">Register</div>
-				<div class="panel-body">
-					<form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
-						{{ csrf_field() }}
+	<div class="container">
+		<div class="row">
+			<div class="card-panel grey lighten-4 col s12 m8 offset-m2">
+				<h3 class="center">Register</h3>
 
-						<div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-							<label for="name" class="col-md-4 control-label">Name</label>
+				<form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
+					{{ csrf_field() }}
 
-							<div class="col-md-6">
-								<input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+					<div class="row">
+						<div class="input-field col s8 offset-s2">
+							<input id="name" type="text" class="validate{{ $errors->has('name') ? ' invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
 
-								@if ($errors->has('name'))
-									<span class="help-block">
-										<strong>{{ $errors->first('name') }}</strong>
-									</span>
-								@endif
-							</div>
+							<label for="name">Name</label>
+
+							@if ($errors->has('name'))
+								<div class="card-panel red lighten-1 card-content valign">
+									<ul class="white-text">
+										<li>{{ $errors->first('name') }}</li>
+									</ul>
+								</div>
+							@endif
 						</div>
+					</div>
 
-						<div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-							<label for="email" class="col-md-4 control-label">E-Mail Address</label>
+					<div class="row">
+						<div class="input-field col s8 offset-s2">
+							<input id="email" type="email" class="validate{{ $errors->has('email') ? ' invalid' : '' }}" name="email" value="{{ old('email') }}" required>
 
-							<div class="col-md-6">
-								<input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+							<label for="email">E-Mail</label>
 
-								@if ($errors->has('email'))
-									<span class="help-block">
-										<strong>{{ $errors->first('email') }}</strong>
-									</span>
-								@endif
-							</div>
+							@if ($errors->has('email'))
+								<div class="card-panel red lighten-1 card-content valign">
+									<ul class="white-text">
+										<li>{{ $errors->first('email') }}</li>
+									</ul>
+								</div>
+							@endif
 						</div>
+					</div>
 
-						<div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
-							<label for="username" class="col-md-4 control-label">Username</label>
+					<div class="row">
+						<div class="input-field col s8 offset-s2">
+							<input id="username" type="text" class="validate{{ $errors->has('username') ? ' invalid' : '' }}" name="username" value="{{ old('username') }}" required>
 
-							<div class="col-md-6">
-								<input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}" required>
+							<label for="username">Username</label>
 
-								@if ($errors->has('username'))
-									<span class="help-block">
-										<strong>{{ $errors->first('username') }}</strong>
-									</span>
-								@endif
-							</div>
+							@if ($errors->has('username'))
+								<div class="card-panel red lighten-1 card-content valign">
+									<ul class="white-text">
+										<li>{{ $errors->first('username') }}</li>
+									</ul>
+								</div>
+							@endif
 						</div>
+					</div>
 
-						<div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-							<label for="password" class="col-md-4 control-label">Password</label>
+					<div class="row">
+						<div class="input-field col s8 offset-s2">
+							<input id="password" type="password" class="validate{{ $errors->has('password') ? ' invalid' : '' }}" name="password" required>
 
-							<div class="col-md-6">
-								<input id="password" type="password" class="form-control" name="password" required>
+							<label for="password">Password</label>
 
-								@if ($errors->has('password'))
-									<span class="help-block">
-										<strong>{{ $errors->first('password') }}</strong>
-									</span>
-								@endif
-							</div>
+							@if ($errors->has('password'))
+								<div class="card-panel red lighten-1 card-content valign">
+									<ul class="white-text">
+										<li>{{ $errors->first('password') }}</li>
+									</ul>
+								</div>
+							@endif
 						</div>
+					</div>
 
-						<div class="form-group">
-							<label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
+					<div class="row">
+						<div class="input-field col s8 offset-s2">
+							<input id="password-confirm" type="password" class="validate{{ $errors->has('password') ? ' invalid' : '' }}" name="password_confirmation" required>
 
-							<div class="col-md-6">
-								<input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-							</div>
+							<label for="password-confirm">Confirm Password</label>
 						</div>
+					</div>
 
-						<div class="form-group">
-							<div class="col-md-6 col-md-offset-4">
-								<button type="submit" class="btn btn-primary">
-									Register
-								</button>
-							</div>
-						</div>
-					</form>
-				</div>
+					<div class="center">
+						<button type="submit" class="waves-effect waves-light btn blue">Register</button>
+					</div>
+					<br>
+				</form>
 			</div>
 		</div>
 	</div>
-</div>
 @endsection

@@ -177,6 +177,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Nahid\Talk\TalkServiceProvider::class,
+        App\Providers\GoogleDriveServiceProvider::class,
 
     ],
 

@@ -96,7 +96,7 @@ class RegisterController extends Controller
 			$email = new EmailVerification(new User(['email_token' => $user->email_token, 'name' => $user->name]));
 			Mail::to($user->email)->send($email);
 			DB::commit();
-			return home();
+			return redirect('login');
 		}
 		catch(Exception $e)
 		{

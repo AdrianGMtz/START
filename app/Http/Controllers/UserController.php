@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use League\Flysystem\Filesystem;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
+use Hypweb\Flysystem\GoogleDrive\GoogleDriveAdapter;
+
 use App\User;
 use App\Commission;
 
@@ -97,7 +102,8 @@ class UserController extends Controller
 	public function store() {
 		// Validate form
 	 	$this->validate(request(), [
-	 		'description' => 'required|min:2'
+	 		'description' => 'required|min:2',
+            'avatar' => 'image|mimes:jpeg,png|dimensions:min_width=200,min_height=300,max_width=1000,max_height=1200'
 	 	]);
 
 	 	// Create new post
@@ -105,7 +111,28 @@ class UserController extends Controller
 		$user->description = (request('description'));
 		$user->save();
 
+		// Update profile picture if file was uploaded
+		if (!empty(request()->file('avatar'))) {
+			$this->saveAvatar();
+			// Storage::disk('google')
+			// 	->put('profile_' . auth()->id(),
+			// 		file_get_contents(request()->file('avatar'))
+			// 	);
+		}
+
 	 	// return view
 		return redirect('/profile');
 	}
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function saveAvatar() {
+		Storage::disk('google')
+			->put('profile_' . auth()->id(),
+				file_get_contents(request()->file('avatar'))
+			);
+    }
 }

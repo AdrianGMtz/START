@@ -13,11 +13,18 @@
 						<input id="description" type="text" class="validate" name="description" value="{{ $commission->description }}" required>
 						<label for="description">Description</label>
 					</div>
-					<div class="input-field col s12">
-						<input id="type" type="text" class="validate" name="type" value="{{ $commission->type }}" required>
+
+					<div class="input-field col s6">
+						<select id="type" name="type" class="validate">
+							<option value="" disabled required>Choose commission type</option>
+							<option value="Photography" {{ $commission->type == 'Photography' ? 'selected' : '' }} required>Photography</option>
+							<option value="Digital Art" {{ $commission->type == 'Digital Art' ? 'selected' : '' }} required>Digital Art</option>
+							<option value="Sketch" {{ $commission->type == 'Sketch' ? 'selected' : '' }} required>Sketch</option>
+						</select>
 						<label for="type">Type</label>
 					</div>
-					<div class="input-field col s12">
+
+					<div class="input-field col s6">
 						<input id="price" type="number" class="validate" name="price" min="1" step="any" placeholder="0.00" value="{{ $commission->price }}" required>
 						<label for="price">Price</label>
 					</div>
