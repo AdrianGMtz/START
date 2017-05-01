@@ -15,7 +15,7 @@ class User extends Authenticatable
 	 * @var array
 	 */
 	protected $fillable = [
-		'name', 'email', 'username', 'password', 'email_token', 'verified'
+		'name', 'email', 'username', 'password', 'email_token', 'verified', 'image'
 	];
 
 	/**
@@ -37,7 +37,7 @@ class User extends Authenticatable
 
 	public function order(Order $order) {
 		$order = $this->orders()->save($order);
-		return $order->id;
+		return $order;
 	}
 
 	public function publish(Commission $commission) {

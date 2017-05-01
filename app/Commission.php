@@ -11,4 +11,8 @@ class Commission extends Model
 	public function user() {
 		return $this->belongsTo(User::Class);
 	}
+
+	public function images() {
+		return $this->hasMany(Commission_Image::Class);
+	}
 }

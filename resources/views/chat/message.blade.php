@@ -11,7 +11,7 @@
 	{{-- File --}}
 	@elseif ($message->type == 2)
 		<div class="message my-message float-right">
-			<a class="white-text" href="{{$message->message}}"><i class="material-icons">attach_file</i> File</a>
+			<a class="white-text" href="https://drive.google.com/uc?id={{$message->message}}" target="blank_"><i class="material-icons">attach_file</i> File</a>
 		</div>
 	{{-- Payment --}}
 	@else

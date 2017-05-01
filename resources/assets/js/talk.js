@@ -7,29 +7,66 @@ $(document).ready(function () {
 		}, 250);
 	}
 
+	$('#talkSendFile').submit(function(e) {
+		e.preventDefault();
+
+		var form = $(this)[0];
+
+		var data = new FormData();
+		$.each(form.elements['send_file'].files, function(i, file) {
+			data.append('file', file);
+		});
+		data.append('_id', form.elements['_id'].value);
+		data.append('type', 2);
+
+		$.ajax({
+			url : "/message/file",
+			type: "POST",
+			data: data,
+			processData: false,
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			dataType : "json",
+			contentType : false,
+			success: function(jsonResponse){
+				$('#talkMessages').append(jsonResponse.html);
+				form.reset();
+				scrollSmoothToBottom();
+			},
+			error: function(errorMessage){
+				console.log(errorMessage);
+			}
+		});
+	});
+
 	$('#talkSendPayment').submit(function(e) {
 		e.preventDefault();
 
 		var form = $(this)[0];
-		
-		var data = {
-			'commission_id' : $('#commissions :selected').val(),
-			'order_comments' : form.elements['order_comments'].value,
-			'message-data' : form.elements['commission_description'].value,
-			'client_id' : form.elements['_id'].value,
-			'type' : 3
-		};
 
-		if ($('#commission_description').val() != '') {
+		var data = new FormData();
+		$.each(form.elements['file'].files, function(i, file) {
+			data.append('file', file);
+		});
+
+		data.append('commission_id', $('#commissions :selected').val());
+		data.append('order_comments', form.elements['order_comments'].value);
+		data.append('message-data', form.elements['commission_description'].value);
+		data.append('client_id', form.elements['_id'].value);
+		data.append('type', 3);
+
+		if (data.message-data != '') {
 			$.ajax({
 				url : "/message/payment",
 				type: "POST",
 				data: data,
+				processData: false,
 				headers: {
 					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				},
 				dataType : "json",
-				contentType : "application/x-www-form-urlencoded",
+				contentType : false,
 				success: function(jsonResponse){
 					$('#talkMessages').append(jsonResponse.html);
 					form.reset();
@@ -82,9 +119,6 @@ $(document).ready(function () {
 		// Check which button was pressed
 		if ($(this).attr("value") == "text") {
 			$('#type').val(1);
-			$("#talkSendMessage").submit();
-		}else if ($(this).attr("value") == "file") {
-			$('#type').val(2);
 			$("#talkSendMessage").submit();
 		}
 	});

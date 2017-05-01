@@ -3,7 +3,7 @@
 @section ('content')
 	<div class="row">
 		<div class="card-panel grey lighten-4 col s12 m6 offset-m3">
-			<form method="POST" action="/commissions/{{ $commission->id }}/edit">
+			<form method="POST" action="/commissions/{{ $commission->id }}/edit" enctype="multipart/form-data">
 
 				{{ csrf_field() }}
 

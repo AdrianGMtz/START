@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 
 use App\Commission;
 
+use League\Flysystem\Filesystem;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
+use Hypweb\Flysystem\GoogleDrive\GoogleDriveAdapter;
+
 class CommissionController extends Controller
 {
 	/**
@@ -53,13 +58,24 @@ class CommissionController extends Controller
 		$this->validate(request(), [
 			'description' => 'required|min:3',
 			'type' => 'required',
-			'price' => 'required'
+			'price' => 'required',
+			'images' => 'required',
+			'images.*' => 'image|mimes:jpeg,png|dimensions:min_width=300,min_height=300,max_width=1800,max_height=1200'
 		]);
 
 		// Create new post
-		auth()->user()->publish(
-			new Commission(request(['description', 'type', 'price']))
-		);
+		$commission = new Commission(request(['description', 'type', 'price']));
+
+		auth()->user()->publish($commission);
+
+		$files = request()->file('images');
+
+		$count = 1;
+
+		foreach ($files as $file) {
+			Storage::disk('google')->put('commission_' . $commission->id . '_' . $count, file_get_contents($file));
+			$count++;
+		}
 
 		// return view
 		return redirect('/profile');

@@ -11,7 +11,7 @@
 				@if(!is_null($inbox->thread))
 					<li class="clearfix">
 						<a href="/message/{{$inbox->withUser->id}}">
-						<img class="circle responsive-img" src="https://help.sketchbook.com/knowledgebase/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png" alt="profile" style="width: 25%;"/>
+						<img class="circle responsive-img" src="https://drive.google.com/uc?id={{ $inbox->withUser->image }}" alt="profile" style="width: 25%;"/>
 						<div class="about">
 							<div class="white-text">{{$inbox->withUser->name}}
 							</div>
@@ -21,9 +21,13 @@
 								@else
 									<i class="material-icons">subdirectory_arrow_right</i>
 								@endif
-								<span>{{substr($inbox->thread->message, 0, 20)}}</span>
-								@if(!($inbox->thread->is_seen) && auth()->user()->id != $inbox->thread->sender->id)
-									<span class="new badge red"></span>
+								
+								@if($inbox->thread->type == 1)
+									<span>{{substr($inbox->thread->message, 0, 20)}}</span>
+								@elseif($inbox->thread->type == 2)
+									<span>File</span>
+								@else
+									<span>Order</span>
 								@endif
 							</div>
 						</div>

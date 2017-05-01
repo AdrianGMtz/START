@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
 			$table->string('password');
 			$table->boolean('verified')->default(false);
 			$table->string('email_token')->nullable(); // this column will be a VARCHAR with no default value and will also BE NULLABLE
+			$table->string('image')->default('0B-mHz_IrAi-aR2RiQV9sYmVoRWs');
 			$table->rememberToken();
 			$table->timestamps();
 		});

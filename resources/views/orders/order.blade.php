@@ -39,8 +39,13 @@
 							<h5><b>Commission Type:</b></h5>
 							<p class="center">{{ $commission->type }}</p>
 
-							<h5><b>Artist:</b></h5>
-							<p class="center">{{ $artist->name }}</p>
+							@if($order->user_id == auth()->user()->id)
+								<h5><b>Client:</b></h5>
+								<p class="center">{{ $client->name }}</p>
+							@else
+								<h5><b>Artist:</b></h5>
+								<p class="center">{{ $artist->name }}</p>
+							@endif
 
 							<h5><b>Price:</b></h5>
 							<p class="center">${{ $commission->price }}</p>
@@ -64,11 +69,12 @@
 							<a class="waves-effect waves-light btn blue" href="{{ (strpos(URL::previous(), 'pay') ? 'http://start.dev/orders': URL::previous()) }}">Back</a>
 
 							@if((auth()->user()->id != $artist->id) && ($order->paid == 0))
-								<button type="submit" form="payment-form" class="waves-effect waves-light btn green" style="margin-left: 5%;">Pay</button>
+								<button type="submit" form="payment-form" class="waves-effect waves-light btn green" style="margin-left: 30px;">Pay</button>
 							@endif
 
-							@if($order->paid == 1)
-								{{-- show files --}}
+							@if($order->paid == 1 || $order->user_id == auth()->user()->id)
+								{{-- Show files --}}
+								<a class="waves-effect waves-light btn orange" style="margin-left: 30px;" href="https://drive.google.com/uc?id={{ $order->file }}">Download File</a>
 							@else
 								<br>
 								<br>

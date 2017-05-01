@@ -3,7 +3,7 @@
 @section ('content')
 	<div class="row">
 		<div class="card-panel grey lighten-4 col s12 m6 offset-m3">
-			<form method="POST" action="/commissions">
+			<form method="POST" action="/commissions" enctype="multipart/form-data">
 
 				{{ csrf_field() }}
 
@@ -27,6 +27,17 @@
 					<div class="input-field col s6">
 						<input id="price" type="number" class="validate" name="price" min="1" step="any" placeholder="0.00"  required>
 						<label for="price">Price</label>
+					</div>
+
+					<label class="col s10 offset-s1" for="images">Commission Images</label>
+					<div class="file-field input-field col s10 offset-s1">
+						<div class="waves-effect waves-light btn blue">
+							<span>Choose Files</span>
+							<input id="images" name="images[]" type="file" multiple required>
+						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path" type="text" disabled>
+						</div>
 					</div>
 				</div>
 

@@ -58,6 +58,8 @@ Route::post('/message/send', 'MessageController@sendMessage');
 
 Route::post('/message/payment', 'MessageController@sendOrder');
 
+Route::post('/message/file', 'MessageController@sendFile');
+
 // Payment Routes
 Route::get('/orders', 'OrderController@show');
 

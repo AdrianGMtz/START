@@ -15,7 +15,7 @@
 							</div>
 						@else
 							@if(isset($requested_user))
-								<img class="circle responsive-img" src="https://help.sketchbook.com/knowledgebase/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png" alt="profile" style="width: 5%;"/>
+								<img class="circle responsive-img" src="https://drive.google.com/uc?id={{ $requested_user->image }}" alt="profile" style="width: 5%;"/>
 								<div class="chat-about">
 									<div class="chat-with">{{@$requested_user->name}}</div>
 								</div>
@@ -40,7 +40,7 @@
 										@if(auth()->user()->artist == 1)
 											<button data-target="payment" class="waves-effect waves-light btn-floating green"><i class="material-icons">attach_money</i></button>
 										@endif
-										<button class="waves-effect waves-light btn-floating orange" type="submit" value="file"><i class="material-icons">attach_file</i></button>
+										<button data-target="attach_file" class="waves-effect waves-light btn-floating orange" value="file"><i class="material-icons">attach_file</i></button>
 									</div>
 								</div>
 							</form>
@@ -53,26 +53,70 @@
 									<h4 class="center">Request Payment</h4>
 									<hr>
 									<br>
-									<form action="" method="post" id="talkSendPayment" name="talkSendPayment">
-										<div class="input-field">
-											<select id="commissions" required>
-												<option value="" disabled selected></option>
-												@foreach($commissions as $commission)
-													<option value="{{$commission->id}}" name="commission_id">{{$commission->description}} ${{$commission->price}}</option>
-												@endforeach
-											</select>
-											<label for="commissions"><b>Choose a commission:</b></label>
+									<form action="" method="post" id="talkSendPayment" name="talkSendPayment" enctype="multipart/form-data">
+										<div class="row">
+											<div class="input-field">
+												<select id="commissions" required>
+													<option value="" disabled selected>Select a commission</option>
+													@foreach($commissions as $commission)
+														<option value="{{$commission->id}}" name="commission_id">{{$commission->description}} ${{$commission->price}}</option>
+													@endforeach
+												</select>
+												<label for="commissions"><b>Choose a commission:</b></label>
+											</div>
+
+											<input id="commission_description" type="hidden" name="commission_description" required>
+											
+											<div class="input-field">
+												<textarea class="materialize-textarea" name="order_comments" id="order_comments" placeholder ="Type your message" rows="3" maxlength="300"></textarea>
+												<label for="order_comments"><b>Comments:</b></label>
+											</div>
+
+											<input type="hidden" name="_id" value="{{@request()->route('id')}}">
+
+											<label class="col s10 offset-s1" for="file">Order File</label>
+											<div class="file-field input-field col s10 offset-s1">
+												<div class="waves-effect waves-light btn blue">
+													<span>Choose File</span>
+													<input id="file" name="file" type="file" required>
+												</div>
+												<div class="file-path-wrapper">
+													<input class="file-path" type="text" placeholder="File must be ZIP folder" disabled>
+												</div>
+											</div>
 										</div>
-										<input id="commission_description" type="hidden" name="commission_description" required>
-										<div class="input-field">
-											<textarea class="materialize-textarea" name="order_comments" id="order_comments" placeholder ="Type your message" rows="3" maxlength="300"></textarea>
-											<label for="order_comments"><b>Comments:</b></label>
-										</div>
-										<input type="hidden" name="_id" value="{{@request()->route('id')}}">
 									</form>
 								</div>
 								<div class="modal-footer">
 									<button type="submit" form="talkSendPayment" class="modal-action modal-close waves-effect waves-light btn green btn-medium" style="margin-left: 4px;">Charge</button>
+									<button class="modal-action modal-close waves-effect waves-light btn red btn-medium" type="reset" style="margin-right: 4px;">Cancel</button>
+								</div>
+							</div>
+							<!-- Payment Modal -->
+							<div id="attach_file" class="modal">
+								<div class="modal-content">
+									<h4 class="center">Send File</h4>
+									<hr>
+									<br>
+									<form action="" method="post" id="talkSendFile" name="talkSendFile" enctype="multipart/form-data">
+										<div class="row">
+											<input type="hidden" name="_id" value="{{@request()->route('id')}}">
+
+											<div class="file-field input-field col s10 offset-s1">
+												<div class="waves-effect waves-light btn blue">
+													<span>Choose File</span>
+													<input id="send_file" name="send_file" type="file" required>
+												</div>
+												<div class="file-path-wrapper">
+													<input class="file-path" type="text" disabled>
+												</div>
+											</div>
+										</div>
+										<hr>
+									</form>
+								</div>
+								<div class="modal-footer">
+									<button type="submit" form="talkSendFile" class="modal-action modal-close waves-effect waves-light btn orange btn-medium" style="margin-left: 4px;">Send</button>
 									<button class="modal-action modal-close waves-effect waves-light btn red btn-medium" type="reset" style="margin-right: 4px;">Cancel</button>
 								</div>
 							</div>
@@ -85,6 +129,13 @@
 		<script type="text/javascript">
 			$(document).ready(function(){
 				$('#payment').modal({
+					dismissible: false, // Modal can't be dismissed by clicking outside of the modal
+					opacity: .8, // Opacity of modal background
+					inDuration: 300, // Transition in duration
+					outDuration: 200 // Transition out duration
+				});
+
+				$('#attach_file').modal({
 					dismissible: false, // Modal can't be dismissed by clicking outside of the modal
 					opacity: .8, // Opacity of modal background
 					inDuration: 300, // Transition in duration
@@ -114,7 +165,7 @@
 					message = data.message;
 				} else if (data.type == 2) {
 					// File
-					message = '<a class="white-text" href="' + data.message + '"><i class="material-icons">attach_file</i> File</a>';
+					message = '<a class="white-text" href="https://drive.google.com/uc?id=' + data.message + '" target="blank_"><i class="material-icons">attach_file</i> File</a>';
 				} else {
 					// Payment
 					message = '<b><u>Order:</u></b> <br> ' + data.message + '<br> <a href="/orders/latest" class="waves-effect waves-light btn green btn-medium">View</a>';

@@ -101,38 +101,40 @@ class UserController extends Controller
 	 */
 	public function store() {
 		// Validate form
-	 	$this->validate(request(), [
-	 		'description' => 'required|min:2',
-            'avatar' => 'image|mimes:jpeg,png|dimensions:min_width=200,min_height=300,max_width=1000,max_height=1200'
-	 	]);
-
-	 	// Create new post
-		$user = auth()->user();
-		$user->description = (request('description'));
-		$user->save();
+		$this->validate(request(), [
+			'description' => 'required|min:2',
+			'avatar' => 'image|mimes:jpeg,png|dimensions:min_width=200,min_height=300,max_width=1200,max_height=1200'
+		]);
 
 		// Update profile picture if file was uploaded
 		if (!empty(request()->file('avatar'))) {
 			$this->saveAvatar();
-			// Storage::disk('google')
-			// 	->put('profile_' . auth()->id(),
-			// 		file_get_contents(request()->file('avatar'))
-			// 	);
 		}
 
-	 	// return view
+		$parts = parse_url(Storage::disk('google')->url('profile_' . auth()->id()));
+		parse_str($parts['query'], $query);
+
+		// dd(Storage::disk('google')->listContents());
+
+		// Create new post
+		$user = auth()->user();
+		$user->description = (request('description'));
+		$user->image = $query['id'];
+		$user->save();
+
+		// return view
 		return redirect('/profile');
 	}
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function saveAvatar() {
+	/**
+	 * Show the application dashboard.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function saveAvatar() {
 		Storage::disk('google')
 			->put('profile_' . auth()->id(),
 				file_get_contents(request()->file('avatar'))
 			);
-    }
+	}
 }

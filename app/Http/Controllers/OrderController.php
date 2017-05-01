@@ -76,10 +76,12 @@ class OrderController extends Controller
 		// Verify current user is either the artist of the order or the client
 		if ($current_user->id == $order->user_id || $current_user->id == $order->client_id) {
 			$artist = ($current_user->id == $order->user_id) ? $current_user : User::find($order->user_id);
+			$client = ($current_user->id == $order->client_id) ? $current_user : User::find($order->client_id);
+			
 
 			$commission = Commission::find($order->commission_id);
 
-			return view('orders.order', compact('order', 'artist', 'commission'));
+			return view('orders.order', compact('order', 'artist', 'client', 'commission'));
 		}
 
 		return redirect('/orders');

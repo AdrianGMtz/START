@@ -1,6 +1,6 @@
 <div class="card-panel col s12 m3 grey lighten-4">
 	<!-- User Image -->
-	<img class="responsive-img " src="https://help.sketchbook.com/knowledgebase/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png">
+	<img class="responsive-img" src="https://drive.google.com/uc?id={{ $user->image }}">
 	
 	<!-- User Name -->
 	<h5 id="username" class="center">{{ $user->name }}</h5>

@@ -7,8 +7,12 @@ use Illuminate\Http\Request;
 use Nahid\Talk\Facades\Talk;
 use Auth;
 use View;
-
 use App\Order;
+
+use League\Flysystem\Filesystem;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
+use Hypweb\Flysystem\GoogleDrive\GoogleDriveAdapter;
 
 class MessageController extends Controller
 {
@@ -102,6 +106,7 @@ class MessageController extends Controller
 			'commission_id' => 'required',
 			'message-data' => 'required',
 			'client_id' => 'required',
+			'file' => 'required|mimes:zip',
 			'type' => 'required'
 		]);
 
@@ -111,9 +116,23 @@ class MessageController extends Controller
 		$messageType = request('type');
 		Talk::setAuthUserId(auth()->user()->id);
 
-		$order_id = auth()->user()->order(
+		Storage::disk('google')
+			->put('order_' . auth()->id() . '_' . $client_id,
+				file_get_contents(request()->file('file'))
+			);
+		$parts = parse_url(Storage::disk('google')->url('order_' . auth()->id() . '_' . $client_id));
+		parse_str($parts['query'], $query);
+
+		$file = $query['id'];
+
+		$order = auth()->user()->order(
 			new Order(request(['commission_id', 'client_id', 'order_comments']))
 		);
+
+		$order->file = $file;
+		$order->save();
+
+		$order_id = $order->id;
 		
 		if ($message = Talk::sendMessageByUserId($client_id, $body, $messageType)) {
 			$html = view('chat.message', compact('message', 'order_id'))->render();
@@ -131,6 +150,38 @@ class MessageController extends Controller
 		]);
 
 		$body = request('message-data');
+		$userId = request('_id');
+		// Type 1 (Text), 2 (File), 3 (Payment)
+		$messageType = request('type');
+		Talk::setAuthUserId(auth()->user()->id);
+		
+		if ($message = Talk::sendMessageByUserId($userId, $body, $messageType)) {
+			$html = view('chat.message', compact('message'))->render();
+			return response()->json(['status'=>'success', 'html'=>$html], 200);
+		}
+	}
+
+	public function sendFile(Request $request)
+	{
+		// Validate form
+		$this->validate(request(), [
+			'file' => 'required',
+			'_id' => 'required',
+			'type' => 'required'
+		]);
+
+		$randomString = str_random(8);
+
+		Storage::disk('google')
+			->put('message_' . auth()->id() . $randomString,
+				file_get_contents(request()->file('file'))
+			);
+		$parts = parse_url(Storage::disk('google')->url('message_' . auth()->id() . $randomString));
+		parse_str($parts['query'], $query);
+
+		$file = $query['id'];
+
+		$body = $file;
 		$userId = request('_id');
 		// Type 1 (Text), 2 (File), 3 (Payment)
 		$messageType = request('type');

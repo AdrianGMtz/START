@@ -20,6 +20,7 @@ class CreateOrdersTable extends Migration
             $tbl->integer('commission_id');
             $tbl->text('order_comments')->nullable();
             $tbl->boolean('paid')->default(false);
+            $tbl->string('file')->default('0B-mHz_IrAi-aR2RiQV9sYmVoRWs');
             $tbl->timestamps();
         });
     }
