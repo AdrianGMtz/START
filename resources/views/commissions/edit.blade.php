@@ -28,6 +28,17 @@
 						<input id="price" type="number" class="validate" name="price" min="1" step="any" placeholder="0.00" value="{{ $commission->price }}" required>
 						<label for="price">Price</label>
 					</div>
+
+					<label class="col s10 offset-s1" for="images">Add Commission Images</label>
+					<div class="file-field input-field col s10 offset-s1">
+						<div class="waves-effect waves-light btn blue">
+							<span>Choose Files</span>
+							<input id="images" name="images[]" type="file" multiple>
+						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path" type="text" disabled>
+						</div>
+					</div>
 				</div>
 
 				@include ('layouts.errors')

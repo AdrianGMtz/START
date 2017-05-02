@@ -15,4 +15,8 @@ class Commission extends Model
 	public function images() {
 		return $this->hasMany(Commission_Image::Class);
 	}
+
+	public function add(Commission_Image $image) {
+		$this->images()->save($image);
+	}
 }

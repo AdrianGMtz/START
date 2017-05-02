@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Commission;
+use App\Commission_Image;
 
 use League\Flysystem\Filesystem;
 use Illuminate\Support\Facades\Cache;
@@ -74,6 +75,18 @@ class CommissionController extends Controller
 
 		foreach ($files as $file) {
 			Storage::disk('google')->put('commission_' . $commission->id . '_' . $count, file_get_contents($file));
+
+			$parts = parse_url(Storage::disk('google')->url('commission_' . $commission->id . '_' . $count));
+			parse_str($parts['query'], $query);
+
+			$file_id = $query['id'];
+
+			$commission_image = new Commission_Image();
+			$commission_image->commission_id = $commission->id;
+			$commission_image->image = $file_id;
+			$commission_image->save();
+
+			$commission->add($commission_image);
 			$count++;
 		}
 
@@ -94,7 +107,8 @@ class CommissionController extends Controller
 		$this->validate(request(), [
 			'description' => 'required|min:2',
 			'type' => 'required',
-			'price' => 'required'
+			'price' => 'required',
+			'images.*' => 'image|mimes:jpeg,png|dimensions:min_width=300,min_height=300,max_width=1800,max_height=1200'
 		]);
 
 		if ($current_user == $commission_user) {
@@ -103,6 +117,29 @@ class CommissionController extends Controller
 			$commission->price = request('price');
 
 			$commission->save();
+
+			$files = request()->file('images');
+
+			if (!empty($files)) {
+				$count = 1;
+
+				foreach ($files as $file) {
+					Storage::disk('google')->put('commission_' . $commission->id . '_' . $count, file_get_contents($file));
+
+					$parts = parse_url(Storage::disk('google')->url('commission_' . $commission->id . '_' . $count));
+					parse_str($parts['query'], $query);
+
+					$file_id = $query['id'];
+
+					$commission_image = new Commission_Image();
+					$commission_image->commission_id = $commission->id;
+					$commission_image->image = $file_id;
+					$commission_image->save();
+
+					$commission->add($commission_image);
+					$count++;
+				}
+			}
 
 			// return view
 			return redirect('/profile');

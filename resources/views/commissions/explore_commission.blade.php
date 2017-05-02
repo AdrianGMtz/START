@@ -1,7 +1,7 @@
 <div class="col s3">
 	<div class="card small">
 		<div class="card-image">
-			<img src="https://udemy-images.udemy.com/course/750x422/394968_538b_7.jpg">
+			<img src="https://drive.google.com/uc?id={{ $commission->images()->first()->image }}">
 			{{-- <span class="card-title black-text">{{ $commission->user->name }}</span> --}}
 		</div>
 		<div class="card-content center">

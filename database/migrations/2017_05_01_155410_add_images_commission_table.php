@@ -13,7 +13,7 @@ class AddImagesCommissionTable extends Migration
      */
     public function up()
     {
-        Schema::create('commission_images', function (Blueprint $table) {
+        Schema::create('commission__images', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('commission_id');
             $table->string('image');
@@ -28,6 +28,6 @@ class AddImagesCommissionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('commission_images');
+        Schema::dropIfExists('commission__images');
     }
 }

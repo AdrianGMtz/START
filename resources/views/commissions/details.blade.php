@@ -24,18 +24,13 @@
 						<div class="slider">
 							<ul class="slides">
 								{{-- Create <li> per image in commission --}}
-								<li>
-									{{-- href is #img + commission id + commission image id --}}
-									<a href="#img{{ $commission->id }}1">
-										<img src="https://udemy-images.udemy.com/course/750x422/394968_538b_7.jpg">
-									</a>
-								</li>
-
-								<li>
-									<a href="#img{{ $commission->id }}2">
-										<img src="https://udemy-images.udemy.com/course/750x422/394968_538b_7.jpg">
-									</a>
-								</li>
+								@foreach($commission->images as $image)
+									<li>
+										<a href="#img{{ $image->id }}">
+											<img src="https://drive.google.com/uc?id={{ $image->image }}">
+										</a>
+									</li>
+								@endforeach
 							</ul>
 						</div>
 						<p class="white-text left">{{ $commission->description }}</p>
@@ -50,8 +45,9 @@
 				<!-- Gallery Modals -->
 				<div id="zoom_images">
 					{{-- Add img tag per image in commission --}}
-					<img class="modal lightbox" id="img{{ $commission->id }}1" src="https://udemy-images.udemy.com/course/750x422/394968_538b_7.jpg">
-					<img class="modal lightbox" id="img{{ $commission->id }}2" src="https://udemy-images.udemy.com/course/750x422/394968_538b_7.jpg">
+					@foreach($commission->images as $image)
+						<img class="modal lightbox" id="img{{ $image->id }}" src="https://drive.google.com/uc?id={{ $image->image }}">
+					@endforeach
 				</div>
 				<!-- Policies Modal -->
 				{{-- <div id="{{ $id }}_policies" class="modal">
