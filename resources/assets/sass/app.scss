@@ -30,6 +30,10 @@ form input[type="checkbox"].filled-in:checked+label:after {
 	background-color: #2196F3;
 }
 
+.card .card-action a:not(.btn):not(.btn-large):not(.btn-large):not(.btn-floating) {
+	margin-right: 0px;
+}
+
 /* Navbar */
 nav ul li:hover {
 	background-color: orange;

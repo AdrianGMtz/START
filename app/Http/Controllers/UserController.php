@@ -49,9 +49,9 @@ class UserController extends Controller
 		if (!$result->isEmpty()) {
 			$user = $result[0];
 
-			$current_user = auth()->user()->id;
-
-			if ($user->id != $current_user) {
+			if (auth()->check() && $user->id == auth()->user()->id){
+				return redirect('/profile');
+			} else {
 				$photography_commissions = Commission::latest()->where([['type', 'Photography'],['user_id', $user->id]])->paginate(8);
 				$digital_commissions = Commission::latest()->where([['type', 'Digital Art'],['user_id', $user->id]])->paginate(8);
 				$sketch_commissions = Commission::latest()->where([['type', 'Sketch'],['user_id', $user->id]])->paginate(8);

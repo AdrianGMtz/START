@@ -108,7 +108,7 @@ class CommissionController extends Controller
 			'description' => 'required|min:2',
 			'type' => 'required',
 			'price' => 'required',
-			'images.*' => 'image|mimes:jpeg,png|dimensions:min_width=300,min_height=300,max_width=1800,max_height=1200'
+			'images.*' => 'image|dimensions:min_width=300,min_height=300,max_width=1800,max_height=1200'
 		]);
 
 		if ($current_user == $commission_user) {
@@ -142,7 +142,7 @@ class CommissionController extends Controller
 			}
 
 			// return view
-			return redirect('/profile');
+			return redirect('/commissions/' . $commission->id);
 		}
 	   abort(403, 'Unauthorized action.');
 	}

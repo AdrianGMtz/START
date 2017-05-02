@@ -17,7 +17,7 @@
 					</div>
 				</div>
 				<div class="card grey darken-4 center">
-					@if ($user->id == auth()->user()->id)
+					@if (auth()->check() && $user->id == auth()->user()->id)
 						<a id="edit_btn" class="btn-floating halfway-fab waves-effect waves-light btn-large blue" href="/commissions/{{ $commission->id }}/edit"><i class="material-icons">mode_edit</i></a>
 					@endif
 					<div class="card-content white-text">
@@ -37,7 +37,7 @@
 					</div>
 					<div class="card-action">
 						<h5 class="white-text">Price: ${{ $commission->price }}</h5>
-						@if($user->id != auth()->user()->id)
+						@if(auth()->check() && $user->id != auth()->user()->id)
 							<a class="waves-effect waves-light btn orange btn-large" href="/message/{{ $user->id }}">Hire</a>
 						@endif
 					</div>

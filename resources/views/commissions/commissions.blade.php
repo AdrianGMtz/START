@@ -2,12 +2,12 @@
 	<h5 style="display: inline-block; margin-left: 39%;">Commissions</h5>
 	{{-- Verify user is an artist --}}
 	@if($user->artist)
-		@if ($user->id == auth()->user()->id)
+		@if (auth()->check() && $user->id == auth()->user()->id)
 			<a class="waves-effect waves-light btn blue" style="float: right; margin-top: 10px;" href="/profile/create"><i class="material-icons">note_add</i></a>
 		@endif
 		{{-- Check user has Commissions --}}
 		@if ((count($photography_commissions) == 0) && (count($digital_commissions) == 0) && (count($sketch_commissions) == 0))
-			@if ($user->id == auth()->user()->id)
+			@if (auth()->check() && $user->id == auth()->user()->id)
 				<div class="card-panel blue lighten-5 card-content valign center">
 					<h5 class="blue-text text-lighten-2">You're not offering any commissions.</h5>
 				</div>
@@ -55,7 +55,7 @@
 			@endif
 		@endif
 	@else
-		@if ($user->id == auth()->user()->id)
+		@if (auth()->check() && $user->id == auth()->user()->id)
 			<!-- Message for non artist -->
 			<div class="card-panel blue lighten-5 card-content valign center">
 				<h5 class="blue-text text-lighten-2">You must be an artist to offer commissions.</h5>
