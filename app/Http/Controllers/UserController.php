@@ -31,9 +31,9 @@ class UserController extends Controller
 	public function show() {
 		$user = User::find(auth()->user()->id);
 
-		$photography_commissions = Commission::latest()->where([['type', 'Photography'],['user_id', $user->id]])->paginate(8);
-		$digital_commissions = Commission::latest()->where([['type', 'Digital Art'],['user_id', $user->id]])->paginate(8);
-		$sketch_commissions = Commission::latest()->where([['type', 'Sketch'],['user_id', $user->id]])->paginate(8);
+		$photography_commissions = Commission::latest()->where([['type', 'Photography'],['user_id', $user->id]])->paginate(4);
+		$digital_commissions = Commission::latest()->where([['type', 'Digital Art'],['user_id', $user->id]])->paginate(4);
+		$sketch_commissions = Commission::latest()->where([['type', 'Sketch'],['user_id', $user->id]])->paginate(4);
 
 		return view('profile.show', compact('user', 'photography_commissions', 'digital_commissions', 'sketch_commissions'));
 	}
@@ -52,9 +52,9 @@ class UserController extends Controller
 			if (auth()->check() && $user->id == auth()->user()->id){
 				return redirect('/profile');
 			} else {
-				$photography_commissions = Commission::latest()->where([['type', 'Photography'],['user_id', $user->id]])->paginate(8);
-				$digital_commissions = Commission::latest()->where([['type', 'Digital Art'],['user_id', $user->id]])->paginate(8);
-				$sketch_commissions = Commission::latest()->where([['type', 'Sketch'],['user_id', $user->id]])->paginate(8);
+				$photography_commissions = Commission::latest()->where([['type', 'Photography'],['user_id', $user->id]])->paginate(4);
+				$digital_commissions = Commission::latest()->where([['type', 'Digital Art'],['user_id', $user->id]])->paginate(4);
+				$sketch_commissions = Commission::latest()->where([['type', 'Sketch'],['user_id', $user->id]])->paginate(4);
 
 				return view('profile.show', compact('user', 'photography_commissions', 'digital_commissions', 'sketch_commissions'));
 			}

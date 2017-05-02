@@ -34,6 +34,16 @@ form input[type="checkbox"].filled-in:checked+label:after {
 	margin-right: 0px;
 }
 
+img.explore-image {
+	max-height: 150px;
+	max-width: 100%;
+}
+
+img.commission-image {
+	max-height: 250px;
+	max-width: 100%;
+}
+
 /* Navbar */
 nav ul li:hover {
 	background-color: orange;
@@ -64,8 +74,9 @@ nav .brand-logo {
 }
 .lightbox {
 	position: fixed;
-	max-width: 90%;
+	width: auto;
 	max-height: 90%;
+	bottom: 10%;
 }
 
 .slider .indicators .indicator-item.active {
