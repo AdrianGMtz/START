@@ -37,7 +37,7 @@
 					</div>
 					<div class="card-action">
 						<h5 class="white-text">Price: ${{ $commission->price }}</h5>
-						@if(auth()->check() && $user->id != auth()->user()->id)
+						@if(!auth()->check() || (auth()->check() && $user->id != auth()->user()->id))
 							<a class="waves-effect waves-light btn orange btn-large" href="/message/{{ $user->id }}">Hire</a>
 						@endif
 					</div>
